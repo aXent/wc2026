@@ -30,9 +30,14 @@ jobs:
 
       - name: index.html genereren
         env:
-          # Gratis testkey '123' werkt; zet een repo-secret TSDB_KEY voor je eigen (premium) key.
-          TSDB_KEY: ${{ secrets.TSDB_KEY || '123' }}
-        run: python generate.py
+          # Premium key vereist: de gratis key '123' geeft maar 15 seizoensevents terug.
+          TSDB_KEY: ${{ secrets.TSDB_KEY }}
+        run: |
+          if [ -z "$TSDB_KEY" ]; then
+            echo "TSDB_KEY secret ontbreekt; de gratis key levert geen volledig WK-schema." >&2
+            exit 1
+          fi
+          python generate.py
 
       - name: Committen en pushen (alleen bij wijziging)
         run: |

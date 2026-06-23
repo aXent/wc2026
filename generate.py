@@ -13,11 +13,12 @@ Aanpak:
   4. We renderen de drie dynamische blokken en vullen template.html -> index.html.
 
 Gebruik:
-    export TSDB_KEY=123          # gratis testkey; of je eigen premium key
+    export TSDB_KEY=...          # premium key; gratis key 123 is te beperkt
     python generate.py
 
 Afhankelijkheden: alleen de Python-standaardbibliotheek.
-TheSportsDB gratis tier: 30 requests/minuut. Wij doen er 1 per run.
+TheSportsDB gratis tier geeft maar 15 seizoensevents terug; voor het volledige
+WK-schema is een premium key nodig.
 """
 
 import json, os, sys, urllib.request, urllib.error
@@ -27,9 +28,9 @@ from zoneinfo import ZoneInfo
 # ----------------------------------------------------------------------------
 # Config
 # ----------------------------------------------------------------------------
-KEY      = os.environ.get("TSDB_KEY", "123")        # '123' = gratis testkey
+KEY      = os.environ.get("TSDB_KEY") or "123"      # '123' = gratis testkey
 LEAGUE   = "4429"                                    # FIFA World Cup
-SEASONS  = ["2026", "2026-2027"]                     # eerste die data geeft wint
+SEASONS  = ["2026", "2026-2027"]                     # meeste events wint
 BASE     = f"https://www.thesportsdb.com/api/v1/json/{KEY}"
 TZ       = ZoneInfo("Europe/Brussels")              # Belgische tijd (CEST)
 TEMPLATE = "template.html"
@@ -72,6 +73,7 @@ GROUPS = {
  "G":["BEL","EGY","IRN","NZL"], "H":["ESP","URU","CPV","KSA"], "I":["FRA","SEN","NOR","IRQ"],
  "J":["ARG","AUT","ALG","JOR"], "K":["POR","COL","UZB","COD"], "L":["ENG","CRO","GHA","PAN"],
 }
+EXPECTED_GROUP_MATCHES = sum(len(codes) * (len(codes) - 1) // 2 for codes in GROUPS.values())
 
 # Snelle opzoektabel: genormaliseerde Engelse naam -> code
 NAME2CODE = {}
@@ -92,7 +94,8 @@ def group_of(code):
 # API
 # ----------------------------------------------------------------------------
 def fetch_events():
-    """Probeer de seizoenen tot er events zijn; geef de eventslijst terug."""
+    """Probeer bekende seizoenslabels; gebruik de lijst met de meeste events."""
+    best_season, best_events = None, []
     for season in SEASONS:
         url = f"{BASE}/eventsseason.php?id={LEAGUE}&s={season}"
         try:
@@ -101,9 +104,12 @@ def fetch_events():
         except urllib.error.HTTPError as e:
             sys.exit(f"API-fout {e.code} bij {url}")
         events = data.get("events") or []
-        if events:
-            print(f"Seizoen '{season}': {len(events)} events opgehaald.")
-            return events
+        print(f"Seizoen '{season}': {len(events)} events opgehaald.")
+        if len(events) > len(best_events):
+            best_season, best_events = season, events
+    if best_events:
+        print(f"Seizoen '{best_season}' geselecteerd ({len(best_events)} events).")
+        return best_season, best_events
     sys.exit("Geen events gevonden — controleer LEAGUE-id en SEASONS.")
 
 # ----------------------------------------------------------------------------
@@ -175,6 +181,27 @@ def build_groups(events):
                      "teams": teams, "matches": matches}
     return groups
 
+def validate_group_schedule(groups, event_count, season):
+    total = sum(len(gr["matches"]) for gr in groups.values())
+    incomplete = {
+        g: len(groups[g]["matches"])
+        for g in sorted(groups)
+        if len(groups[g]["matches"]) < 6
+    }
+    if not incomplete and total == EXPECTED_GROUP_MATCHES:
+        return
+
+    detail = ", ".join(f"{g}:{n}/6" for g, n in incomplete.items())
+    hint = ("De gratis TheSportsDB key '123' geeft maar 15 seizoensevents terug; "
+            "zet TSDB_KEY op een premium key in GitHub Secrets.")
+    if KEY != "123":
+        hint = "Controleer of TSDB_KEY een premium key is en toegang heeft tot de volledige season endpoint."
+    sys.exit(
+        f"Onvolledig WK-schema: {total}/{EXPECTED_GROUP_MATCHES} groepsduels "
+        f"gevonden uit {event_count} events voor seizoen '{season}'. "
+        f"Ontbrekend: {detail}. {hint}"
+    )
+
 # ----------------------------------------------------------------------------
 # Renderen (identiek format aan de placeholders in template.html)
 # ----------------------------------------------------------------------------
@@ -230,7 +257,9 @@ def main():
     if not os.path.exists(TEMPLATE):
         sys.exit(f"{TEMPLATE} ontbreekt (de pagina met placeholders "
                  f"{{{{GROUPS}}}}, {{{{POP_DATA}}}}, {{{{FX_DATA}}}}, {{{{DATE}}}}).")
-    groups = build_groups(fetch_events())
+    season, events = fetch_events()
+    groups = build_groups(events)
+    validate_group_schedule(groups, len(events), season)
     html = open(TEMPLATE, encoding="utf-8").read()
     html = html.replace("{{DATE}}",     date_label())
     html = html.replace("{{GROUPS}}",   render_group_cards(groups))
