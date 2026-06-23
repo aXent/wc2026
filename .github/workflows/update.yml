@@ -1,0 +1,46 @@
+name: Update WK 2026 cheat sheet
+
+# Plaats dit bestand in de repo als: .github/workflows/update.yml
+
+on:
+  schedule:
+    # Elke 10 minuten (tijden in UTC). GitHub kan geplande runs vertragen.
+    # Wil je het rustiger? Zet bv. '*/30 * * * *' (elk half uur).
+    - cron: '*/10 * * * *'
+  workflow_dispatch: {}          # handmatige "Run workflow"-knop
+
+permissions:
+  contents: write                # nodig om de bijgewerkte index.html terug te pushen
+
+concurrency:
+  group: update-cheatsheet       # voorkomt overlappende runs
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Repo uitchecken
+        uses: actions/checkout@v4
+
+      - name: Python opzetten
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: index.html genereren
+        env:
+          FD_TOKEN: ${{ secrets.FD_TOKEN }}   # zet deze als repo-secret
+        run: python generate.py
+
+      - name: Committen en pushen (alleen bij wijziging)
+        run: |
+          if git diff --quiet -- index.html; then
+            echo "Geen wijziging in de standen — niets te committen."
+          else
+            git config user.name  "wk-bot"
+            git config user.email "github-actions[bot]@users.noreply.github.com"
+            git add index.html
+            git commit -m "Auto-update standen ($(date -u +'%Y-%m-%d %H:%M UTC'))"
+            git push
+          fi
