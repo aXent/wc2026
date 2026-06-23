@@ -6,7 +6,7 @@ on:
   schedule:
     # Elke 10 minuten (tijden in UTC). GitHub kan geplande runs vertragen.
     # Wil je het rustiger? Zet bv. '*/30 * * * *' (elk half uur).
-    - cron: '*/10 * * * *'
+    - cron: '*/30 * * * *'
   workflow_dispatch: {}          # handmatige "Run workflow"-knop
 
 permissions:
@@ -30,7 +30,8 @@ jobs:
 
       - name: index.html genereren
         env:
-          FD_TOKEN: ${{ secrets.FD_TOKEN }}   # zet deze als repo-secret
+          # Gratis testkey '123' werkt; zet een repo-secret TSDB_KEY voor je eigen (premium) key.
+          TSDB_KEY: ${{ secrets.TSDB_KEY || '123' }}
         run: python generate.py
 
       - name: Committen en pushen (alleen bij wijziging)
