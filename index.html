@@ -1,0 +1,852 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WK 2026 — Cheat Sheet</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#15181E;
+    --paper:#FFFFFF;
+    --bg:#E9ECF1;
+    --line:#CDD4DE;
+    --muted:#6B7480;
+    --turf:#00935A;
+    --turf-soft:#E2F2EA;
+    --amber:#E08600;
+    --amber-soft:#FBEFD6;
+    --signal:#FF4F2B;
+    --gold:#F2A50C;
+    --be:#E8112D;        /* België rood */
+    --be-soft:#FCE3E6;
+    --nl:#F36C21;        /* Nederland oranje */
+    --nl-soft:#FDE8D6;
+    --shadow:0 1px 0 rgba(20,24,30,.04), 0 8px 24px -16px rgba(20,24,30,.45);
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0}
+  body{
+    font-family:'Inter',system-ui,sans-serif;
+    color:var(--ink);background:var(--bg);line-height:1.45;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:1200px;margin:0 auto;padding:24px 16px 64px}
+
+  /* Header */
+  header.masthead{
+    background:var(--ink);color:#fff;border-radius:18px;padding:26px 26px 22px;
+    position:relative;overflow:hidden;box-shadow:var(--shadow);
+  }
+  header.masthead::after{
+    content:"";position:absolute;inset:0;
+    background:repeating-linear-gradient(90deg, rgba(255,255,255,.05) 0 2px, transparent 2px 64px);
+    pointer-events:none;
+  }
+  .kicker{font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);font-weight:700;margin:0 0 6px}
+  h1{font-family:'Anton',sans-serif;font-weight:400;font-size:clamp(40px,9vw,76px);line-height:.92;margin:0;letter-spacing:.01em;text-transform:uppercase}
+  h1 .yr{color:var(--signal)}
+  .sub{margin:12px 0 0;color:#C7CDD6;font-size:14px;font-weight:500;display:flex;flex-wrap:wrap;gap:6px 14px}
+  .sub b{color:#fff;font-weight:700}
+  .sub .dot{color:#4A525E}
+  .live{display:inline-flex;align-items:center;gap:6px;background:var(--signal);color:#fff;font-weight:700;font-size:12px;padding:3px 9px;border-radius:999px}
+  .live .pulse{width:7px;height:7px;border-radius:50%;background:#fff;box-shadow:0 0 0 0 rgba(255,255,255,.6);animation:pulse 1.6s infinite}
+  @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(255,255,255,.55)}70%{box-shadow:0 0 0 7px rgba(255,255,255,0)}100%{box-shadow:0 0 0 0 rgba(255,255,255,0)}}
+
+  /* Section titles */
+  .sec-head{display:flex;align-items:baseline;gap:12px;margin:38px 4px 16px}
+  .sec-head .num{font-family:'Anton',sans-serif;font-size:24px;color:var(--signal);line-height:1}
+  .sec-head h2{font-family:'Anton',sans-serif;font-weight:400;text-transform:uppercase;font-size:clamp(20px,4.5vw,30px);margin:0;letter-spacing:.02em}
+  .sec-head .tag{margin-left:auto;font-size:12px;color:var(--muted);font-weight:600;text-align:right}
+
+  /* Groups */
+  .groups{display:grid;gap:12px;grid-template-columns:repeat(auto-fill,minmax(232px,1fr))}
+  .grp{background:var(--paper);border:1px solid var(--line);border-radius:14px;overflow:hidden;box-shadow:var(--shadow)}
+  .grp.has-be{border-color:var(--be);box-shadow:0 0 0 1px var(--be), var(--shadow)}
+  .grp .gh{display:flex;align-items:center;gap:10px;padding:10px 14px;border-bottom:1px solid var(--line);background:linear-gradient(180deg,#fff,#FAFBFC)}
+  .grp .glet{font-family:'Anton',sans-serif;font-size:22px;line-height:1;background:var(--ink);color:#fff;width:34px;height:34px;border-radius:9px;display:grid;place-items:center;flex:none}
+  .grp.has-be .glet{background:var(--be)}
+  .grp .gname{font-weight:800;font-size:13px;letter-spacing:.04em;text-transform:uppercase;color:var(--muted)}
+  .grp .played{margin-left:auto;font-size:10px;font-weight:800;letter-spacing:.04em;color:var(--muted);background:#EEF1F5;padding:3px 7px;border-radius:999px;text-transform:uppercase}
+  .grp ol{list-style:none;margin:0;padding:6px 8px 10px}
+  .grp li{display:flex;align-items:center;gap:8px;padding:5px 6px;border-radius:8px;font-size:14px;font-weight:500}
+  .grp li .pos{font-family:'Anton',sans-serif;font-size:13px;width:20px;height:20px;border-radius:6px;flex:none;display:grid;place-items:center;color:#fff;background:var(--muted)}
+  .grp li.q1 .pos,.grp li.q2 .pos{background:var(--turf)}
+  .grp li.q3 .pos{background:var(--amber)}
+  .grp li.q4 .pos{background:#AEB6C0}
+  .grp li .fl{font-size:18px;line-height:1;flex:none}
+  .grp li .nm{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .grp li .pts{font-weight:800;font-size:13px;flex:none}
+  .grp li .gd{font-size:10.5px;color:var(--muted);font-weight:700;flex:none;width:26px;text-align:right}
+  .grp li.host .nm::after{content:" ·";color:transparent}
+  .grp li.host .hostbadge{font-size:9px;font-weight:800;letter-spacing:.05em;color:var(--turf);background:var(--turf-soft);padding:1px 5px;border-radius:999px;text-transform:uppercase;flex:none}
+  .grp li.be{background:var(--be-soft)}
+  .grp li.be .nm{font-weight:800}
+  .grp li.be .nm::after{content:" ★";color:var(--be);font-size:11px}
+
+  /* uitklapbare resterende wedstrijden */
+  .grp .gh{cursor:pointer;user-select:none}
+  .grp .gh:hover{background:#F2F5F9}
+  .grp .chev{margin-left:8px;flex:none;color:var(--muted);font-size:12px;transition:transform .2s;display:inline-block}
+  .grp.open .chev{transform:rotate(90deg)}
+  .grp .fx{display:none;border-top:1px dashed var(--line);padding:8px 10px 10px;background:#FAFBFC}
+  .grp.open .fx{display:block}
+  .fx-title{font-size:9.5px;font-weight:800;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
+  .fx-row{display:flex;align-items:center;gap:8px;padding:5px 4px;font-size:12px;border-top:1px solid #EEF1F5}
+  .fx-row:first-of-type{border-top:none}
+  .fx-when{font-size:10px;font-weight:700;color:var(--muted);width:52px;flex:none;line-height:1.2}
+  .fx-when .ti{display:block;color:var(--ink);font-size:11px}
+  .fx-match{flex:1;display:flex;align-items:center;gap:5px;min-width:0;font-weight:600}
+  .fx-match .fl{font-size:14px;flex:none}
+  .fx-match .nm{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .fx-vs{color:var(--muted);font-weight:700;font-size:10px;flex:none}
+  .fx-row.be{background:var(--be-soft);border-radius:6px}
+  .fx-row.nl{background:var(--nl-soft);border-radius:6px}
+  .fx-row.pending{opacity:.9}
+  .fx-tag{font-size:8px;font-weight:800;color:#fff;background:var(--amber);border-radius:999px;padding:1px 6px;flex:none;text-transform:uppercase;letter-spacing:.03em}
+  .fx-score{font-family:'Anton',sans-serif;font-size:12px;background:var(--ink);color:#fff;border-radius:5px;padding:1px 7px;flex:none;letter-spacing:.02em}
+  .fx-row.done .nm{color:#3A424E}
+  .fx-row.done.be .fx-score{background:var(--be)}
+  .fx-row.done.nl .fx-score{background:var(--nl)}
+
+  /* Format strip */
+  .format{margin-top:14px;background:var(--ink);color:#fff;border-radius:14px;padding:14px 18px;display:flex;flex-wrap:wrap;align-items:center;gap:10px 22px;box-shadow:var(--shadow)}
+  .format .big{font-family:'Anton',sans-serif;font-size:30px;color:var(--gold);line-height:1}
+  .format .step{font-size:13px;color:#C7CDD6}
+  .format .step b{color:#fff}
+  .format .arr{color:#4A525E;font-weight:800}
+  .keychips{display:flex;gap:8px 14px;flex-wrap:wrap;margin:12px 4px 0;font-size:11.5px;font-weight:700;color:var(--muted)}
+  .keychips span{display:inline-flex;align-items:center;gap:6px}
+  .keychips .sw{width:12px;height:12px;border-radius:4px;display:inline-block}
+
+  /* Bracket */
+  .scroll-hint{font-size:12px;color:var(--muted);margin:0 4px 8px;font-weight:600}
+  .bracket-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;padding:6px 2px 14px;background:var(--paper);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow)}
+  .bracket{display:flex;min-width:1080px;padding:10px 8px}
+  .round{display:flex;flex-direction:column;justify-content:space-around;flex:1 1 0;padding:0 6px;min-width:172px}
+  .round.r-final{flex:0 0 196px;min-width:196px;justify-content:center}
+  .rlabel{font-size:10.5px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);text-align:center;margin-bottom:8px;padding-bottom:6px;border-bottom:2px solid var(--line)}
+  .round.r-final .rlabel{color:var(--signal);border-color:var(--signal)}
+  .matches{display:flex;flex-direction:column;justify-content:space-around;flex:1}
+  .m{position:relative;display:flex;flex-direction:column;justify-content:center;flex:1 1 auto;padding:7px 0}
+  .round:not(.r-first) .m::before{content:"";position:absolute;left:-6px;top:0;height:100%;border-left:2px solid var(--line)}
+  .round:not(.r-first) .m::after{content:"";position:absolute;left:-6px;top:50%;width:6px;border-top:2px solid var(--line)}
+  .round:not(.r-final) .m .box::after{content:"";position:absolute;right:-6px;top:50%;width:6px;border-top:2px solid var(--line)}
+  .box{position:relative;background:#fff;border:1px solid var(--line);border-radius:9px;overflow:hidden;box-shadow:0 1px 2px rgba(20,24,30,.05)}
+  .slot{display:flex;align-items:center;gap:7px;padding:6px 8px;font-size:12.5px;font-weight:600}
+  .slot+.slot{border-top:1px solid #EDF0F4}
+  .slot .code{font-family:'Anton',sans-serif;font-size:13px;color:var(--ink);background:#F1F3F7;border-radius:5px;padding:1px 6px;min-width:30px;text-align:center;flex:none}
+  .slot.win .code{background:var(--turf);color:#fff}
+  .slot.team .code{background:var(--ink);color:#fff}
+  .slot .fl{font-size:15px;flex:none}
+  .slot .lab{color:var(--muted);font-weight:600;font-size:11.5px}
+  .slot.team .lab{color:var(--ink);font-weight:700;font-size:12.5px}
+  .cap{font-size:10px;color:var(--muted);font-weight:700;letter-spacing:.02em;padding:3px 8px 0;display:flex;justify-content:space-between;gap:6px}
+  .cap .city{color:var(--ink)}
+
+  /* België-indicator */
+  .box.be-route{border:2px solid var(--be)}
+  .slot.be-slot{background:var(--be-soft)}
+  .slot.be-slot .lab{color:var(--be);font-weight:800}
+  .be-flag{position:absolute;top:-2px;right:-7px;background:var(--be);color:#fff;font-size:9.5px;font-weight:800;letter-spacing:.03em;padding:2px 7px;border-radius:999px;box-shadow:0 2px 6px -1px rgba(232,17,45,.5);z-index:4;white-space:nowrap}
+
+  /* Nederland-indicator */
+  .box.nl-route{border:2px solid var(--nl)}
+  .slot.nl-slot{background:var(--nl-soft)}
+  .slot.nl-slot .lab{color:#C24E0E;font-weight:800}
+  .nl-flag{position:absolute;top:-2px;left:-7px;background:var(--nl);color:#fff;font-size:9.5px;font-weight:800;letter-spacing:.03em;padding:2px 7px;border-radius:999px;box-shadow:0 2px 6px -1px rgba(243,108,33,.5);z-index:4;white-space:nowrap}
+
+  /* highlighted group letters inside beste-3e combos */
+  .hl-nl{color:var(--nl);font-weight:900}
+  .hl-be{color:var(--be);font-weight:900}
+
+  .box.final-box{border:2px solid var(--signal);box-shadow:0 8px 22px -12px rgba(255,79,43,.55)}
+  .final-tag{font-family:'Anton',sans-serif;text-align:center;color:var(--signal);font-size:14px;letter-spacing:.05em;padding-top:2px}
+  .bronze{margin:10px 8px 0;border:1px dashed var(--line);border-radius:9px;background:#FAFBFC}
+  .bronze .cap .city{color:var(--muted)}
+
+  /* Legend */
+  .legend{margin-top:16px;display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
+  .lg{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:12px 14px;font-size:12.5px;box-shadow:var(--shadow)}
+  .lg.be-card{border-color:var(--be);box-shadow:0 0 0 1px var(--be),var(--shadow)}
+  .lg.nl-card{border-color:var(--nl);box-shadow:0 0 0 1px var(--nl),var(--shadow)}
+  .lg h4{margin:0 0 6px;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+  .lg.be-card h4{color:var(--be)}
+  .lg.nl-card h4{color:#C24E0E}
+  .lg p{margin:4px 0;color:var(--ink)}
+  .lg .code{font-family:'Anton',sans-serif;font-size:12px;background:#F1F3F7;border-radius:5px;padding:1px 6px;margin-right:6px}
+  .lg .code.w{background:var(--turf);color:#fff}
+  .lg .code.b{background:var(--be);color:#fff}
+  .lg ul{margin:6px 0 0;padding-left:0;list-style:none}
+  .lg li{margin:5px 0;display:flex;gap:8px;align-items:baseline}
+  .lg li .rt{font-family:'Anton',sans-serif;font-size:11px;color:#fff;background:var(--be);border-radius:5px;padding:1px 6px;flex:none}
+  .lg li .rt.nl{background:var(--nl)}
+
+  footer{margin-top:30px;text-align:center;color:var(--muted);font-size:11.5px}
+
+  /* tap/hover popover */
+  .slot{cursor:pointer}
+  .slot:hover{box-shadow:inset 0 0 0 2px rgba(21,24,30,.12)}
+  #wc-pop{position:fixed;z-index:60;width:236px;max-width:calc(100vw - 16px);background:#fff;border:1px solid var(--line);border-radius:11px;box-shadow:0 14px 36px -8px rgba(20,24,30,.45);padding:9px 11px;font-size:12px;display:none}
+  #wc-pop.show{display:block}
+  #wc-pop .wc-title{font-weight:800;font-size:10.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin-bottom:7px;display:flex;align-items:center;gap:7px}
+  #wc-pop .wc-title .wc-code{font-family:'Anton',sans-serif;font-size:12px;color:#fff;background:var(--ink);border-radius:5px;padding:1px 6px;letter-spacing:.02em}
+  #wc-pop .wc-title .wc-code.w{background:var(--turf)}
+  .wc-row{display:flex;align-items:center;gap:7px;padding:2.5px 0}
+  .wc-row.hi{font-weight:800}
+  .wc-row.hi .wc-nm{color:var(--ink)}
+  .wc-fl{font-size:15px;flex:none}
+  .wc-gtag{font-family:'Anton',sans-serif;font-size:10px;color:var(--muted);background:#F1F3F7;border-radius:4px;padding:0 5px;flex:none}
+  .wc-nm{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:#3A424E}
+  .wc-pt{font-weight:800;flex:none}
+  .wc-gd{color:var(--muted);font-size:10.5px;width:26px;text-align:right;flex:none}
+  .wc-note{margin-top:7px;font-size:10.5px;line-height:1.4;color:var(--muted);border-top:1px solid #EDF0F4;padding-top:6px}
+  .wc-vs{font-size:12px;color:var(--ink);font-weight:600;line-height:1.5}
+  .wc-vs b{font-weight:800}
+
+  @media print{ .slot{cursor:default} #wc-pop{display:none!important} .grp .fx{display:block!important} .grp .chev{display:none} .grp .gh{cursor:default} }
+
+  @media print{
+    body{background:#fff}
+    .wrap{max-width:none;padding:0}
+    .scroll-hint,.live .pulse{display:none}
+    .bracket-scroll{overflow:visible;border:none;box-shadow:none;padding:0}
+    .bracket{min-width:0;page-break-inside:avoid}
+    header.masthead,.format,.grp,.box,.lg{box-shadow:none}
+    .sec-head{page-break-after:avoid}
+    .groups{page-break-inside:avoid}
+    @page{size:landscape;margin:10mm}
+  }
+  @media (max-width:520px){.slot .lab{font-size:11px}.round{min-width:158px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="masthead">
+    <p class="kicker">Cheat Sheet · Voetbal</p>
+    <h1>WK <span class="yr">2026</span></h1>
+    <p class="sub">
+      <span class="live"><span class="pulse"></span>Stand t/m 23 juni</span>
+      <span><b>VS · Canada · Mexico</b></span><span class="dot">•</span>
+      <span>Groepsfase t/m 26 juni</span><span class="dot">•</span>
+      <span>Tijden in <b>Belgische tijd</b></span>
+    </p>
+  </header>
+
+  <!-- GROEPEN -->
+  <div class="sec-head">
+    <span class="num">01</span>
+    <h2>De groepen — stand nu</h2>
+    <span class="tag">★ = België &nbsp;|&nbsp; <span style="color:var(--turf)">groen</span> top 2 · <span style="color:var(--amber)">oranje</span> 3<sup>e</sup> · grijs 4<sup>e</sup></span>
+  </div>
+  <p class="scroll-hint" style="margin:0 4px 12px">👆 Tik op een groep voor alle wedstrijden — uitslagen én programma.</p>
+
+  <div class="groups">
+
+    <div class="grp"><div class="gh"><span class="glet">A</span><span class="gname">Groep A</span><span class="played">2/3</span></div>
+      <ol>
+        <li class="q1 host"><span class="pos">1</span><span class="fl">🇲🇽</span><span class="nm">Mexico</span><span class="hostbadge">Gastland</span><span class="pts">6</span><span class="gd">+3</span></li>
+        <li class="q2"><span class="pos">2</span><span class="fl">🇰🇷</span><span class="nm">Zuid-Korea</span><span class="pts">3</span><span class="gd">0</span></li>
+        <li class="q3"><span class="pos">3</span><span class="fl">🇨🇿</span><span class="nm">Tsjechië</span><span class="pts">1</span><span class="gd">−1</span></li>
+        <li class="q4"><span class="pos">4</span><span class="fl">🇿🇦</span><span class="nm">Zuid-Afrika</span><span class="pts">1</span><span class="gd">−2</span></li>
+      </ol></div>
+
+    <div class="grp"><div class="gh"><span class="glet">B</span><span class="gname">Groep B</span><span class="played">2/3</span></div>
+      <ol>
+        <li class="q1 host"><span class="pos">1</span><span class="fl">🇨🇦</span><span class="nm">Canada</span><span class="hostbadge">Gastland</span><span class="pts">4</span><span class="gd">+6</span></li>
+        <li class="q2"><span class="pos">2</span><span class="fl">🇨🇭</span><span class="nm">Zwitserland</span><span class="pts">4</span><span class="gd">+3</span></li>
+        <li class="q3"><span class="pos">3</span><span class="fl">🇧🇦</span><span class="nm">Bosnië-Herz.</span><span class="pts">1</span><span class="gd">−3</span></li>
+        <li class="q4"><span class="pos">4</span><span class="fl">🇶🇦</span><span class="nm">Qatar</span><span class="pts">1</span><span class="gd">−6</span></li>
+      </ol></div>
+
+    <div class="grp"><div class="gh"><span class="glet">C</span><span class="gname">Groep C</span><span class="played">2/3</span></div>
+      <ol>
+        <li class="q1"><span class="pos">1</span><span class="fl">🇧🇷</span><span class="nm">Brazilië</span><span class="pts">4</span><span class="gd">+3</span></li>
+        <li class="q2"><span class="pos">2</span><span class="fl">🇲🇦</span><span class="nm">Marokko</span><span class="pts">4</span><span class="gd">+1</span></li>
+        <li class="q3"><span class="pos">3</span><span class="fl">🏴󠁧󠁢󠁳󠁣󠁴󠁿</span><span class="nm">Schotland</span><span class="pts">3</span><span class="gd">0</span></li>
+        <li class="q4"><span class="pos">4</span><span class="fl">🇭🇹</span><span class="nm">Haïti</span><span class="pts">0</span><span class="gd">−4</span></li>
+      </ol></div>
+
+    <div class="grp"><div class="gh"><span class="glet">D</span><span class="gname">Groep D</span><span class="played">2/3</span></div>
+      <ol>
+        <li class="q1 host"><span class="pos">1</span><span class="fl">🇺🇸</span><span class="nm">Ver. Staten</span><span class="hostbadge">Gastland</span><span class="pts">6</span><span class="gd">+5</span></li>
+        <li class="q2"><span class="pos">2</span><span class="fl">🇦🇺</span><span class="nm">Australië</span><span class="pts">3</span><span class="gd">0</span></li>
+        <li class="q3"><span class="pos">3</span><span class="fl">🇵🇾</span><span class="nm">Paraguay</span><span class="pts">3</span><span class="gd">−2</span></li>
+        <li class="q4"><span class="pos">4</span><span class="fl">🇹🇷</span><span class="nm">Turkije</span><span class="pts">0</span><span class="gd">−3</span></li>
+      </ol></div>
+
+    <div class="grp"><div class="gh"><span class="glet">E</span><span class="gname">Groep E</span><span class="played">2/3</span></div>
+      <ol>
+        <li class="q1"><span class="pos">1</span><span class="fl">🇩🇪</span><span class="nm">Duitsland</span><span class="pts">6</span><span class="gd">+7</span></li>
+        <li class="q2"><span class="pos">2</span><span class="fl">🇨🇮</span><span class="nm">Ivoorkust</span><span class="pts">3</span><span class="gd">0</span></li>
+        <li class="q3"><span class="pos">3</span><span class="fl">🇪🇨</span><span class="nm">Ecuador</span><span class="pts">1</span><span class="gd">−1</span></li>
+        <li class="q4"><span class="pos">4</span><span class="fl">🇨🇼</span><span class="nm">Curaçao</span><span class="pts">1</span><span class="gd">−6</span></li>
+      </ol></div>
+
+    <div class="grp"><div class="gh"><span class="glet">F</span><span class="gname">Groep F</span><span class="played">2/3</span></div>
+      <ol>
+        <li class="q1"><span class="pos">1</span><span class="fl">🇳🇱</span><span class="nm">Nederland</span><span class="pts">4</span><span class="gd">+4</span></li>
+        <li class="q2"><span class="pos">2</span><span class="fl">🇯🇵</span><span class="nm">Japan</span><span class="pts">4</span><span class="gd">+4</span></li>
+        <li class="q3"><span class="pos">3</span><span class="fl">🇸🇪</span><span class="nm">Zweden</span><span class="pts">3</span><span class="gd">0</span></li>
+        <li class="q4"><span class="pos">4</span><span class="fl">🇹🇳</span><span class="nm">Tunesië</span><span class="pts">0</span><span class="gd">−8</span></li>
+      </ol></div>
+
+    <div class="grp has-be"><div class="gh"><span class="glet">G</span><span class="gname">Groep G</span><span class="played">2/3</span></div>
+      <ol>
+        <li class="q1"><span class="pos">1</span><span class="fl">🇪🇬</span><span class="nm">Egypte</span><span class="pts">4</span><span class="gd">+2</span></li>
+        <li class="q2"><span class="pos">2</span><span class="fl">🇮🇷</span><span class="nm">Iran</span><span class="pts">2</span><span class="gd">0</span></li>
+        <li class="q3 be"><span class="pos">3</span><span class="fl">🇧🇪</span><span class="nm">België</span><span class="pts">2</span><span class="gd">0</span></li>
+        <li class="q4"><span class="pos">4</span><span class="fl">🇳🇿</span><span class="nm">Nieuw-Zeeland</span><span class="pts">1</span><span class="gd">−2</span></li>
+      </ol></div>
+
+    <div class="grp"><div class="gh"><span class="glet">H</span><span class="gname">Groep H</span><span class="played">2/3</span></div>
+      <ol>
+        <li class="q1"><span class="pos">1</span><span class="fl">🇪🇸</span><span class="nm">Spanje</span><span class="pts">4</span><span class="gd">+4</span></li>
+        <li class="q2"><span class="pos">2</span><span class="fl">🇺🇾</span><span class="nm">Uruguay</span><span class="pts">2</span><span class="gd">0</span></li>
+        <li class="q3"><span class="pos">3</span><span class="fl">🇨🇻</span><span class="nm">Kaapverdië</span><span class="pts">2</span><span class="gd">0</span></li>
+        <li class="q4"><span class="pos">4</span><span class="fl">🇸🇦</span><span class="nm">Saoedi-Arabië</span><span class="pts">1</span><span class="gd">−4</span></li>
+      </ol></div>
+
+    <div class="grp"><div class="gh"><span class="glet">I</span><span class="gname">Groep I</span><span class="played">2/3</span></div>
+      <ol>
+        <li class="q1"><span class="pos">1</span><span class="fl">🇫🇷</span><span class="nm">Frankrijk</span><span class="pts">6</span><span class="gd">+5</span></li>
+        <li class="q2"><span class="pos">2</span><span class="fl">🇳🇴</span><span class="nm">Noorwegen</span><span class="pts">6</span><span class="gd">+4</span></li>
+        <li class="q3"><span class="pos">3</span><span class="fl">🇸🇳</span><span class="nm">Senegal</span><span class="pts">0</span><span class="gd">−3</span></li>
+        <li class="q4"><span class="pos">4</span><span class="fl">🇮🇶</span><span class="nm">Irak</span><span class="pts">0</span><span class="gd">−6</span></li>
+      </ol></div>
+
+    <div class="grp"><div class="gh"><span class="glet">J</span><span class="gname">Groep J</span><span class="played">2/3</span></div>
+      <ol>
+        <li class="q1"><span class="pos">1</span><span class="fl">🇦🇷</span><span class="nm">Argentinië</span><span class="pts">6</span><span class="gd">+5</span></li>
+        <li class="q2"><span class="pos">2</span><span class="fl">🇦🇹</span><span class="nm">Oostenrijk</span><span class="pts">3</span><span class="gd">0</span></li>
+        <li class="q3"><span class="pos">3</span><span class="fl">🇩🇿</span><span class="nm">Algerije</span><span class="pts">3</span><span class="gd">−2</span></li>
+        <li class="q4"><span class="pos">4</span><span class="fl">🇯🇴</span><span class="nm">Jordanië</span><span class="pts">0</span><span class="gd">−3</span></li>
+      </ol></div>
+
+    <div class="grp"><div class="gh"><span class="glet">K</span><span class="gname">Groep K</span><span class="played">1/3</span></div>
+      <ol>
+        <li class="q1"><span class="pos">1</span><span class="fl">🇨🇴</span><span class="nm">Colombia</span><span class="pts">3</span><span class="gd">+2</span></li>
+        <li class="q2"><span class="pos">2</span><span class="fl">🇵🇹</span><span class="nm">Portugal</span><span class="pts">1</span><span class="gd">0</span></li>
+        <li class="q3"><span class="pos">3</span><span class="fl">🇨🇩</span><span class="nm">DR Congo</span><span class="pts">1</span><span class="gd">0</span></li>
+        <li class="q4"><span class="pos">4</span><span class="fl">🇺🇿</span><span class="nm">Oezbekistan</span><span class="pts">0</span><span class="gd">−2</span></li>
+      </ol></div>
+
+    <div class="grp"><div class="gh"><span class="glet">L</span><span class="gname">Groep L</span><span class="played">1/3</span></div>
+      <ol>
+        <li class="q1"><span class="pos">1</span><span class="fl">🏴󠁧󠁢󠁥󠁮󠁧󠁿</span><span class="nm">Engeland</span><span class="pts">3</span><span class="gd">+2</span></li>
+        <li class="q2"><span class="pos">2</span><span class="fl">🇬🇭</span><span class="nm">Ghana</span><span class="pts">3</span><span class="gd">+1</span></li>
+        <li class="q3"><span class="pos">3</span><span class="fl">🇵🇦</span><span class="nm">Panama</span><span class="pts">0</span><span class="gd">−1</span></li>
+        <li class="q4"><span class="pos">4</span><span class="fl">🇭🇷</span><span class="nm">Kroatië</span><span class="pts">0</span><span class="gd">−2</span></li>
+      </ol></div>
+
+  </div>
+
+  <div class="format">
+    <span class="big">32</span>
+    <span class="step"><b>1<sup>e</sup> + 2<sup>e</sup></b> van elke groep (24)</span>
+    <span class="arr">+</span>
+    <span class="step"><b>8 beste nummers 3</b></span>
+    <span class="arr">→</span>
+    <span class="step"><b>Zestiende finales</b> vanaf 28 juni</span>
+  </div>
+
+  <!-- KNOCKOUT -->
+  <div class="sec-head">
+    <span class="num">02</span>
+    <h2>Knock-outfase</h2>
+    <span class="tag">28 juni → 19 juli · de winnaar schuift door naar rechts</span>
+  </div>
+  <div class="keychips">
+    <span><i class="sw" style="background:var(--be)"></i> 🇧🇪 = wedstrijd waar België kan belanden</span>
+    <span><i class="sw" style="background:var(--nl)"></i> 🇳🇱 = wedstrijd waar Nederland kan belanden</span>
+    <span>In een <b>beste 3ᵉ</b>-vakje wijzen de gekleurde letters <span class="hl-be">G</span>/<span class="hl-nl">F</span> de mogelijke bestemming aan</span>
+  </div>
+  <p class="scroll-hint">↔ Veeg horizontaal om het hele schema te zien (of print liggend). &nbsp;👆 Tik op een vakje voor de mogelijke teams.</p>
+
+  <div class="bracket-scroll">
+    <div class="bracket">
+
+      <!-- ROUND OF 32 -->
+      <div class="round r-first">
+        <div class="rlabel">1/16 finale</div>
+        <div class="matches">
+
+          <div class="m"><div class="box">
+            <div class="slot"><span class="code">2A</span><span class="lab">Nr. 2 groep A</span></div>
+            <div class="slot"><span class="code">2B</span><span class="lab">Nr. 2 groep B</span></div>
+          </div><div class="cap"><span>#73 · zo 28/6 21:00</span><span class="city">Los Angeles</span></div></div>
+
+          <div class="m"><span class="nl-flag">🇳🇱 als winnaar F</span><div class="box nl-route">
+            <div class="slot win nl-slot"><span class="code">1F</span><span class="lab">Winnaar groep F</span></div>
+            <div class="slot"><span class="code">2C</span><span class="lab">Nr. 2 groep C</span></div>
+          </div><div class="cap"><span>#75 · di 30/6 03:00</span><span class="city">Monterrey</span></div></div>
+
+          <div class="m"><div class="box">
+            <div class="slot win"><span class="code">1E</span><span class="lab">Winnaar groep E</span></div>
+            <div class="slot"><span class="code">3</span><span class="lab">Beste 3<sup>e</sup> · A/B/C/D/<span class="hl-nl">F</span></span></div>
+          </div><div class="cap"><span>#74 · ma 29/6 22:30</span><span class="city">Boston</span></div></div>
+
+          <div class="m"><div class="box">
+            <div class="slot win"><span class="code">1I</span><span class="lab">Winnaar groep I</span></div>
+            <div class="slot"><span class="code">3</span><span class="lab">Beste 3<sup>e</sup> · C/D/<span class="hl-nl">F</span>/<span class="hl-be">G</span>/H</span></div>
+          </div><div class="cap"><span>#77 · di 30/6 23:00</span><span class="city">New York/NJ</span></div></div>
+
+          <div class="m"><div class="box">
+            <div class="slot"><span class="code">2K</span><span class="lab">Nr. 2 groep K</span></div>
+            <div class="slot"><span class="code">2L</span><span class="lab">Nr. 2 groep L</span></div>
+          </div><div class="cap"><span>#83 · vr 03/7 01:00</span><span class="city">Toronto</span></div></div>
+
+          <div class="m"><div class="box">
+            <div class="slot win"><span class="code">1H</span><span class="lab">Winnaar groep H</span></div>
+            <div class="slot"><span class="code">2J</span><span class="lab">Nr. 2 groep J</span></div>
+          </div><div class="cap"><span>#84 · do 02/7 21:00</span><span class="city">Los Angeles</span></div></div>
+
+          <div class="m"><div class="box">
+            <div class="slot team"><span class="code">1D</span><span class="fl">🇺🇸</span><span class="lab">Ver. Staten</span></div>
+            <div class="slot"><span class="code">3</span><span class="lab">Beste 3<sup>e</sup> · B/E/<span class="hl-nl">F</span>/I/J</span></div>
+          </div><div class="cap"><span>#81 · do 02/7 02:00</span><span class="city">San Francisco</span></div></div>
+
+          <div class="m"><span class="be-flag">🇧🇪 als winnaar G</span><div class="box be-route">
+            <div class="slot win be-slot"><span class="code">1G</span><span class="lab">Winnaar groep G</span></div>
+            <div class="slot"><span class="code">3</span><span class="lab">Beste 3<sup>e</sup> · A/E/H/I/J</span></div>
+          </div><div class="cap"><span>#82 · wo 01/7 22:00</span><span class="city">Seattle</span></div></div>
+
+          <div class="m"><span class="nl-flag">🇳🇱 als nr. 2 F</span><div class="box nl-route">
+            <div class="slot win"><span class="code">1C</span><span class="lab">Winnaar groep C</span></div>
+            <div class="slot nl-slot"><span class="code">2F</span><span class="lab">Nr. 2 groep F</span></div>
+          </div><div class="cap"><span>#76 · ma 29/6 19:00</span><span class="city">Houston</span></div></div>
+
+          <div class="m"><div class="box">
+            <div class="slot"><span class="code">2E</span><span class="lab">Nr. 2 groep E</span></div>
+            <div class="slot"><span class="code">2I</span><span class="lab">Nr. 2 groep I</span></div>
+          </div><div class="cap"><span>#78 · di 30/6 19:00</span><span class="city">Dallas</span></div></div>
+
+          <div class="m"><div class="box">
+            <div class="slot team"><span class="code">1A</span><span class="fl">🇲🇽</span><span class="lab">Mexico</span></div>
+            <div class="slot"><span class="code">3</span><span class="lab">Beste 3<sup>e</sup> · C/E/<span class="hl-nl">F</span>/H/I</span></div>
+          </div><div class="cap"><span>#79 · wo 01/7 03:00</span><span class="city">Mexico-Stad</span></div></div>
+
+          <div class="m"><div class="box">
+            <div class="slot win"><span class="code">1L</span><span class="lab">Winnaar groep L</span></div>
+            <div class="slot"><span class="code">3</span><span class="lab">Beste 3<sup>e</sup> · E/H/I/J/K</span></div>
+          </div><div class="cap"><span>#80 · wo 01/7 18:00</span><span class="city">Atlanta</span></div></div>
+
+          <div class="m"><div class="box">
+            <div class="slot win"><span class="code">1J</span><span class="lab">Winnaar groep J</span></div>
+            <div class="slot"><span class="code">2H</span><span class="lab">Nr. 2 groep H</span></div>
+          </div><div class="cap"><span>#86 · za 04/7 00:00</span><span class="city">Miami</span></div></div>
+
+          <div class="m"><span class="be-flag">🇧🇪 als nr. 2 G</span><div class="box be-route">
+            <div class="slot"><span class="code">2D</span><span class="lab">Nr. 2 groep D</span></div>
+            <div class="slot be-slot"><span class="code">2G</span><span class="lab">Nr. 2 groep G</span></div>
+          </div><div class="cap"><span>#88 · vr 03/7 20:00</span><span class="city">Dallas</span></div></div>
+
+          <div class="m"><div class="box">
+            <div class="slot win"><span class="code">1B</span><span class="lab">Winnaar groep B</span></div>
+            <div class="slot"><span class="code">3</span><span class="lab">Beste 3<sup>e</sup> · E/<span class="hl-nl">F</span>/<span class="hl-be">G</span>/I/J</span></div>
+          </div><div class="cap"><span>#85 · vr 03/7 05:00</span><span class="city">Vancouver</span></div></div>
+
+          <div class="m"><div class="box">
+            <div class="slot win"><span class="code">1K</span><span class="lab">Winnaar groep K</span></div>
+            <div class="slot"><span class="code">3</span><span class="lab">Beste 3<sup>e</sup> · D/E/I/J/L</span></div>
+          </div><div class="cap"><span>#87 · za 04/7 03:30</span><span class="city">Kansas City</span></div></div>
+
+        </div>
+      </div>
+
+      <!-- ROUND OF 16 -->
+      <div class="round">
+        <div class="rlabel">1/8 finale</div>
+        <div class="matches">
+          <div class="m"><div class="box">
+            <div class="slot win"><span class="code">W73</span><span class="lab">Winnaar #73</span></div>
+            <div class="slot win"><span class="code">W75</span><span class="lab">Winnaar #75</span></div>
+          </div><div class="cap"><span>#90 · za 04/7 19:00</span><span class="city">Houston</span></div></div>
+
+          <div class="m"><div class="box">
+            <div class="slot win"><span class="code">W74</span><span class="lab">Winnaar #74</span></div>
+            <div class="slot win"><span class="code">W77</span><span class="lab">Winnaar #77</span></div>
+          </div><div class="cap"><span>#89 · za 04/7 23:00</span><span class="city">Philadelphia</span></div></div>
+
+          <div class="m"><div class="box">
+            <div class="slot win"><span class="code">W83</span><span class="lab">Winnaar #83</span></div>
+            <div class="slot win"><span class="code">W84</span><span class="lab">Winnaar #84</span></div>
+          </div><div class="cap"><span>#93 · ma 06/7 21:00</span><span class="city">Dallas</span></div></div>
+
+          <div class="m"><div class="box">
+            <div class="slot win"><span class="code">W81</span><span class="lab">Winnaar #81</span></div>
+            <div class="slot win"><span class="code">W82</span><span class="lab">Winnaar #82</span></div>
+          </div><div class="cap"><span>#94 · di 07/7 02:00</span><span class="city">Seattle</span></div></div>
+
+          <div class="m"><div class="box">
+            <div class="slot win"><span class="code">W76</span><span class="lab">Winnaar #76</span></div>
+            <div class="slot win"><span class="code">W78</span><span class="lab">Winnaar #78</span></div>
+          </div><div class="cap"><span>#91 · zo 05/7 22:00</span><span class="city">New York/NJ</span></div></div>
+
+          <div class="m"><div class="box">
+            <div class="slot win"><span class="code">W79</span><span class="lab">Winnaar #79</span></div>
+            <div class="slot win"><span class="code">W80</span><span class="lab">Winnaar #80</span></div>
+          </div><div class="cap"><span>#92 · ma 06/7 02:00</span><span class="city">Mexico-Stad</span></div></div>
+
+          <div class="m"><div class="box">
+            <div class="slot win"><span class="code">W86</span><span class="lab">Winnaar #86</span></div>
+            <div class="slot win"><span class="code">W88</span><span class="lab">Winnaar #88</span></div>
+          </div><div class="cap"><span>#95 · di 07/7 18:00</span><span class="city">Atlanta</span></div></div>
+
+          <div class="m"><div class="box">
+            <div class="slot win"><span class="code">W85</span><span class="lab">Winnaar #85</span></div>
+            <div class="slot win"><span class="code">W87</span><span class="lab">Winnaar #87</span></div>
+          </div><div class="cap"><span>#96 · di 07/7 22:00</span><span class="city">Vancouver</span></div></div>
+        </div>
+      </div>
+
+      <!-- QUARTER -->
+      <div class="round">
+        <div class="rlabel">Kwartfinale</div>
+        <div class="matches">
+          <div class="m"><div class="box">
+            <div class="slot win"><span class="code">W89</span><span class="lab">Winnaar #89</span></div>
+            <div class="slot win"><span class="code">W90</span><span class="lab">Winnaar #90</span></div>
+          </div><div class="cap"><span>#97 · do 09/7 22:00</span><span class="city">Boston</span></div></div>
+
+          <div class="m"><div class="box">
+            <div class="slot win"><span class="code">W93</span><span class="lab">Winnaar #93</span></div>
+            <div class="slot win"><span class="code">W94</span><span class="lab">Winnaar #94</span></div>
+          </div><div class="cap"><span>#98 · vr 10/7 21:00</span><span class="city">Los Angeles</span></div></div>
+
+          <div class="m"><div class="box">
+            <div class="slot win"><span class="code">W91</span><span class="lab">Winnaar #91</span></div>
+            <div class="slot win"><span class="code">W92</span><span class="lab">Winnaar #92</span></div>
+          </div><div class="cap"><span>#99 · za 11/7 23:00</span><span class="city">Miami</span></div></div>
+
+          <div class="m"><div class="box">
+            <div class="slot win"><span class="code">W95</span><span class="lab">Winnaar #95</span></div>
+            <div class="slot win"><span class="code">W96</span><span class="lab">Winnaar #96</span></div>
+          </div><div class="cap"><span>#100 · zo 12/7 03:00</span><span class="city">Kansas City</span></div></div>
+        </div>
+      </div>
+
+      <!-- SEMI -->
+      <div class="round">
+        <div class="rlabel">Halve finale</div>
+        <div class="matches">
+          <div class="m"><div class="box">
+            <div class="slot win"><span class="code">W97</span><span class="lab">Winnaar #97</span></div>
+            <div class="slot win"><span class="code">W98</span><span class="lab">Winnaar #98</span></div>
+          </div><div class="cap"><span>#101 · di 14/7 21:00</span><span class="city">Dallas</span></div></div>
+
+          <div class="m"><div class="box">
+            <div class="slot win"><span class="code">W99</span><span class="lab">Winnaar #99</span></div>
+            <div class="slot win"><span class="code">W100</span><span class="lab">Winnaar #100</span></div>
+          </div><div class="cap"><span>#102 · wo 15/7 21:00</span><span class="city">Atlanta</span></div></div>
+        </div>
+      </div>
+
+      <!-- FINAL -->
+      <div class="round r-final">
+        <div class="rlabel">Finale</div>
+        <div class="matches">
+          <div class="m"><div class="final-tag">🏆</div><div class="box final-box">
+            <div class="slot win"><span class="code">W101</span><span class="lab">Winnaar HF 1</span></div>
+            <div class="slot win"><span class="code">W102</span><span class="lab">Winnaar HF 2</span></div>
+          </div><div class="cap"><span>#104 · zo 19/7 21:00</span><span class="city">New York/NJ</span></div></div>
+
+          <div class="bronze"><div class="cap" style="padding-top:6px"><span>Troostfinale · #103</span><span class="city">za 18/7</span></div>
+            <div class="slot"><span class="code">V101</span><span class="lab">Verliezer HF 1</span></div>
+            <div class="slot"><span class="code">V102</span><span class="lab">Verliezer HF 2</span></div>
+            <div class="cap" style="padding-bottom:6px"><span>za 18/7 23:00</span><span class="city">Miami</span></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- LEGENDE -->
+  <div class="legend">
+    <div class="lg be-card">
+      <h4>🇧🇪 Waar kan België terechtkomen?</h4>
+      <p>Na 2 speeldagen staat België <b>3ᵉ in groep G</b> (2 ptn, twee keer gelijk). Egypte (4) en Iran (2) staan boven. Laatste groepsduel: <b>Nieuw-Zeeland – België, za 27 juni, Vancouver</b>. Alle drie de scenario's kunnen nog:</p>
+      <ul>
+        <li><span class="rt">1G</span> Als groepswinnaar → wedstrijd <b>#82</b>, Seattle (1 juli)</li>
+        <li><span class="rt">2G</span> Als nr. 2 → wedstrijd <b>#88</b>, Dallas (3 juli)</li>
+        <li><span class="rt">3G</span> Als beste 3ᵉ → <b>#77</b> (New York/NJ) of <b>#85</b> (Vancouver)</li>
+      </ul>
+    </div>
+    <div class="lg nl-card">
+      <h4>🇳🇱 Waar kan Nederland terechtkomen?</h4>
+      <p>Na 2 speeldagen staat Nederland <b>1ᵉ in groep F</b> (4 ptn, +4), gelijk met Japan. Laatste groepsduel: <b>Tunesië – Nederland, vr 26 juni, Kansas City</b>. De entree hangt af van de eindpositie:</p>
+      <ul>
+        <li><span class="rt nl">1F</span> Als groepswinnaar → wedstrijd <b>#75</b>, Monterrey (30 juni)</li>
+        <li><span class="rt nl">2F</span> Als nr. 2 → wedstrijd <b>#76</b>, Houston (29 juni)</li>
+        <li><span class="rt nl">3F</span> Als beste 3ᵉ → <b>#74, #77, #79, #81</b> of <b>#85</b> (afhankelijk van combinatie)</li>
+      </ul>
+    </div>
+    <div class="lg">
+      <h4>Hoe lees je de codes</h4>
+      <p><span class="code w">1F</span> winnaar van die groep</p>
+      <p><span class="code">2C</span> nummer 2 van die groep</p>
+      <p><span class="code">3</span> beste nummer 3 uit één van de genoemde groepen</p>
+      <p><span class="code w">W73</span> winnaar van wedstrijd #73</p>
+    </div>
+    <div class="lg">
+      <h4>Nog te spelen · belangrijke data</h4>
+      <p><b>26 juni</b> — laatste groepswedstrijden</p>
+      <p><b>28 juni</b> — start 1/16 finales</p>
+      <p><b>9–12 juli</b> — kwartfinales</p>
+      <p><b>14–15 juli</b> — halve finales</p>
+      <p><b>19 juli</b> — finale (MetLife Stadium, NY/NJ)</p>
+    </div>
+  </div>
+
+  <footer>
+    Standen t/m 23 juni 2026 (bron: FIFA) · groepen A–J speelden 2 duels, K–L pas 1 · alle aftraptijden in Belgische tijd (CEST). Posities zijn nog voorlopig.
+  </footer>
+
+</div>
+<div id="wc-pop" role="dialog" aria-live="polite"></div>
+<script>
+(function(){
+  // Actuele groepsstanden (volgorde = stand t/m 22 juni). [vlag, naam, punten, doelsaldo]
+  var G = {
+    A:{p:2,t:[["🇲🇽","Mexico",6,"+3"],["🇰🇷","Zuid-Korea",3,"0"],["🇨🇿","Tsjechië",1,"−1"],["🇿🇦","Zuid-Afrika",1,"−2"]]},
+    B:{p:2,t:[["🇨🇦","Canada",4,"+6"],["🇨🇭","Zwitserland",4,"+3"],["🇧🇦","Bosnië-Herz.",1,"−3"],["🇶🇦","Qatar",1,"−6"]]},
+    C:{p:2,t:[["🇧🇷","Brazilië",4,"+3"],["🇲🇦","Marokko",4,"+1"],["🏴󠁧󠁢󠁳󠁣󠁴󠁿","Schotland",3,"0"],["🇭🇹","Haïti",0,"−4"]]},
+    D:{p:2,t:[["🇺🇸","Ver. Staten",6,"+5"],["🇦🇺","Australië",3,"0"],["🇵🇾","Paraguay",3,"−2"],["🇹🇷","Turkije",0,"−3"]]},
+    E:{p:2,t:[["🇩🇪","Duitsland",6,"+7"],["🇨🇮","Ivoorkust",3,"0"],["🇪🇨","Ecuador",1,"−1"],["🇨🇼","Curaçao",1,"−6"]]},
+    F:{p:2,t:[["🇳🇱","Nederland",4,"+4"],["🇯🇵","Japan",4,"+4"],["🇸🇪","Zweden",3,"0"],["🇹🇳","Tunesië",0,"−8"]]},
+    G:{p:2,t:[["🇪🇬","Egypte",4,"+2"],["🇮🇷","Iran",2,"0"],["🇧🇪","België",2,"0"],["🇳🇿","Nieuw-Zeeland",1,"−2"]]},
+    H:{p:2,t:[["🇪🇸","Spanje",4,"+4"],["🇺🇾","Uruguay",2,"0"],["🇨🇻","Kaapverdië",2,"0"],["🇸🇦","Saoedi-Arabië",1,"−4"]]},
+    I:{p:2,t:[["🇫🇷","Frankrijk",6,"+5"],["🇳🇴","Noorwegen",6,"+4"],["🇸🇳","Senegal",0,"−3"],["🇮🇶","Irak",0,"−6"]]},
+    J:{p:2,t:[["🇦🇷","Argentinië",6,"+5"],["🇦🇹","Oostenrijk",3,"0"],["🇩🇿","Algerije",3,"−2"],["🇯🇴","Jordanië",0,"−3"]]},
+    K:{p:1,t:[["🇨🇴","Colombia",3,"+2"],["🇵🇹","Portugal",1,"0"],["🇨🇩","DR Congo",1,"0"],["🇺🇿","Oezbekistan",0,"−2"]]},
+    L:{p:1,t:[["🏴󠁧󠁢󠁥󠁮󠁧󠁿","Engeland",3,"+2"],["🇬🇭","Ghana",3,"+1"],["🇵🇦","Panama",0,"−1"],["🇭🇷","Kroatië",0,"−2"]]}
+  };
+  // Welke twee plekken voeden elke knock-outwedstrijd (voor "winnaar #NN")
+  var M = {
+    73:["Nr. 2 groep A","Nr. 2 groep B"], 74:["Winnaar groep E","Beste 3ᵉ (A/B/C/D/F)"],
+    75:["Winnaar groep F","Nr. 2 groep C"], 76:["Winnaar groep C","Nr. 2 groep F"],
+    77:["Winnaar groep I","Beste 3ᵉ (C/D/F/G/H)"], 78:["Nr. 2 groep E","Nr. 2 groep I"],
+    79:["Mexico (winnaar A)","Beste 3ᵉ (C/E/F/H/I)"], 80:["Winnaar groep L","Beste 3ᵉ (E/H/I/J/K)"],
+    81:["Ver. Staten (winnaar D)","Beste 3ᵉ (B/E/F/I/J)"], 82:["Winnaar groep G","Beste 3ᵉ (A/E/H/I/J)"],
+    83:["Nr. 2 groep K","Nr. 2 groep L"], 84:["Winnaar groep H","Nr. 2 groep J"],
+    85:["Winnaar groep B","Beste 3ᵉ (E/F/G/I/J)"], 86:["Winnaar groep J","Nr. 2 groep H"],
+    87:["Winnaar groep K","Beste 3ᵉ (D/E/I/J/L)"], 88:["Nr. 2 groep D","Nr. 2 groep G"],
+    89:["Winnaar #74","Winnaar #77"], 90:["Winnaar #73","Winnaar #75"],
+    91:["Winnaar #76","Winnaar #78"], 92:["Winnaar #79","Winnaar #80"],
+    93:["Winnaar #83","Winnaar #84"], 94:["Winnaar #81","Winnaar #82"],
+    95:["Winnaar #86","Winnaar #88"], 96:["Winnaar #85","Winnaar #87"],
+    97:["Winnaar #89","Winnaar #90"], 98:["Winnaar #93","Winnaar #94"],
+    99:["Winnaar #91","Winnaar #92"], 100:["Winnaar #95","Winnaar #96"],
+    101:["Winnaar #97","Winnaar #98"], 102:["Winnaar #99","Winnaar #100"]
+  };
+
+  function row(t, hi, gtag){
+    return '<div class="wc-row'+(hi?' hi':'')+'">'+
+      '<span class="wc-fl">'+t[0]+'</span>'+
+      (gtag?'<span class="wc-gtag">'+gtag+'</span>':'')+
+      '<span class="wc-nm">'+t[1]+'</span>'+
+      '<span class="wc-pt">'+t[2]+'</span>'+
+      '<span class="wc-gd">'+t[3]+'</span></div>';
+  }
+  function prov(p){ return p<3 ? 'Nog '+(3-p)+' speeldag(en) te gaan — stand voorlopig.' : 'Eindstand groep.'; }
+
+  function content(slot){
+    var codeEl = slot.querySelector('.code');
+    if(!codeEl) return null;
+    var code = codeEl.textContent.trim();
+    var labEl = slot.querySelector('.lab');
+    var lab = labEl ? labEl.textContent : '';
+    var m;
+
+    // 1X of 2X (incl. 1A/1D met bevestigd team)
+    if((m = code.match(/^([12])([A-L])$/))){
+      var pos = +m[1], grp = m[2], g = G[grp];
+      var title = '<span class="wc-code'+(pos===1?' w':'')+'">'+code+'</span> Groep '+grp+' · stand nu';
+      var rows = g.t.map(function(t,i){ return row(t, pos===1 ? i===0 : i===1); }).join('');
+      var who = g.t[pos-1][1];
+      var note = (pos===1?'Nu eerste: ':'Nu tweede: ')+who+'. '+prov(g.p);
+      return '<div class="wc-title">'+title+'</div>'+rows+'<div class="wc-note">'+note+'</div>';
+    }
+    // Beste 3e met combinatie van groepen
+    if(code==='3'){
+      var after = lab.split('·')[1] || lab;
+      var letters = (after.match(/[A-L]/g) || []);
+      var rows2 = letters.map(function(l){ var g=G[l]; return row(g.t[2], l==='F'||l==='G', l); }).join('');
+      return '<div class="wc-title"><span class="wc-code">3ᵉ</span> Beste nummers 3 · kandidaten</div>'+
+        rows2+'<div class="wc-note">Huidige nummers 3 van deze groepen. De 8 beste nummers 3 van het toernooi plaatsen zich.</div>';
+    }
+    // Winnaar van wedstrijd
+    if((m = code.match(/^W(\d+)$/))){
+      var n=+m[1], s=M[n]||[];
+      return '<div class="wc-title"><span class="wc-code w">W'+n+'</span> Winnaar van wedstrijd #'+n+'</div>'+
+        '<div class="wc-vs"><b>'+(s[0]||'?')+'</b><br>tegen<br><b>'+(s[1]||'?')+'</b></div>'+
+        '<div class="wc-note">Tik op het bronvakje in een eerdere ronde voor de teams daarachter.</div>';
+    }
+    // Verliezer halve finale
+    if((m = code.match(/^V(\d+)$/))){
+      var n2=+m[1], s2=M[n2]||[];
+      return '<div class="wc-title"><span class="wc-code">V'+n2+'</span> Verliezer halve finale #'+n2+'</div>'+
+        '<div class="wc-vs"><b>'+(s2[0]||'?')+'</b><br>tegen<br><b>'+(s2[1]||'?')+'</b></div>';
+    }
+    return null;
+  }
+
+  var pop = document.getElementById('wc-pop');
+  var current = null;
+
+  function place(slot){
+    var r = slot.getBoundingClientRect();
+    pop.style.left='0px'; pop.style.top='0px'; // reset for measure
+    var pw = pop.offsetWidth, ph = pop.offsetHeight;
+    var vw = window.innerWidth, vh = window.innerHeight;
+    var left = r.left + r.width/2 - pw/2;
+    left = Math.max(8, Math.min(left, vw - pw - 8));
+    var top = r.bottom + 8;
+    if(top + ph > vh - 8){ top = r.top - ph - 8; }       // flip up
+    if(top < 8){ top = Math.max(8, vh - ph - 8); }
+    pop.style.left = left+'px';
+    pop.style.top = top+'px';
+  }
+  function open(slot){
+    var html = content(slot);
+    if(!html){ close(); return; }
+    pop.innerHTML = html;
+    pop.classList.add('show');
+    place(slot);
+    current = slot;
+  }
+  function close(){ pop.classList.remove('show'); current = null; }
+
+  document.addEventListener('click', function(e){
+    var slot = e.target.closest && e.target.closest('.slot');
+    if(slot){
+      e.stopPropagation();
+      if(current===slot){ close(); } else { open(slot); }
+      return;
+    }
+    if(!e.target.closest || !e.target.closest('#wc-pop')) close();
+  });
+  // desktop: hover toont, maar klik blijft werken
+  if(window.matchMedia && window.matchMedia('(hover:hover) and (pointer:fine)').matches){
+    document.querySelectorAll('.slot').forEach(function(slot){
+      slot.addEventListener('mouseenter', function(){ open(slot); });
+    });
+    document.querySelector('.bracket-scroll').addEventListener('mouseleave', close);
+  }
+  window.addEventListener('resize', close);
+  window.addEventListener('scroll', function(){ if(current) place(current); }, true);
+})();
+</script>
+<script>
+(function(){
+  // Alle groepswedstrijden (Belgische tijd). s = uitslag (gespeeld), anders t = aftraptijd.
+  var FX = {
+    A:[{d:"do 11/6",s:"2–0",h:["🇲🇽","Mexico"],a:["🇿🇦","Zuid-Afrika"]},
+       {d:"vr 12/6",s:"2–1",h:["🇰🇷","Zuid-Korea"],a:["🇨🇿","Tsjechië"]},
+       {d:"do 18/6",s:"1–1",h:["🇨🇿","Tsjechië"],a:["🇿🇦","Zuid-Afrika"]},
+       {d:"vr 19/6",s:"1–0",h:["🇲🇽","Mexico"],a:["🇰🇷","Zuid-Korea"]},
+       {d:"do 25/6",t:"03:00",h:["🇨🇿","Tsjechië"],a:["🇲🇽","Mexico"]},
+       {d:"do 25/6",t:"03:00",h:["🇿🇦","Zuid-Afrika"],a:["🇰🇷","Zuid-Korea"]}],
+    B:[{d:"vr 12/6",s:"1–1",h:["🇨🇦","Canada"],a:["🇧🇦","Bosnië-Herz."]},
+       {d:"za 13/6",s:"1–1",h:["🇶🇦","Qatar"],a:["🇨🇭","Zwitserland"]},
+       {d:"do 18/6",s:"4–1",h:["🇨🇭","Zwitserland"],a:["🇧🇦","Bosnië-Herz."]},
+       {d:"vr 19/6",s:"6–0",h:["🇨🇦","Canada"],a:["🇶🇦","Qatar"]},
+       {d:"wo 24/6",t:"21:00",h:["🇨🇭","Zwitserland"],a:["🇨🇦","Canada"]},
+       {d:"wo 24/6",t:"21:00",h:["🇧🇦","Bosnië-Herz."],a:["🇶🇦","Qatar"]}],
+    C:[{d:"zo 14/6",s:"1–1",h:["🇧🇷","Brazilië"],a:["🇲🇦","Marokko"]},
+       {d:"zo 14/6",s:"0–1",h:["🇭🇹","Haïti"],a:["🏴󠁧󠁢󠁳󠁣󠁴󠁿","Schotland"]},
+       {d:"za 20/6",s:"0–1",h:["🏴󠁧󠁢󠁳󠁣󠁴󠁿","Schotland"],a:["🇲🇦","Marokko"]},
+       {d:"za 20/6",s:"3–0",h:["🇧🇷","Brazilië"],a:["🇭🇹","Haïti"]},
+       {d:"do 25/6",t:"00:00",h:["🏴󠁧󠁢󠁳󠁣󠁴󠁿","Schotland"],a:["🇧🇷","Brazilië"]},
+       {d:"do 25/6",t:"00:00",h:["🇲🇦","Marokko"],a:["🇭🇹","Haïti"]}],
+    D:[{d:"za 13/6",s:"4–1",h:["🇺🇸","Ver. Staten"],a:["🇵🇾","Paraguay"]},
+       {d:"za 13/6",s:"2–0",h:["🇦🇺","Australië"],a:["🇹🇷","Turkije"]},
+       {d:"vr 19/6",s:"0–1",h:["🇹🇷","Turkije"],a:["🇵🇾","Paraguay"]},
+       {d:"vr 19/6",s:"2–0",h:["🇺🇸","Ver. Staten"],a:["🇦🇺","Australië"]},
+       {d:"vr 26/6",t:"04:00",h:["🇹🇷","Turkije"],a:["🇺🇸","Ver. Staten"]},
+       {d:"vr 26/6",t:"04:00",h:["🇵🇾","Paraguay"],a:["🇦🇺","Australië"]}],
+    E:[{d:"zo 14/6",s:"7–1",h:["🇩🇪","Duitsland"],a:["🇨🇼","Curaçao"]},
+       {d:"ma 15/6",s:"1–0",h:["🇨🇮","Ivoorkust"],a:["🇪🇨","Ecuador"]},
+       {d:"za 20/6",s:"2–1",h:["🇩🇪","Duitsland"],a:["🇨🇮","Ivoorkust"]},
+       {d:"zo 21/6",s:"0–0",h:["🇪🇨","Ecuador"],a:["🇨🇼","Curaçao"]},
+       {d:"do 25/6",t:"22:00",h:["🇪🇨","Ecuador"],a:["🇩🇪","Duitsland"]},
+       {d:"do 25/6",t:"22:00",h:["🇨🇼","Curaçao"],a:["🇨🇮","Ivoorkust"]}],
+    F:[{d:"zo 14/6",s:"2–2",nl:true,h:["🇳🇱","Nederland"],a:["🇯🇵","Japan"]},
+       {d:"ma 15/6",s:"5–1",h:["🇸🇪","Zweden"],a:["🇹🇳","Tunesië"]},
+       {d:"za 20/6",s:"0–4",h:["🇹🇳","Tunesië"],a:["🇯🇵","Japan"]},
+       {d:"za 20/6",s:"5–1",nl:true,h:["🇳🇱","Nederland"],a:["🇸🇪","Zweden"]},
+       {d:"vr 26/6",t:"01:00",h:["🇯🇵","Japan"],a:["🇸🇪","Zweden"]},
+       {d:"vr 26/6",t:"01:00",nl:true,h:["🇹🇳","Tunesië"],a:["🇳🇱","Nederland"]}],
+    G:[{d:"ma 15/6",s:"1–1",be:true,h:["🇧🇪","België"],a:["🇪🇬","Egypte"]},
+       {d:"di 16/6",s:"2–2",h:["🇮🇷","Iran"],a:["🇳🇿","Nieuw-Zeeland"]},
+       {d:"zo 21/6",s:"0–0",be:true,h:["🇧🇪","België"],a:["🇮🇷","Iran"]},
+       {d:"ma 22/6",s:"1–3",h:["🇳🇿","Nieuw-Zeeland"],a:["🇪🇬","Egypte"]},
+       {d:"za 27/6",t:"05:00",h:["🇪🇬","Egypte"],a:["🇮🇷","Iran"]},
+       {d:"za 27/6",t:"05:00",be:true,h:["🇳🇿","Nieuw-Zeeland"],a:["🇧🇪","België"]}],
+    H:[{d:"ma 15/6",s:"0–0",h:["🇪🇸","Spanje"],a:["🇨🇻","Kaapverdië"]},
+       {d:"di 16/6",s:"1–1",h:["🇸🇦","Saoedi-Arabië"],a:["🇺🇾","Uruguay"]},
+       {d:"zo 21/6",s:"4–0",h:["🇪🇸","Spanje"],a:["🇸🇦","Saoedi-Arabië"]},
+       {d:"ma 22/6",s:"2–2",h:["🇺🇾","Uruguay"],a:["🇨🇻","Kaapverdië"]},
+       {d:"za 27/6",t:"02:00",h:["🇨🇻","Kaapverdië"],a:["🇸🇦","Saoedi-Arabië"]},
+       {d:"za 27/6",t:"02:00",h:["🇺🇾","Uruguay"],a:["🇪🇸","Spanje"]}],
+    I:[{d:"di 16/6",s:"3–1",h:["🇫🇷","Frankrijk"],a:["🇸🇳","Senegal"]},
+       {d:"wo 17/6",s:"1–4",h:["🇮🇶","Irak"],a:["🇳🇴","Noorwegen"]},
+       {d:"ma 22/6",s:"3–0",h:["🇫🇷","Frankrijk"],a:["🇮🇶","Irak"]},
+       {d:"di 23/6",s:"3–2",h:["🇳🇴","Noorwegen"],a:["🇸🇳","Senegal"]},
+       {d:"vr 26/6",t:"21:00",h:["🇳🇴","Noorwegen"],a:["🇫🇷","Frankrijk"]},
+       {d:"vr 26/6",t:"21:00",h:["🇸🇳","Senegal"],a:["🇮🇶","Irak"]}],
+    J:[{d:"di 16/6",s:"3–1",h:["🇦🇹","Oostenrijk"],a:["🇯🇴","Jordanië"]},
+       {d:"wo 17/6",s:"3–0",h:["🇦🇷","Argentinië"],a:["🇩🇿","Algerije"]},
+       {d:"ma 22/6",s:"2–0",h:["🇦🇷","Argentinië"],a:["🇦🇹","Oostenrijk"]},
+       {d:"di 23/6",s:"1–2",h:["🇯🇴","Jordanië"],a:["🇩🇿","Algerije"]},
+       {d:"zo 28/6",t:"04:00",h:["🇩🇿","Algerije"],a:["🇦🇹","Oostenrijk"]},
+       {d:"zo 28/6",t:"04:00",h:["🇯🇴","Jordanië"],a:["🇦🇷","Argentinië"]}],
+    K:[{d:"wo 17/6",s:"1–1",h:["🇵🇹","Portugal"],a:["🇨🇩","DR Congo"]},
+       {d:"do 18/6",s:"1–3",h:["🇺🇿","Oezbekistan"],a:["🇨🇴","Colombia"]},
+       {d:"di 23/6",t:"19:00",h:["🇵🇹","Portugal"],a:["🇺🇿","Oezbekistan"]},
+       {d:"wo 24/6",t:"04:00",h:["🇨🇴","Colombia"],a:["🇨🇩","DR Congo"]},
+       {d:"zo 28/6",t:"01:30",h:["🇨🇴","Colombia"],a:["🇵🇹","Portugal"]},
+       {d:"zo 28/6",t:"01:30",h:["🇨🇩","DR Congo"],a:["🇺🇿","Oezbekistan"]}],
+    L:[{d:"wo 17/6",s:"4–2",h:["🏴󠁧󠁢󠁥󠁮󠁧󠁿","Engeland"],a:["🇭🇷","Kroatië"]},
+       {d:"do 18/6",s:"1–0",h:["🇬🇭","Ghana"],a:["🇵🇦","Panama"]},
+       {d:"di 23/6",t:"22:00",h:["🏴󠁧󠁢󠁥󠁮󠁧󠁿","Engeland"],a:["🇬🇭","Ghana"]},
+       {d:"wo 24/6",t:"01:00",h:["🇵🇦","Panama"],a:["🇭🇷","Kroatië"]},
+       {d:"za 27/6",t:"23:00",h:["🇵🇦","Panama"],a:["🏴󠁧󠁢󠁥󠁮󠁧󠁿","Engeland"]},
+       {d:"za 27/6",t:"23:00",h:["🇭🇷","Kroatië"],a:["🇬🇭","Ghana"]}]
+  };
+  function team(t){ return '<span class="fl">'+t[0]+'</span><span class="nm">'+t[1]+'</span>'; }
+  document.querySelectorAll('.grp').forEach(function(grp){
+    var glet = grp.querySelector('.glet'); if(!glet) return;
+    var list = FX[glet.textContent.trim()]; if(!list) return;
+    var rows = list.map(function(m){
+      var acc = m.be?' be':(m.nl?' nl':'');
+      var when, mid, extra='';
+      if(m.s){
+        when = '<span class="fx-when">'+m.d+'</span>';
+        mid = '<span class="fx-score">'+m.s+'</span>';
+        return '<div class="fx-row done'+acc+'">'+when+'<span class="fx-match">'+team(m.h)+mid+team(m.a)+'</span></div>';
+      }
+      when = '<span class="fx-when">'+m.d+'<span class="ti">'+m.t+'</span></span>';
+      mid = '<span class="fx-vs">–</span>';
+      if(m.tag) extra = '<span class="fx-tag">'+m.tag+'</span>';
+      return '<div class="fx-row'+(m.tag?' pending':acc)+'">'+when+'<span class="fx-match">'+team(m.h)+mid+team(m.a)+'</span>'+extra+'</div>';
+    }).join('');
+    var done = list.filter(function(m){return m.s;}).length;
+    var panel = document.createElement('div');
+    panel.className = 'fx';
+    panel.innerHTML = '<div class="fx-title">Uitslagen &amp; programma · '+done+'/'+list.length+' gespeeld</div>'+rows;
+    grp.appendChild(panel);
+    var gh = grp.querySelector('.gh');
+    var chev = document.createElement('span');
+    chev.className = 'chev'; chev.textContent = '▸';
+    gh.appendChild(chev);
+    gh.addEventListener('click', function(){ grp.classList.toggle('open'); });
+  });
+})();
+</script>
+</body>
+</html>
