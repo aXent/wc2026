@@ -1,245 +1,244 @@
 #!/usr/bin/env python3
 """
-generate.py — bouwt de WK 2026 cheat sheet (index.html) uit live data.
+generate.py — bouwt de WK 2026 cheat sheet (index.html) uit TheSportsDB-data.
 
-Werking:
-  1. Haalt groepsstanden + wedstrijden op bij football-data.org (gratis tier, key nodig).
-  2. Zet dat om naar de drie dynamische stukken van de pagina:
-        - de 12 groepskaartjes (HTML)
-        - het JS-object met de groepsstanden voor de popovers
-        - het JS-object met alle wedstrijden (uitslagen + programma) voor de accordion
-  3. Vult die in een template.html met placeholders en schrijft index.html weg.
-
-De statische schil (kop, format-strook, knock-outbracket met BE/NL-indicatoren,
-alle CSS en de interactieve JS) staat in template.html en verandert niet — de
-groepsindeling ligt immers vast sinds de loting.
+Aanpak:
+  1. Eén API-call: eventsseason.php?id=4429 (alle WK-wedstrijden + scores + tijden).
+  2. De groepsindeling ligt vast sinds de loting, dus die staat hardcoded (GROUPS).
+     We koppelen elke wedstrijd aan een groep als BEIDE teams in dezelfde groep zitten,
+     en nemen per groep de eerste 6 zulke duels (= de groepsfase; knockout valt af).
+  3. De standen rekenen we zelf uit die duels (3/1/0 punten, doelsaldo) — de tabel-
+     endpoint van TheSportsDB werkt op de gratis tier namelijk alleen voor
+     'featured' competities.
+  4. We renderen de drie dynamische blokken en vullen template.html -> index.html.
 
 Gebruik:
-    export FD_TOKEN=xxxxxxxx          # je football-data.org API-key
-    python generate.py               # schrijft index.html
+    export TSDB_KEY=123          # gratis testkey; of je eigen premium key
+    python generate.py
 
-Afhankelijkheden: alleen de Python-standaardbibliotheek (urllib, zoneinfo).
+Afhankelijkheden: alleen de Python-standaardbibliotheek.
+TheSportsDB gratis tier: 30 requests/minuut. Wij doen er 1 per run.
 """
 
-import json
-import os
-import sys
-import urllib.request
-import urllib.error
+import json, os, sys, urllib.request, urllib.error
 from datetime import datetime
 from zoneinfo import ZoneInfo
 
-# ----------------------------------------------------------------------------- 
+# ----------------------------------------------------------------------------
 # Config
-# -----------------------------------------------------------------------------
-API_BASE   = "https://api.football-data.org/v4"
-COMP_CODE  = "WC"                       # World Cup; verifieer in je football-data.org-account
-TOKEN      = os.environ.get("FD_TOKEN", "")
-TZ         = ZoneInfo("Europe/Brussels")   # Belgische tijd (CEST)
-TEMPLATE   = "template.html"
-OUTPUT     = "index.html"
+# ----------------------------------------------------------------------------
+KEY      = os.environ.get("TSDB_KEY", "123")        # '123' = gratis testkey
+LEAGUE   = "4429"                                    # FIFA World Cup
+SEASONS  = ["2026", "2026-2027"]                     # eerste die data geeft wint
+BASE     = f"https://www.thesportsdb.com/api/v1/json/{KEY}"
+TZ       = ZoneInfo("Europe/Brussels")              # Belgische tijd (CEST)
+TEMPLATE = "template.html"
+OUTPUT   = "index.html"
+WEEKDAYS = ["ma", "di", "wo", "do", "vr", "za", "zo"]
+MONTHS   = ["januari","februari","maart","april","mei","juni",
+            "juli","augustus","september","oktober","november","december"]
 
-WEEKDAYS   = ["ma", "di", "wo", "do", "vr", "za", "zo"]   # ma=0 .. zo=6
-
-# Welke teamcode hoort bij welk land (Nederlandse naam + vlag-emoji).
-# Sleutel = de 3-letter code (tla) die football-data.org teruggeeft.
-# Mocht een team niet gevonden worden, dan logt het script een waarschuwing
-# zodat je de juiste sleutel kunt toevoegen.
+# code -> (Nederlandse naam, vlag, [Engelse namen zoals TheSportsDB ze kan geven])
 TEAMS = {
-    "MEX": ("Mexico", "🇲🇽"),        "RSA": ("Zuid-Afrika", "🇿🇦"),
-    "KOR": ("Zuid-Korea", "🇰🇷"),    "CZE": ("Tsjechië", "🇨🇿"),
-    "CAN": ("Canada", "🇨🇦"),        "SUI": ("Zwitserland", "🇨🇭"),
-    "BIH": ("Bosnië-Herz.", "🇧🇦"),  "QAT": ("Qatar", "🇶🇦"),
-    "BRA": ("Brazilië", "🇧🇷"),      "MAR": ("Marokko", "🇲🇦"),
-    "SCO": ("Schotland", "🏴󠁧󠁢󠁳󠁣󠁴󠁿"),  "HAI": ("Haïti", "🇭🇹"),
-    "USA": ("Ver. Staten", "🇺🇸"),   "AUS": ("Australië", "🇦🇺"),
-    "PAR": ("Paraguay", "🇵🇾"),      "TUR": ("Turkije", "🇹🇷"),
-    "GER": ("Duitsland", "🇩🇪"),     "ECU": ("Ecuador", "🇪🇨"),
-    "CIV": ("Ivoorkust", "🇨🇮"),     "CUW": ("Curaçao", "🇨🇼"),
-    "NED": ("Nederland", "🇳🇱"),     "JPN": ("Japan", "🇯🇵"),
-    "SWE": ("Zweden", "🇸🇪"),        "TUN": ("Tunesië", "🇹🇳"),
-    "BEL": ("België", "🇧🇪"),        "EGY": ("Egypte", "🇪🇬"),
-    "IRN": ("Iran", "🇮🇷"),          "NZL": ("Nieuw-Zeeland", "🇳🇿"),
-    "ESP": ("Spanje", "🇪🇸"),        "URU": ("Uruguay", "🇺🇾"),
-    "CPV": ("Kaapverdië", "🇨🇻"),    "KSA": ("Saoedi-Arabië", "🇸🇦"),
-    "FRA": ("Frankrijk", "🇫🇷"),     "SEN": ("Senegal", "🇸🇳"),
-    "NOR": ("Noorwegen", "🇳🇴"),     "IRQ": ("Irak", "🇮🇶"),
-    "ARG": ("Argentinië", "🇦🇷"),    "AUT": ("Oostenrijk", "🇦🇹"),
-    "ALG": ("Algerije", "🇩🇿"),      "JOR": ("Jordanië", "🇯🇴"),
-    "POR": ("Portugal", "🇵🇹"),      "COL": ("Colombia", "🇨🇴"),
-    "UZB": ("Oezbekistan", "🇺🇿"),   "COD": ("DR Congo", "🇨🇩"),
-    "ENG": ("Engeland", "🏴󠁧󠁢󠁥󠁮󠁧󠁿"),  "CRO": ("Kroatië", "🇭🇷"),
-    "GHA": ("Ghana", "🇬🇭"),         "PAN": ("Panama", "🇵🇦"),
+ "MEX":("Mexico","🇲🇽",["Mexico"]),                 "RSA":("Zuid-Afrika","🇿🇦",["South Africa"]),
+ "KOR":("Zuid-Korea","🇰🇷",["South Korea","Korea Republic"]), "CZE":("Tsjechië","🇨🇿",["Czechia","Czech Republic"]),
+ "CAN":("Canada","🇨🇦",["Canada"]),                 "SUI":("Zwitserland","🇨🇭",["Switzerland"]),
+ "BIH":("Bosnië-Herz.","🇧🇦",["Bosnia and Herzegovina","Bosnia-Herzegovina"]), "QAT":("Qatar","🇶🇦",["Qatar"]),
+ "BRA":("Brazilië","🇧🇷",["Brazil"]),               "MAR":("Marokko","🇲🇦",["Morocco"]),
+ "SCO":("Schotland","🏴󠁧󠁢󠁳󠁣󠁴󠁿",["Scotland"]),         "HAI":("Haïti","🇭🇹",["Haiti"]),
+ "USA":("Ver. Staten","🇺🇸",["United States","USA"]), "AUS":("Australië","🇦🇺",["Australia"]),
+ "PAR":("Paraguay","🇵🇾",["Paraguay"]),             "TUR":("Turkije","🇹🇷",["Turkey","Türkiye","Turkiye"]),
+ "GER":("Duitsland","🇩🇪",["Germany"]),             "ECU":("Ecuador","🇪🇨",["Ecuador"]),
+ "CIV":("Ivoorkust","🇨🇮",["Ivory Coast","Cote d'Ivoire","Côte d'Ivoire"]), "CUW":("Curaçao","🇨🇼",["Curacao","Curaçao"]),
+ "NED":("Nederland","🇳🇱",["Netherlands","Holland"]),"JPN":("Japan","🇯🇵",["Japan"]),
+ "SWE":("Zweden","🇸🇪",["Sweden"]),                 "TUN":("Tunesië","🇹🇳",["Tunisia"]),
+ "BEL":("België","🇧🇪",["Belgium"]),                "EGY":("Egypte","🇪🇬",["Egypt"]),
+ "IRN":("Iran","🇮🇷",["Iran","Iran IR"]),           "NZL":("Nieuw-Zeeland","🇳🇿",["New Zealand"]),
+ "ESP":("Spanje","🇪🇸",["Spain"]),                  "URU":("Uruguay","🇺🇾",["Uruguay"]),
+ "CPV":("Kaapverdië","🇨🇻",["Cape Verde","Cabo Verde"]), "KSA":("Saoedi-Arabië","🇸🇦",["Saudi Arabia"]),
+ "FRA":("Frankrijk","🇫🇷",["France"]),              "SEN":("Senegal","🇸🇳",["Senegal"]),
+ "NOR":("Noorwegen","🇳🇴",["Norway"]),              "IRQ":("Irak","🇮🇶",["Iraq"]),
+ "ARG":("Argentinië","🇦🇷",["Argentina"]),          "AUT":("Oostenrijk","🇦🇹",["Austria"]),
+ "ALG":("Algerije","🇩🇿",["Algeria"]),              "JOR":("Jordanië","🇯🇴",["Jordan"]),
+ "POR":("Portugal","🇵🇹",["Portugal"]),             "COL":("Colombia","🇨🇴",["Colombia"]),
+ "UZB":("Oezbekistan","🇺🇿",["Uzbekistan"]),        "COD":("DR Congo","🇨🇩",["DR Congo","Congo DR","Democratic Republic of Congo"]),
+ "ENG":("Engeland","🏴󠁧󠁢󠁥󠁮󠁧󠁿",["England"]),           "CRO":("Kroatië","🇭🇷",["Croatia"]),
+ "GHA":("Ghana","🇬🇭",["Ghana"]),                   "PAN":("Panama","🇵🇦",["Panama"]),
 }
-NL_MONTHS = None  # niet nodig; we gebruiken dd/m
+# Loting (vast). Volgorde binnen een groep maakt niet uit; standen worden berekend.
+GROUPS = {
+ "A":["MEX","RSA","KOR","CZE"], "B":["CAN","SUI","BIH","QAT"], "C":["BRA","MAR","SCO","HAI"],
+ "D":["USA","AUS","PAR","TUR"], "E":["GER","CIV","ECU","CUW"], "F":["NED","JPN","SWE","TUN"],
+ "G":["BEL","EGY","IRN","NZL"], "H":["ESP","URU","CPV","KSA"], "I":["FRA","SEN","NOR","IRQ"],
+ "J":["ARG","AUT","ALG","JOR"], "K":["POR","COL","UZB","COD"], "L":["ENG","CRO","GHA","PAN"],
+}
 
-# -----------------------------------------------------------------------------
-# Data ophalen
-# -----------------------------------------------------------------------------
-def api(path):
-    """Eenvoudige GET naar football-data.org met de auth-header."""
-    req = urllib.request.Request(f"{API_BASE}{path}",
-                                 headers={"X-Auth-Token": TOKEN})
-    try:
-        with urllib.request.urlopen(req, timeout=30) as r:
-            return json.load(r)
-    except urllib.error.HTTPError as e:
-        sys.exit(f"API-fout {e.code} op {path}: {e.read().decode(errors='ignore')}")
+# Snelle opzoektabel: genormaliseerde Engelse naam -> code
+NAME2CODE = {}
+for code, (_, _, aliases) in TEAMS.items():
+    for a in aliases:
+        NAME2CODE[a.strip().lower()] = code
 
-def team_meta(t):
-    """Map een team-object van de API naar (naam, vlag, code)."""
-    code = (t.get("tla") or "").upper()
-    if code in TEAMS:
-        nl, flag = TEAMS[code]
-        return nl, flag, code
-    # fallback: probeer op naam, anders waarschuwen
-    print(f"WAARSCHUWING: onbekend team {t.get('name')} (tla={code}) — voeg toe aan TEAMS",
-          file=sys.stderr)
-    return t.get("name", "?"), "🏳️", code
+def code_of(name):
+    return NAME2CODE.get((name or "").strip().lower())
 
+def group_of(code):
+    for letter, codes in GROUPS.items():
+        if code in codes:
+            return letter
+    return None
+
+# ----------------------------------------------------------------------------
+# API
+# ----------------------------------------------------------------------------
+def fetch_events():
+    """Probeer de seizoenen tot er events zijn; geef de eventslijst terug."""
+    for season in SEASONS:
+        url = f"{BASE}/eventsseason.php?id={LEAGUE}&s={season}"
+        try:
+            with urllib.request.urlopen(url, timeout=30) as r:
+                data = json.load(r)
+        except urllib.error.HTTPError as e:
+            sys.exit(f"API-fout {e.code} bij {url}")
+        events = data.get("events") or []
+        if events:
+            print(f"Seizoen '{season}': {len(events)} events opgehaald.")
+            return events
+    sys.exit("Geen events gevonden — controleer LEAGUE-id en SEASONS.")
+
+# ----------------------------------------------------------------------------
+# Helpers
+# ----------------------------------------------------------------------------
 def gd_str(n):
-    """Doelsaldo met echt minteken, '+'-prefix bij positief."""
-    if n > 0:  return f"+{n}"
-    if n < 0:  return f"−{abs(n)}"      # U+2212, past bij de styling
-    return "0"
+    return f"+{n}" if n > 0 else (f"−{abs(n)}" if n < 0 else "0")   # − = U+2212
 
-def when_label(utc_iso):
-    """ISO-UTC -> ('do 25/6', '03:00') in Belgische tijd."""
-    dt = datetime.fromisoformat(utc_iso.replace("Z", "+00:00")).astimezone(TZ)
-    return f"{WEEKDAYS[dt.weekday()]} {dt.day}/{dt.month}", dt.strftime("%H:%M")
+def when_label(ev):
+    """('do 25/6', '03:00') in Belgische tijd uit strTimestamp (UTC)."""
+    ts = ev.get("strTimestamp")
+    if ts:
+        dt = datetime.fromisoformat(ts.replace("Z", "")).replace(tzinfo=ZoneInfo("UTC"))
+    else:  # fallback: dateEvent + strTime
+        t = (ev.get("strTime") or "00:00:00")[:8]
+        dt = datetime.fromisoformat(f'{ev["dateEvent"]}T{t}').replace(tzinfo=ZoneInfo("UTC"))
+    dt = dt.astimezone(TZ)
+    return f"{WEEKDAYS[dt.weekday()]} {dt.day}/{dt.month}", dt.strftime("%H:%M"), dt
 
-# -----------------------------------------------------------------------------
-# Data verwerken tot een handige structuur
-# -----------------------------------------------------------------------------
-def build_groups():
-    standings = api(f"/competitions/{COMP_CODE}/standings")
-    matches   = api(f"/competitions/{COMP_CODE}/matches?stage=GROUP_STAGE")
+def played(ev):
+    return ev.get("intHomeScore") not in (None, "") and ev.get("intAwayScore") not in (None, "")
 
-    groups = {}   # "A" -> {"played":n, "teams":[...], "matches":[...]}
-
-    # 1) standen
-    for s in standings.get("standings", []):
-        if s.get("type") != "TOTAL" or not s.get("group"):
+# ----------------------------------------------------------------------------
+# Data verwerken
+# ----------------------------------------------------------------------------
+def build_groups(events):
+    # 1) per groep alle eigen duels verzamelen (beide teams in dezelfde groep)
+    raw = {g: [] for g in GROUPS}
+    for ev in events:
+        hc, ac = code_of(ev.get("strHomeTeam")), code_of(ev.get("strAwayTeam"))
+        if not hc or not ac:
+            if hc != ac:  # alleen waarschuwen als het een WK-team lijkt
+                miss = ev.get("strHomeTeam") if not hc else ev.get("strAwayTeam")
+                if miss:
+                    print(f"WAARSCHUWING: onbekend team '{miss}' — vul aan in TEAMS", file=sys.stderr)
             continue
-        letter = s["group"].split("_")[-1]          # "GROUP_A" -> "A"
-        teams, played = [], 0
-        for row in s["table"]:
-            nl, flag, code = team_meta(row["team"])
-            played = max(played, row["playedGames"])
-            teams.append({
-                "nl": nl, "flag": flag, "code": code,
-                "pts": row["points"], "gd": row["goalDifference"],
-            })
-        groups[letter] = {"played": played, "teams": teams, "matches": []}
+        g = group_of(hc)
+        if g and group_of(ac) == g:                       # zelfde groep = groepsduel
+            d, t, dt = when_label(ev)
+            raw[g].append({"dt": dt, "d": d, "t": t, "hc": hc, "ac": ac,
+                           "hs": ev.get("intHomeScore"), "as": ev.get("intAwayScore"),
+                           "fin": played(ev)})
 
-    # 2) wedstrijden (chronologisch per groep)
-    for m in sorted(matches.get("matches", []), key=lambda x: x["utcDate"]):
-        if not m.get("group"):
-            continue
-        letter = m["group"].split("_")[-1]
-        if letter not in groups:
-            continue
-        hnl, hfl, hc = team_meta(m["homeTeam"])
-        anl, afl, ac = team_meta(m["awayTeam"])
-        d, t = when_label(m["utcDate"])
-        ft = m.get("score", {}).get("fullTime", {})
-        played = m.get("status") == "FINISHED" and ft.get("home") is not None
-        groups[letter]["matches"].append({
-            "d": d, "t": t,
-            "score": f'{ft["home"]}–{ft["away"]}' if played else None,
-            "h": [hfl, hnl], "a": [afl, anl],
-            "be": "BEL" in (hc, ac), "nl": "NED" in (hc, ac),
-        })
+    groups = {}
+    for g, codes in GROUPS.items():
+        ms = sorted(raw[g], key=lambda m: m["dt"])[:6]     # eerste 6 = groepsfase
+        # 2) standen berekenen
+        tbl = {c: {"pts": 0, "gf": 0, "ga": 0, "pl": 0} for c in codes}
+        for m in ms:
+            if not m["fin"]:
+                continue
+            hs, as_ = int(m["hs"]), int(m["as"])
+            for c, gf, ga in ((m["hc"], hs, as_), (m["ac"], as_, hs)):
+                tbl[c]["pl"] += 1; tbl[c]["gf"] += gf; tbl[c]["ga"] += ga
+                tbl[c]["pts"] += 3 if gf > ga else (1 if gf == ga else 0)
+        order = sorted(codes, key=lambda c: (tbl[c]["pts"],
+                       tbl[c]["gf"] - tbl[c]["ga"], tbl[c]["gf"]), reverse=True)
+        teams = [{"flag": TEAMS[c][1], "nl": TEAMS[c][0], "code": c,
+                  "pts": tbl[c]["pts"], "gd": tbl[c]["gf"] - tbl[c]["ga"]} for c in order]
+        # 3) wedstrijdregels voor de accordion
+        matches = [{
+            "d": m["d"], "t": m["t"],
+            "score": f'{int(m["hs"])}–{int(m["as"])}' if m["fin"] else None,
+            "h": [TEAMS[m["hc"]][1], TEAMS[m["hc"]][0]],
+            "a": [TEAMS[m["ac"]][1], TEAMS[m["ac"]][0]],
+            "be": "BEL" in (m["hc"], m["ac"]), "nl": "NED" in (m["hc"], m["ac"]),
+        } for m in ms]
+        groups[g] = {"played": max((t["pl"] for t in tbl.values()), default=0),
+                     "teams": teams, "matches": matches}
     return groups
 
-# -----------------------------------------------------------------------------
-# Renderen
-# -----------------------------------------------------------------------------
+# ----------------------------------------------------------------------------
+# Renderen (identiek format aan de placeholders in template.html)
+# ----------------------------------------------------------------------------
 def render_group_cards(groups):
     out = []
-    for letter in sorted(groups):
-        g = groups[letter]
-        has_be = any(t["code"] == "BEL" for t in g["teams"])
-        rows = []
-        for i, t in enumerate(g["teams"], start=1):
-            cls = f"q{i}" + (" be" if t["code"] == "BEL" else "")
-            rows.append(
-                f'<li class="{cls}"><span class="pos">{i}</span>'
-                f'<span class="fl">{t["flag"]}</span>'
-                f'<span class="nm">{t["nl"]}</span>'
-                f'<span class="pts">{t["pts"]}</span>'
-                f'<span class="gd">{gd_str(t["gd"])}</span></li>'
-            )
+    for g in sorted(groups):
+        gr = groups[g]
+        has_be = any(t["code"] == "BEL" for t in gr["teams"])
+        rows = "".join(
+            f'<li class="q{i}{" be" if t["code"]=="BEL" else ""}">'
+            f'<span class="pos">{i}</span><span class="fl">{t["flag"]}</span>'
+            f'<span class="nm">{t["nl"]}</span><span class="pts">{t["pts"]}</span>'
+            f'<span class="gd">{gd_str(t["gd"])}</span></li>'
+            for i, t in enumerate(gr["teams"], 1))
         out.append(
-            f'<div class="grp{" has-be" if has_be else ""}">'
-            f'<div class="gh"><span class="glet">{letter}</span>'
-            f'<span class="gname">Groep {letter}</span>'
-            f'<span class="played">{g["played"]}/3</span></div>'
-            f'<ol>{"".join(rows)}</ol></div>'
-        )
+            f'<div class="grp{" has-be" if has_be else ""}"><div class="gh">'
+            f'<span class="glet">{g}</span><span class="gname">Groep {g}</span>'
+            f'<span class="played">{gr["played"]}/3</span></div><ol>{rows}</ol></div>')
     return "\n".join(out)
 
 def render_pop_data(groups):
-    """JS-object voor de popovers: A:{p:..,t:[[flag,naam,ptn,gd],...]}, ..."""
     parts = []
-    for letter in sorted(groups):
-        g = groups[letter]
-        teams = ",".join(
-            f'["{t["flag"]}","{t["nl"]}",{t["pts"]},"{gd_str(t["gd"])}"]'
-            for t in g["teams"]
-        )
-        parts.append(f'{letter}:{{p:{g["played"]},t:[{teams}]}}')
+    for g in sorted(groups):
+        gr = groups[g]
+        t = ",".join(f'["{x["flag"]}","{x["nl"]}",{x["pts"]},"{gd_str(x["gd"])}"]'
+                     for x in gr["teams"])
+        parts.append(f'{g}:{{p:{gr["played"]},t:[{t}]}}')
     return "{" + ",".join(parts) + "}"
 
 def render_fx_data(groups):
-    """JS-object voor de accordion: A:[{d,t|score,h,a,be,nl}, ...], ..."""
     parts = []
-    for letter in sorted(groups):
+    for g in sorted(groups):
         ms = []
-        for m in groups[letter]["matches"]:
-            fields = [f'd:"{m["d"]}"']
-            if m["score"]:
-                fields.append(f's:"{m["score"]}"')
-            else:
-                fields.append(f't:"{m["t"]}"')
-            if m["be"]: fields.append("be:true")
-            if m["nl"]: fields.append("nl:true")
-            fields.append(f'h:["{m["h"][0]}","{m["h"][1]}"]')
-            fields.append(f'a:["{m["a"][0]}","{m["a"][1]}"]')
-            ms.append("{" + ",".join(fields) + "}")
-        parts.append(f'{letter}:[{",".join(ms)}]')
+        for m in groups[g]["matches"]:
+            f = [f'd:"{m["d"]}"']
+            f.append(f's:"{m["score"]}"' if m["score"] else f't:"{m["t"]}"')
+            if m["be"]: f.append("be:true")
+            if m["nl"]: f.append("nl:true")
+            f.append(f'h:["{m["h"][0]}","{m["h"][1]}"]')
+            f.append(f'a:["{m["a"][0]}","{m["a"][1]}"]')
+            ms.append("{" + ",".join(f) + "}")
+        parts.append(f'{g}:[{",".join(ms)}]')
     return "{" + ",".join(parts) + "}"
 
 def date_label():
-    now = datetime.now(TZ)
-    return f"Stand t/m {now.day} {['januari','februari','maart','april','mei','juni','juli','augustus','september','oktober','november','december'][now.month-1]}"
+    n = datetime.now(TZ)
+    return f"Stand t/m {n.day} {MONTHS[n.month-1]}"
 
-# -----------------------------------------------------------------------------
+# ----------------------------------------------------------------------------
 # Main
-# -----------------------------------------------------------------------------
+# ----------------------------------------------------------------------------
 def main():
-    if not TOKEN:
-        sys.exit("Zet eerst FD_TOKEN (je football-data.org API-key) als environment-variabele.")
     if not os.path.exists(TEMPLATE):
-        sys.exit(f"{TEMPLATE} niet gevonden. Maak die van de huidige index.html "
-                 f"door de dynamische stukken te vervangen door de placeholders "
-                 f"{{{{GROUPS}}}}, {{{{POP_DATA}}}}, {{{{FX_DATA}}}}, {{{{DATE}}}}.")
-
-    groups = build_groups()
-    if len(groups) != 12:
-        print(f"LET OP: {len(groups)} groepen gevonden i.p.v. 12 — check de competitiecode.",
-              file=sys.stderr)
-
+        sys.exit(f"{TEMPLATE} ontbreekt (de pagina met placeholders "
+                 f"{{{{GROUPS}}}}, {{{{POP_DATA}}}}, {{{{FX_DATA}}}}, {{{{DATE}}}}).")
+    groups = build_groups(fetch_events())
     html = open(TEMPLATE, encoding="utf-8").read()
     html = html.replace("{{DATE}}",     date_label())
     html = html.replace("{{GROUPS}}",   render_group_cards(groups))
     html = html.replace("{{POP_DATA}}", render_pop_data(groups))
     html = html.replace("{{FX_DATA}}",  render_fx_data(groups))
-
-    with open(OUTPUT, "w", encoding="utf-8") as f:
-        f.write(html)
-    print(f"{OUTPUT} geschreven ({len(groups)} groepen, "
-          f"{sum(len(g['matches']) for g in groups.values())} wedstrijden).")
+    open(OUTPUT, "w", encoding="utf-8").write(html)
+    tot = sum(len(g["matches"]) for g in groups.values())
+    print(f"{OUTPUT} geschreven — {len(groups)} groepen, {tot} groepsduels.")
 
 if __name__ == "__main__":
     main()
