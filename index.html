@@ -230,6 +230,78 @@
     @page{size:landscape;margin:10mm}
   }
   @media (max-width:520px){.slot .lab{font-size:11px}.round{min-width:158px}}
+
+  /* ===== Speelkalender (variant B) — alle regels gescoped onder #kal ===== */
+  #kal{margin-top:8px}
+  #kal .nextup{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:11px 14px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;box-shadow:var(--shadow);margin:0 0 14px}
+  #kal .nextup .nu-lab{font-size:10px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--signal);display:flex;align-items:center;gap:6px}
+  #kal .kp{width:7px;height:7px;border-radius:50%;background:var(--signal);display:inline-block;animation:kalpulse 1.6s infinite}
+  @keyframes kalpulse{0%{box-shadow:0 0 0 0 rgba(255,79,43,.5)}70%{box-shadow:0 0 0 8px rgba(255,79,43,0)}100%{box-shadow:0 0 0 0 rgba(255,79,43,0)}}
+  #kal .nextup .nu-match{display:flex;align-items:center;gap:8px;font-weight:700;font-size:15px;min-width:0}
+  #kal .nextup .nu-match .fl{font-size:19px;flex:none}
+  #kal .nextup .nu-when{margin-left:auto;font-size:12px;font-weight:700;color:var(--muted);white-space:nowrap}
+  #kal .nextup .nu-when b{color:var(--ink)}
+  #kal .nextup .today-pill{font-size:11px;font-weight:800;background:var(--signal);color:#fff;padding:4px 10px;border-radius:999px}
+  #kal .chips{display:flex;gap:8px;flex-wrap:wrap;margin:0 4px 12px}
+  #kal .chip{font-size:12.5px;font-weight:700;border:1px solid var(--line);background:var(--paper);color:var(--ink);padding:6px 12px;border-radius:999px;cursor:pointer;display:inline-flex;align-items:center;gap:6px;user-select:none;transition:.15s}
+  #kal .chip:hover{border-color:var(--muted)}
+  #kal .chip.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+  #kal .chip.on.be{background:var(--be);border-color:var(--be)}
+  #kal .chip.on.nl{background:var(--nl);border-color:var(--nl)}
+  #kal .chip.go{border-color:var(--signal);color:var(--signal);margin-left:auto}
+  #kal .chip.go:hover{background:var(--signal);color:#fff}
+  #kal .day{margin-bottom:4px}
+  #kal .dhead{display:flex;align-items:center;gap:10px;padding:9px 6px 8px}
+  #kal .dhead .bar{width:4px;height:20px;border-radius:3px;background:var(--ink);flex:none}
+  #kal .dhead .dt{font-family:'Anton',sans-serif;font-size:18px;letter-spacing:.02em}
+  #kal .dhead .cnt{font-size:11px;color:var(--muted);font-weight:700}
+  #kal .dhead.today .bar{background:var(--signal)}
+  #kal .dhead.today .dt{color:var(--signal)}
+  #kal .dhead.today .live{display:inline-flex;align-items:center;gap:5px;background:var(--signal);color:#fff;font-weight:800;font-size:10px;padding:3px 8px;border-radius:999px;text-transform:uppercase;letter-spacing:.04em}
+  #kal .dhead.today .live .kp{width:5px;height:5px;background:#fff}
+  #kal .dhead.past .dt{color:var(--muted)}
+  #kal .dhead .ph{margin-left:auto;font-size:9.5px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:#fff;background:var(--ink);border-radius:999px;padding:3px 8px}
+  #kal .mrow{display:flex;align-items:center;gap:11px;padding:9px 11px;border-radius:11px;background:var(--paper);border:1px solid var(--line);box-shadow:var(--shadow)}
+  #kal .mrow+.mrow{margin-top:7px}
+  #kal .mrow.be{background:var(--be-soft);border-color:#F1C4CB}
+  #kal .mrow.nl{background:var(--nl-soft);border-color:#F4CEAF}
+  #kal .mrow .when{width:52px;flex:none;text-align:center}
+  #kal .mrow .when .ti{font-weight:800;font-size:14px}
+  #kal .mrow .sc{font-family:'Anton',sans-serif;font-size:15px;background:var(--ink);color:#fff;border-radius:6px;padding:2px 9px;display:inline-block;letter-spacing:.03em}
+  #kal .mrow.be .sc{background:var(--be)} #kal .mrow.nl .sc{background:var(--nl)}
+  #kal .teams{flex:1;min-width:0;display:flex;flex-direction:column;gap:3px}
+  #kal .tm{display:flex;align-items:center;gap:8px;min-width:0}
+  #kal .tm .fl{font-size:17px;flex:none}
+  #kal .tm .nm{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-weight:600;font-size:14px}
+  #kal .tm .cd{font-family:'Anton',sans-serif;font-size:12px;background:#EEF1F5;color:var(--ink);border-radius:5px;padding:1px 6px;flex:none;min-width:32px;text-align:center}
+  #kal .rt{display:flex;flex-direction:column;align-items:flex-end;gap:3px;flex:none}
+  #kal .metatag{font-size:9.5px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;color:var(--muted);background:#EEF1F5;border-radius:999px;padding:3px 8px;white-space:nowrap}
+  #kal .metatag.ko{background:var(--ink);color:#fff}
+  #kal .metatag.fin{background:var(--signal);color:#fff}
+  #kal .cty{font-size:10.5px;color:var(--muted);font-weight:600;white-space:nowrap}
+  #kal .empty-note{color:var(--muted);font-size:13px;padding:20px 6px;text-align:center}
+  #kal .boxbar{display:flex;justify-content:flex-end;margin:8px 4px 0}
+  #kal .expandbtn{font-size:12px;font-weight:700;border:1px solid var(--line);background:var(--paper);color:var(--ink);border-radius:999px;padding:6px 12px;cursor:pointer;transition:.15s}
+  #kal .expandbtn:hover{border-color:var(--muted)}
+
+  #kal .seg{font-size:9.5px;font-weight:800;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);margin:2px 4px 8px}
+  #kal .toggle{width:100%;border:1px dashed var(--line);background:#FAFBFC;color:var(--ink);font-weight:800;font-size:13px;padding:12px;border-radius:12px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;transition:.15s;margin-top:6px}
+  #kal .toggle:hover{border-color:var(--muted);background:#F2F5F9}
+  #kal .toggle .cv{transition:transform .2s;display:inline-block}
+  #kal.open .toggle .cv{transform:rotate(180deg)}
+  #kal #kalFull{display:none;margin-top:10px}
+  #kal.open #kalFull{display:block}
+  #kal.open #kalCompact{display:none}
+  #kal .chips{display:none}
+  #kal.open .chips{display:flex}
+  /* zwevende inklap-knop, alleen zichtbaar als de volledige lijst openstaat */
+  #kal .kal-fab{position:fixed;right:16px;bottom:16px;bottom:calc(16px + env(safe-area-inset-bottom));z-index:80;display:none;align-items:center;gap:7px;background:var(--ink);color:#fff;border:none;font-family:'Inter',sans-serif;font-weight:800;font-size:13px;padding:12px 16px;border-radius:999px;cursor:pointer;box-shadow:0 10px 28px -6px rgba(20,24,30,.55);transition:transform .15s,background .15s}
+  #kal .kal-fab:hover{background:#000;transform:translateY(-1px)}
+  #kal .kal-fab .av{font-size:13px;line-height:1}
+  #kal.open .kal-fab{display:inline-flex;animation:kalfab .2s ease-out}
+  @keyframes kalfab{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+  @media print{#kal .kal-fab{display:none!important}}
+
 </style>
 </head>
 <body>
@@ -278,9 +350,20 @@
     <span class="step"><b>Zestiende finales</b> vanaf 28 juni</span>
   </div>
 
+
+  <section id="kal" class="kal">
+  <div class="sec-head"><span class="num">02</span><h2>Speelkalender</h2><span class="tag">vandaag &amp; eerstvolgende · klap uit voor alle 104</span></div>
+  <div class="nextup" id="kalNext"></div>
+  <div class="chips" id="kalChips"><span class="chip on" data-f="all">Alle</span><span class="chip" data-f="todo">Te spelen</span><span class="chip be" data-f="be">🇧🇪 België</span><span class="chip nl" data-f="nl">🇳🇱 Nederland</span><span class="chip go" data-act="today">↧ Vandaag</span></div>
+  <div id="kalCompact"></div>
+  <button class="toggle" id="kalToggle"><span class="cv">▾</span><span id="kalToggleLabel">Volledige speelkalender (104 wedstrijden)</span></button>
+  <div id="kalFull"></div>
+  <button class="kal-fab" id="kalFab" aria-label="Speelkalender inklappen"><span class="av">▴</span>Kalender inklappen</button>
+  </section>
+
   <!-- KNOCKOUT -->
   <div class="sec-head">
-    <span class="num">02</span>
+    <span class="num">03</span>
     <h2>Knock-outfase</h2>
     <span class="tag">28 juni → 19 juli · de winnaar schuift door naar rechts</span>
   </div>
@@ -685,6 +768,138 @@
     gh.appendChild(chev);
     gh.addEventListener('click', function(){ grp.classList.toggle('open'); });
   });
+})();
+</script>
+<script>
+
+var FX = {A:[{d:"do 11/6",s:"2–0",h:["🇲🇽","Mexico"],a:["🇿🇦","Zuid-Afrika"]},{d:"vr 12/6",s:"2–1",h:["🇰🇷","Zuid-Korea"],a:["🇨🇿","Tsjechië"]},{d:"do 18/6",s:"1–1",h:["🇨🇿","Tsjechië"],a:["🇿🇦","Zuid-Afrika"]},{d:"vr 19/6",s:"1–0",h:["🇲🇽","Mexico"],a:["🇰🇷","Zuid-Korea"]},{d:"do 25/6",t:"03:00",h:["🇿🇦","Zuid-Afrika"],a:["🇰🇷","Zuid-Korea"]},{d:"do 25/6",t:"03:00",h:["🇨🇿","Tsjechië"],a:["🇲🇽","Mexico"]}],B:[{d:"vr 12/6",s:"1–1",h:["🇨🇦","Canada"],a:["🇧🇦","Bosnië-Herz."]},{d:"za 13/6",s:"1–1",h:["🇶🇦","Qatar"],a:["🇨🇭","Zwitserland"]},{d:"do 18/6",s:"4–1",h:["🇨🇭","Zwitserland"],a:["🇧🇦","Bosnië-Herz."]},{d:"vr 19/6",s:"6–0",h:["🇨🇦","Canada"],a:["🇶🇦","Qatar"]},{d:"wo 24/6",t:"21:00",h:["🇨🇭","Zwitserland"],a:["🇨🇦","Canada"]},{d:"wo 24/6",t:"21:00",h:["🇧🇦","Bosnië-Herz."],a:["🇶🇦","Qatar"]}],C:[{d:"zo 14/6",s:"1–1",h:["🇧🇷","Brazilië"],a:["🇲🇦","Marokko"]},{d:"zo 14/6",s:"0–1",h:["🇭🇹","Haïti"],a:["🏴󠁧󠁢󠁳󠁣󠁴󠁿","Schotland"]},{d:"za 20/6",s:"0–1",h:["🏴󠁧󠁢󠁳󠁣󠁴󠁿","Schotland"],a:["🇲🇦","Marokko"]},{d:"za 20/6",s:"3–0",h:["🇧🇷","Brazilië"],a:["🇭🇹","Haïti"]},{d:"do 25/6",t:"00:00",h:["🇲🇦","Marokko"],a:["🇭🇹","Haïti"]},{d:"do 25/6",t:"00:00",h:["🏴󠁧󠁢󠁳󠁣󠁴󠁿","Schotland"],a:["🇧🇷","Brazilië"]}],D:[{d:"za 13/6",s:"4–1",h:["🇺🇸","Ver. Staten"],a:["🇵🇾","Paraguay"]},{d:"zo 14/6",s:"2–0",h:["🇦🇺","Australië"],a:["🇹🇷","Turkije"]},{d:"vr 19/6",s:"2–0",h:["🇺🇸","Ver. Staten"],a:["🇦🇺","Australië"]},{d:"za 20/6",s:"0–1",h:["🇹🇷","Turkije"],a:["🇵🇾","Paraguay"]},{d:"vr 26/6",t:"04:00",h:["🇵🇾","Paraguay"],a:["🇦🇺","Australië"]},{d:"vr 26/6",t:"04:00",h:["🇹🇷","Turkije"],a:["🇺🇸","Ver. Staten"]}],E:[{d:"zo 14/6",s:"7–1",h:["🇩🇪","Duitsland"],a:["🇨🇼","Curaçao"]},{d:"ma 15/6",s:"1–0",h:["🇨🇮","Ivoorkust"],a:["🇪🇨","Ecuador"]},{d:"za 20/6",s:"2–1",h:["🇩🇪","Duitsland"],a:["🇨🇮","Ivoorkust"]},{d:"zo 21/6",s:"0–0",h:["🇪🇨","Ecuador"],a:["🇨🇼","Curaçao"]},{d:"do 25/6",t:"22:00",h:["🇨🇼","Curaçao"],a:["🇨🇮","Ivoorkust"]},{d:"do 25/6",t:"22:00",h:["🇪🇨","Ecuador"],a:["🇩🇪","Duitsland"]}],F:[{d:"zo 14/6",s:"2–2",nl:true,h:["🇳🇱","Nederland"],a:["🇯🇵","Japan"]},{d:"ma 15/6",s:"5–1",h:["🇸🇪","Zweden"],a:["🇹🇳","Tunesië"]},{d:"za 20/6",s:"5–1",nl:true,h:["🇳🇱","Nederland"],a:["🇸🇪","Zweden"]},{d:"zo 21/6",s:"0–4",h:["🇹🇳","Tunesië"],a:["🇯🇵","Japan"]},{d:"vr 26/6",t:"01:00",nl:true,h:["🇹🇳","Tunesië"],a:["🇳🇱","Nederland"]},{d:"vr 26/6",t:"01:00",h:["🇯🇵","Japan"],a:["🇸🇪","Zweden"]}],G:[{d:"ma 15/6",s:"1–1",be:true,h:["🇧🇪","België"],a:["🇪🇬","Egypte"]},{d:"di 16/6",s:"2–2",h:["🇮🇷","Iran"],a:["🇳🇿","Nieuw-Zeeland"]},{d:"zo 21/6",s:"0–0",be:true,h:["🇧🇪","België"],a:["🇮🇷","Iran"]},{d:"ma 22/6",s:"1–3",h:["🇳🇿","Nieuw-Zeeland"],a:["🇪🇬","Egypte"]},{d:"za 27/6",t:"05:00",h:["🇪🇬","Egypte"],a:["🇮🇷","Iran"]},{d:"za 27/6",t:"05:00",be:true,h:["🇳🇿","Nieuw-Zeeland"],a:["🇧🇪","België"]}],H:[{d:"ma 15/6",s:"0–0",h:["🇪🇸","Spanje"],a:["🇨🇻","Kaapverdië"]},{d:"di 16/6",s:"1–1",h:["🇸🇦","Saoedi-Arabië"],a:["🇺🇾","Uruguay"]},{d:"zo 21/6",s:"4–0",h:["🇪🇸","Spanje"],a:["🇸🇦","Saoedi-Arabië"]},{d:"ma 22/6",s:"2–2",h:["🇺🇾","Uruguay"],a:["🇨🇻","Kaapverdië"]},{d:"za 27/6",t:"02:00",h:["🇨🇻","Kaapverdië"],a:["🇸🇦","Saoedi-Arabië"]},{d:"za 27/6",t:"02:00",h:["🇺🇾","Uruguay"],a:["🇪🇸","Spanje"]}],I:[{d:"di 16/6",s:"3–1",h:["🇫🇷","Frankrijk"],a:["🇸🇳","Senegal"]},{d:"wo 17/6",s:"1–4",h:["🇮🇶","Irak"],a:["🇳🇴","Noorwegen"]},{d:"ma 22/6",s:"3–0",h:["🇫🇷","Frankrijk"],a:["🇮🇶","Irak"]},{d:"di 23/6",s:"3–2",h:["🇳🇴","Noorwegen"],a:["🇸🇳","Senegal"]},{d:"vr 26/6",t:"21:00",h:["🇳🇴","Noorwegen"],a:["🇫🇷","Frankrijk"]},{d:"vr 26/6",t:"21:00",h:["🇸🇳","Senegal"],a:["🇮🇶","Irak"]}],J:[{d:"wo 17/6",s:"3–0",h:["🇦🇷","Argentinië"],a:["🇩🇿","Algerije"]},{d:"wo 17/6",s:"3–1",h:["🇦🇹","Oostenrijk"],a:["🇯🇴","Jordanië"]},{d:"ma 22/6",s:"2–0",h:["🇦🇷","Argentinië"],a:["🇦🇹","Oostenrijk"]},{d:"di 23/6",s:"1–2",h:["🇯🇴","Jordanië"],a:["🇩🇿","Algerije"]},{d:"zo 28/6",t:"04:00",h:["🇩🇿","Algerije"],a:["🇦🇹","Oostenrijk"]},{d:"zo 28/6",t:"04:00",h:["🇯🇴","Jordanië"],a:["🇦🇷","Argentinië"]}],K:[{d:"wo 17/6",s:"1–1",h:["🇵🇹","Portugal"],a:["🇨🇩","DR Congo"]},{d:"do 18/6",s:"1–3",h:["🇺🇿","Oezbekistan"],a:["🇨🇴","Colombia"]},{d:"di 23/6",s:"5–0",h:["🇵🇹","Portugal"],a:["🇺🇿","Oezbekistan"]},{d:"wo 24/6",s:"1–0",h:["🇨🇴","Colombia"],a:["🇨🇩","DR Congo"]},{d:"zo 28/6",t:"01:30",h:["🇨🇴","Colombia"],a:["🇵🇹","Portugal"]},{d:"zo 28/6",t:"01:30",h:["🇨🇩","DR Congo"],a:["🇺🇿","Oezbekistan"]}],L:[{d:"wo 17/6",s:"4–2",h:["🏴󠁧󠁢󠁥󠁮󠁧󠁿","Engeland"],a:["🇭🇷","Kroatië"]},{d:"do 18/6",s:"1–0",h:["🇬🇭","Ghana"],a:["🇵🇦","Panama"]},{d:"di 23/6",s:"0–0",h:["🏴󠁧󠁢󠁥󠁮󠁧󠁿","Engeland"],a:["🇬🇭","Ghana"]},{d:"wo 24/6",s:"0–1",h:["🇵🇦","Panama"],a:["🇭🇷","Kroatië"]},{d:"za 27/6",t:"23:00",h:["🇭🇷","Kroatië"],a:["🇬🇭","Ghana"]},{d:"za 27/6",t:"23:00",h:["🇵🇦","Panama"],a:["🏴󠁧󠁢󠁥󠁮󠁧󠁿","Engeland"]}]};
+var KO = [
+ {n:73,d:"zo 28/6",t:"21:00",c:"Los Angeles",r:"1/16",h:"2A",a:"2B"},
+ {n:75,d:"di 30/6",t:"03:00",c:"Monterrey",r:"1/16",h:"1F",a:"2C",nl:true},
+ {n:74,d:"ma 29/6",t:"22:30",c:"Boston",r:"1/16",h:"1E",a:"3"},
+ {n:77,d:"di 30/6",t:"23:00",c:"New York/NJ",r:"1/16",h:"1I",a:"3"},
+ {n:83,d:"vr 03/7",t:"01:00",c:"Toronto",r:"1/16",h:"2K",a:"2L"},
+ {n:84,d:"do 02/7",t:"21:00",c:"Los Angeles",r:"1/16",h:"1H",a:"2J"},
+ {n:81,d:"do 02/7",t:"02:00",c:"San Francisco",r:"1/16",h:"1D",a:"3"},
+ {n:82,d:"wo 01/7",t:"22:00",c:"Seattle",r:"1/16",h:"1G",a:"3",be:true},
+ {n:76,d:"ma 29/6",t:"19:00",c:"Houston",r:"1/16",h:"1C",a:"2F",nl:true},
+ {n:78,d:"di 30/6",t:"19:00",c:"Dallas",r:"1/16",h:"2E",a:"2I"},
+ {n:79,d:"wo 01/7",t:"03:00",c:"Mexico-Stad",r:"1/16",h:"1A",a:"3"},
+ {n:80,d:"wo 01/7",t:"18:00",c:"Atlanta",r:"1/16",h:"1L",a:"3"},
+ {n:86,d:"za 04/7",t:"00:00",c:"Miami",r:"1/16",h:"1J",a:"2H"},
+ {n:88,d:"vr 03/7",t:"20:00",c:"Dallas",r:"1/16",h:"2D",a:"2G",be:true},
+ {n:85,d:"vr 03/7",t:"05:00",c:"Vancouver",r:"1/16",h:"1B",a:"3"},
+ {n:87,d:"za 04/7",t:"03:30",c:"Kansas City",r:"1/16",h:"1K",a:"3"},
+ {n:90,d:"za 04/7",t:"19:00",c:"Houston",r:"1/8",h:"W73",a:"W75"},
+ {n:89,d:"za 04/7",t:"23:00",c:"Philadelphia",r:"1/8",h:"W74",a:"W77"},
+ {n:93,d:"ma 06/7",t:"21:00",c:"Dallas",r:"1/8",h:"W83",a:"W84"},
+ {n:94,d:"di 07/7",t:"02:00",c:"Seattle",r:"1/8",h:"W81",a:"W82"},
+ {n:91,d:"zo 05/7",t:"22:00",c:"New York/NJ",r:"1/8",h:"W76",a:"W78"},
+ {n:92,d:"ma 06/7",t:"02:00",c:"Mexico-Stad",r:"1/8",h:"W79",a:"W80"},
+ {n:95,d:"di 07/7",t:"18:00",c:"Atlanta",r:"1/8",h:"W86",a:"W88"},
+ {n:96,d:"di 07/7",t:"22:00",c:"Vancouver",r:"1/8",h:"W85",a:"W87"},
+ {n:97,d:"do 09/7",t:"22:00",c:"Boston",r:"KF",h:"W89",a:"W90"},
+ {n:98,d:"vr 10/7",t:"21:00",c:"Los Angeles",r:"KF",h:"W93",a:"W94"},
+ {n:99,d:"za 11/7",t:"23:00",c:"Miami",r:"KF",h:"W91",a:"W92"},
+ {n:100,d:"zo 12/7",t:"03:00",c:"Kansas City",r:"KF",h:"W95",a:"W96"},
+ {n:101,d:"di 14/7",t:"21:00",c:"Dallas",r:"HF",h:"W97",a:"W98"},
+ {n:102,d:"wo 15/7",t:"21:00",c:"Atlanta",r:"HF",h:"W99",a:"W100"},
+ {n:103,d:"za 18/7",t:"23:00",c:"Miami",r:"Troost",h:"V101",a:"V102"},
+ {n:104,d:"zo 19/7",t:"21:00",c:"New York/NJ",r:"Finale",h:"W101",a:"W102"}
+];
+var MON=["januari","februari","maart","april","mei","juni","juli","augustus","september","oktober","november","december"];
+var WDU=["ZO","MA","DI","WO","DO","VR","ZA"];
+var NOW=new Date();
+var TODAY0=new Date(NOW.getFullYear(),NOW.getMonth(),NOW.getDate());
+function pad(n){return (n<10?'0':'')+n;}
+function parseDate(d,t){var p=d.split(' ')[1].split('/');var hm=(t||'00:00').split(':');return new Date(2026,(+p[1])-1,+p[0],+hm[0],+hm[1]);}
+function keyOf(dt){return dt.getFullYear()+'-'+dt.getMonth()+'-'+dt.getDate();}
+function isToday(dt){return keyOf(dt)===keyOf(NOW);}
+function roundTag(r){return {'1/16':'1/16 F','1/8':'1/8 F','KF':'Kwartfinale','HF':'Halve F','Troost':'Troostfin.','Finale':'Finale'}[r]||r;}
+function codeLabel(c){var m;if((m=c.match(/^1([A-L])$/)))return 'Winnaar '+m[1];if((m=c.match(/^2([A-L])$/)))return 'Nr. 2 '+m[1];if(c==='3')return 'Beste 3e';if((m=c.match(/^W(\d+)$/)))return 'Winnaar #'+m[1];if((m=c.match(/^V(\d+)$/)))return 'Verliezer #'+m[1];return c;}
+function buildMatches(){
+  var out=[];
+  Object.keys(FX).forEach(function(g){FX[g].forEach(function(m){
+    out.push({dt:parseDate(m.d,m.t),kind:'group',tag:'Groep '+g,home:m.h,away:m.a,score:m.s||null,time:m.t||null,be:!!m.be,nl:!!m.nl});
+  });});
+  KO.forEach(function(m){
+    out.push({dt:parseDate(m.d,m.t),kind:'ko',tag:roundTag(m.r),round:m.r,city:m.c,home:codeLabel(m.h),away:codeLabel(m.a),hcode:m.h,acode:m.a,score:null,time:m.t,be:!!m.be,nl:!!m.nl});
+  });
+  out.sort(function(a,b){return a.dt-b.dt;});
+  return out;
+}
+function teamLine(m,side){
+  if(m.kind==='group'){var t=side==='h'?m.home:m.away;return '<span class="tm"><span class="fl">'+t[0]+'</span><span class="nm">'+t[1]+'</span></span>';}
+  var code=side==='h'?m.hcode:m.acode,lab=side==='h'?m.home:m.away;
+  return '<span class="tm"><span class="cd">'+code+'</span><span class="nm">'+lab+'</span></span>';
+}
+function rowHTML(m){
+  var cls=m.be?'be':(m.nl?'nl':'');
+  var left=m.score?'<span class="sc">'+m.score+'</span>':'<span class="ti">'+(m.time||'')+'</span>';
+  var tag=m.kind==='group'?'<span class="metatag">'+m.tag+'</span>':'<span class="metatag '+(m.round==='Finale'?'fin':'ko')+'">'+m.tag+'</span>';
+  var city=m.kind==='ko'?'<span class="cty">'+m.city+'</span>':'';
+  return '<div class="mrow '+cls+'"><span class="when">'+left+'</span><span class="teams">'+teamLine(m,'h')+teamLine(m,'a')+'</span><span class="rt">'+tag+city+'</span></div>';
+}
+function relTime(dt){
+  var d1=new Date(dt.getFullYear(),dt.getMonth(),dt.getDate());
+  var diff=Math.round((d1-TODAY0)/86400000);
+  if(diff===0)return 'vandaag';if(diff===1)return 'morgen';if(diff<0)return 'gespeeld';
+  return 'over '+diff+' dagen';
+}
+function byDay(list){var map=new Map();list.forEach(function(m){var k=keyOf(m.dt);if(!map.has(k))map.set(k,{dt:m.dt,items:[]});map.get(k).items.push(m);});return Array.from(map.values());}
+function dlabel(dt){return WDU[dt.getDay()]+' '+dt.getDate()+' '+MON[dt.getMonth()].toUpperCase();}
+function emptyNote(){return '<div class="empty-note">Geen wedstrijden voor dit filter.</div>';}
+function dayBlockHTML(d){
+  var today=isToday(d.dt),past=d.dt<TODAY0&&!today;
+  var phase=d.items[0].kind==='ko'?'<span class="ph">'+d.items[0].tag+'</span>':'';
+  return '<div class="day"><div class="dhead'+(today?' today':'')+(past?' past':'')+'">'+
+    '<span class="bar"></span><span class="dt">'+dlabel(d.dt)+'</span>'+
+    (today?'<span class="live"><span class="kp"></span>Vandaag</span>':'')+
+    '<span class="cnt">'+d.items.length+'×</span>'+phase+'</div>'+
+    d.items.map(rowHTML).join('')+'</div>';
+}
+function bannerInit(){
+  var ALL=buildMatches();
+  var next=ALL.filter(function(m){return !m.score&&m.dt>=NOW;})[0]||ALL.filter(function(m){return !m.score;})[0];
+  var nu=document.getElementById('kalNext'); if(!nu) return;
+  if(!next){nu.style.display='none';return;}
+  var todayCount=ALL.filter(function(m){return isToday(m.dt);}).length;
+  var t=next.kind==='group'?('<span class="fl">'+next.home[0]+'</span> '+next.home[1]+' – <span class="fl">'+next.away[0]+'</span> '+next.away[1]):(next.home+' – '+next.away);
+  nu.innerHTML='<span class="nu-lab"><span class="kp"></span>Volgende aftrap</span><span class="nu-match">'+t+'</span>'+
+    '<span class="nu-when">'+(next.kind==='ko'?next.tag+' · ':'')+'<b>'+relTime(next.dt)+'</b> · '+pad(next.dt.getHours())+':'+pad(next.dt.getMinutes())+'</span>'+
+    (todayCount?'<span class="today-pill">'+todayCount+' vandaag</span>':'');
+}
+
+</script>
+<script>
+(function(){
+  var ALL=buildMatches();var root=document.getElementById('kal');var filter='all';
+  bannerInit();
+  var days=byDay(ALL);
+  var ti=days.findIndex(function(d){return isToday(d.dt);});
+  var si=ti>=0?ti:days.findIndex(function(d){return d.dt>=TODAY0;});if(si<0)si=Math.max(0,days.length-1);
+  function pass(m){if(filter==='todo')return !m.score;if(filter==='be')return m.be;if(filter==='nl')return m.nl;return true;}
+  function compact(){
+    var out=[];for(var i=si;i<Math.min(si+2,days.length);i++)out.push(dayBlockHTML(days[i]));
+    document.getElementById('kalCompact').innerHTML='<div class="seg">'+(ti>=0?'Vandaag &amp; eerstvolgende speeldag':'Eerstvolgende speeldagen')+'</div>'+out.join('');
+  }
+  function full(){var fd=byDay(ALL.filter(pass));document.getElementById('kalFull').innerHTML=fd.map(dayBlockHTML).join('')||emptyNote();}
+  function focusFull(){
+    var h=document.querySelector('#kalFull .dhead.today')||document.querySelector('#kalFull .day .dhead:not(.past)')||document.querySelector('#kalFull .dhead');
+    if(h)h.scrollIntoView({behavior:'smooth',block:'start'});
+  }
+  function open(){root.classList.add('open');document.getElementById('kalToggleLabel').textContent='Inklappen';full();requestAnimationFrame(focusFull);}
+  function close(){root.classList.remove('open');document.getElementById('kalToggleLabel').textContent='Volledige speelkalender (104 wedstrijden)';}
+  document.getElementById('kalToggle').addEventListener('click',function(){root.classList.contains('open')?close():open();});
+  document.getElementById('kalFab').addEventListener('click',function(){close();document.getElementById('kal').scrollIntoView({behavior:'smooth',block:'start'});});
+  document.getElementById('kalChips').addEventListener('click',function(e){
+    var c=e.target.closest('.chip');if(!c)return;
+    if(c.dataset.act==='today'){var h=document.querySelector('#kalFull .dhead.today');if(h)h.scrollIntoView({behavior:'smooth',block:'center'});return;}
+    filter=c.dataset.f;
+    document.querySelectorAll('#kalChips .chip[data-f]').forEach(function(x){x.classList.toggle('on',x.dataset.f===filter);});
+    if(!root.classList.contains('open'))open();else full();
+  });
+  compact();
 })();
 </script>
 </body>
