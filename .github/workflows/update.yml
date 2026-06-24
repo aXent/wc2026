@@ -41,12 +41,12 @@ jobs:
 
       - name: Committen en pushen (alleen bij wijziging)
         run: |
-          if git diff --quiet -- index.html; then
+          if git diff --quiet -- index.html data.json; then
             echo "Geen wijziging in de standen — niets te committen."
           else
             git config user.name  "wk-bot"
             git config user.email "github-actions[bot]@users.noreply.github.com"
-            git add index.html
+            git add index.html data.json
             git commit -m "Auto-update standen ($(date -u +'%Y-%m-%d %H:%M UTC'))"
             git push
           fi

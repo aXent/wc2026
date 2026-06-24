@@ -35,6 +35,7 @@ BASE     = f"https://www.thesportsdb.com/api/v1/json/{KEY}"
 TZ       = ZoneInfo("Europe/Brussels")              # Belgische tijd (CEST)
 TEMPLATE = "template.html"
 OUTPUT   = "index.html"
+CACHE    = "data.json"                               # tijdlijn-cache (doelpunten/kaarten)
 WEEKDAYS = ["ma", "di", "wo", "do", "vr", "za", "zo"]
 MONTHS   = ["januari","februari","maart","april","mei","juni",
             "juli","augustus","september","oktober","november","december"]
@@ -203,6 +204,86 @@ def validate_group_schedule(groups, event_count, season):
     )
 
 # ----------------------------------------------------------------------------
+# Tijdlijn-cache (doelpunten + kaarten per gespeeld duel)
+# ----------------------------------------------------------------------------
+# Een afgelopen wedstrijd verandert niet meer, dus halen we de tijdlijn één keer
+# op (lookuptimeline.php) en bewaren we 'm in data.json. Dat bestand wordt mee
+# gecommit, zodat de cache de (efemere) Actions-runner overleeft. Per run kost
+# dit dus alleen API-calls voor pas afgelopen duels, niet voor alles.
+def fetch_timeline(eid):
+    """Doelpunten + kaarten voor één wedstrijd; None bij API-fout (→ later opnieuw)."""
+    url = f"{BASE}/lookuptimeline.php?id={eid}"
+    try:
+        with urllib.request.urlopen(url, timeout=30) as r:
+            rows = json.load(r).get("timeline") or []
+    except (urllib.error.URLError, json.JSONDecodeError) as e:
+        print(f"WAARSCHUWING: tijdlijn {eid} faalde ({e}) — later opnieuw", file=sys.stderr)
+        return None
+    out = []
+    for r in rows:
+        typ = r.get("strTimeline")
+        if typ not in ("Goal", "Card"):
+            continue
+        out.append({"t": int(r.get("intTime") or 0),
+                    "k": "G" if typ == "Goal" else "C",
+                    "d": r.get("strTimelineDetail") or "",
+                    "p": r.get("strPlayer") or "",
+                    "a": r.get("strAssist") or "",
+                    "h": r.get("strHome") == "Yes"})
+    out.sort(key=lambda x: x["t"])
+    return out
+
+def load_cache():
+    try:
+        with open(CACHE, encoding="utf-8") as f:
+            c = json.load(f)
+    except (FileNotFoundError, json.JSONDecodeError):
+        c = {}
+    c.setdefault("schema", 1)
+    c.setdefault("events", {})
+    return c
+
+def update_cache(events, cache):
+    """Vul de cache aan voor gespeelde duels die nieuw/niet-definitief/gewijzigd zijn."""
+    evmap = cache["events"]
+    fetched = 0
+    for ev in events:
+        eid = ev.get("idEvent")
+        if not eid or not played(ev):
+            continue
+        score  = f'{ev.get("intHomeScore")}-{ev.get("intAwayScore")}'
+        status = ev.get("strStatus") or ""
+        old = evmap.get(eid)
+        if old and old.get("status") == "FT" and old.get("score") == score and "tl" in old:
+            continue                                   # definitief én ongewijzigd → skip
+        tl = fetch_timeline(eid)
+        if tl is None:                                 # API-fout → niet cachen, volgende run
+            continue
+        evmap[eid] = {"status": status, "score": score, "tl": tl}
+        fetched += 1
+    if fetched:
+        with open(CACHE, "w", encoding="utf-8") as f:
+            json.dump(cache, f, ensure_ascii=False, indent=1, sort_keys=True)
+    print(f"Tijdlijn-cache: {fetched} duel(s) opgehaald, {len(evmap)} in cache.")
+    return cache
+
+def render_tl_data(events, cache):
+    """{'vlag_vlag_d/m': [ {t,k,d,p,a,h}, ... ]} — zelfde sleutel als de client berekent."""
+    evmap = cache["events"]
+    out = {}
+    for ev in events:
+        entry = evmap.get(ev.get("idEvent"))
+        if not entry or not entry.get("tl"):
+            continue
+        hc, ac = code_of(ev.get("strHomeTeam")), code_of(ev.get("strAwayTeam"))
+        if not hc or not ac:
+            continue
+        _, _, dt = when_label(ev)
+        key = f"{TEAMS[hc][1]}_{TEAMS[ac][1]}_{dt.day}/{dt.month}"
+        out[key] = entry["tl"]
+    return json.dumps(out, ensure_ascii=False)
+
+# ----------------------------------------------------------------------------
 # Renderen (identiek format aan de placeholders in template.html)
 # ----------------------------------------------------------------------------
 def render_group_cards(groups):
@@ -260,11 +341,13 @@ def main():
     season, events = fetch_events()
     groups = build_groups(events)
     validate_group_schedule(groups, len(events), season)
+    cache = update_cache(events, load_cache())
     html = open(TEMPLATE, encoding="utf-8").read()
     html = html.replace("{{DATE}}",     date_label())
     html = html.replace("{{GROUPS}}",   render_group_cards(groups))
     html = html.replace("{{POP_DATA}}", render_pop_data(groups))
     html = html.replace("{{FX_DATA}}",  render_fx_data(groups))
+    html = html.replace("{{TL_DATA}}",  render_tl_data(events, cache))
     open(OUTPUT, "w", encoding="utf-8").write(html)
     tot = sum(len(g["matches"]) for g in groups.values())
     print(f"{OUTPUT} geschreven — {len(groups)} groepen, {tot} groepsduels.")

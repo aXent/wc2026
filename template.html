@@ -263,6 +263,19 @@
   #kal .dhead .ph{margin-left:auto;font-size:9.5px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:#fff;background:var(--ink);border-radius:999px;padding:3px 8px}
   #kal .mrow{display:flex;align-items:center;gap:11px;padding:9px 11px;border-radius:11px;background:var(--paper);border:1px solid var(--line);box-shadow:var(--shadow)}
   #kal .mrow+.mrow{margin-top:7px}
+  #kal .mgame+.mgame{margin-top:7px}
+  #kal .mrow.exp{cursor:pointer}
+  #kal .mchev{flex:none;color:var(--muted);font-size:11px;transition:transform .2s;align-self:center}
+  #kal .mgame.open .mchev{transform:rotate(90deg)}
+  #kal .mgame.open .mrow{border-bottom-left-radius:0;border-bottom-right-radius:0}
+  #kal .mdetail{background:#FAFBFC;border:1px solid var(--line);border-top:none;border-radius:0 0 11px 11px;margin:0 1px;padding:7px 12px 9px}
+  #kal .tl-row{display:flex;align-items:center;gap:8px;font-size:12.5px;padding:3px 0}
+  #kal .tl-min{font-weight:800;color:var(--muted);font-size:11px;width:28px;flex:none;text-align:right;font-variant-numeric:tabular-nums}
+  #kal .tl-ic{flex:none;font-size:12px;width:16px;text-align:center}
+  #kal .tl-fl{flex:none;font-size:14px}
+  #kal .tl-p{font-weight:600}
+  #kal .tl-note{color:var(--muted);font-weight:700;font-size:10.5px}
+  #kal .tl-as{color:var(--muted);font-weight:500;font-size:11px;margin-left:2px}
   #kal .mrow.be{background:var(--be-soft);border-color:#F1C4CB}
   #kal .mrow.nl{background:var(--nl-soft);border-color:#F4CEAF}
   #kal .mrow .when{width:52px;flex:none;text-align:center}
@@ -806,6 +819,15 @@ function keyOf(dt){return dt.getFullYear()+'-'+dt.getMonth()+'-'+dt.getDate();}
 function isToday(dt){return keyOf(dt)===keyOf(NOW);}
 function roundTag(r){return {'1/16':'1/16 F','1/8':'1/8 F','KF':'Kwartfinale','HF':'Halve F','Troost':'Troostfin.','Finale':'Finale'}[r]||r;}
 function codeLabel(c){var m;if((m=c.match(/^1([A-L])$/)))return 'Winnaar '+m[1];if((m=c.match(/^2([A-L])$/)))return 'Nr. 2 '+m[1];if(c==='3')return 'Beste 3e';if((m=c.match(/^W(\d+)$/)))return 'Winnaar #'+m[1];if((m=c.match(/^V(\d+)$/)))return 'Verliezer #'+m[1];return c;}
+var TL_DATA={{TL_DATA}};
+function tlKey(m){return m.kind==='group'?(m.home[0]+'_'+m.away[0]+'_'+m.dt.getDate()+'/'+(m.dt.getMonth()+1)):null;}
+function tlHTML(tl,m){return tl.map(function(e){
+  var ic=e.k==='G'?(e.d==='Own Goal'?'🥅':'⚽'):(e.d==='Red Card'?'🟥':'🟨');
+  var fl=e.h?m.home[0]:m.away[0];
+  var note=e.k==='G'?(e.d==='Penalty'?' <span class="tl-note">(pen.)</span>':(e.d==='Own Goal'?' <span class="tl-note">(e.d.)</span>':'')):'';
+  var as=(e.k==='G'&&e.a)?'<span class="tl-as">— '+e.a+'</span>':'';
+  return '<div class="tl-row"><span class="tl-min">'+e.t+"'</span><span class='tl-ic'>"+ic+"</span><span class='tl-fl'>"+fl+'</span><span class="tl-p">'+e.p+note+'</span>'+as+'</div>';
+}).join('');}
 function buildMatches(){
   var out=[];
   Object.keys(FX).forEach(function(g){FX[g].forEach(function(m){
@@ -827,7 +849,10 @@ function rowHTML(m){
   var left=m.score?'<span class="sc">'+m.score+'</span>':'<span class="ti">'+(m.time||'')+'</span>';
   var tag=m.kind==='group'?'<span class="metatag">'+m.tag+'</span>':'<span class="metatag '+(m.round==='Finale'?'fin':'ko')+'">'+m.tag+'</span>';
   var city=m.kind==='ko'?'<span class="cty">'+m.city+'</span>':'';
-  return '<div class="mrow '+cls+'"><span class="when">'+left+'</span><span class="teams">'+teamLine(m,'h')+teamLine(m,'a')+'</span><span class="rt">'+tag+city+'</span></div>';
+  var key=tlKey(m),tl=(m.score&&key&&TL_DATA[key]&&TL_DATA[key].length)?TL_DATA[key]:null;
+  var chev=tl?'<span class="mchev">▸</span>':'';
+  var row='<div class="mrow '+cls+(tl?' exp':'')+'"><span class="when">'+left+'</span><span class="teams">'+teamLine(m,'h')+teamLine(m,'a')+'</span><span class="rt">'+tag+city+'</span>'+chev+'</div>';
+  return '<div class="mgame">'+row+(tl?'<div class="mdetail" hidden>'+tlHTML(tl,m)+'</div>':'')+'</div>';
 }
 function relTime(dt){
   var d1=new Date(dt.getFullYear(),dt.getMonth(),dt.getDate());
@@ -895,6 +920,13 @@ function bannerInit(){
   });
   compact();
 })();
+</script>
+<script>
+document.getElementById('kal').addEventListener('click',function(e){
+  var r=e.target.closest('.mrow.exp');if(!r)return;
+  var g=r.parentNode;g.classList.toggle('open');
+  var d=g.querySelector('.mdetail');if(d)d.hidden=!g.classList.contains('open');
+});
 </script>
 </body>
 </html>
