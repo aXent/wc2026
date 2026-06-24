@@ -1761,9 +1761,17 @@
    ]
   },
   "2391767": {
-   "score": "0-0",
-   "status": "1H",
+   "score": "1-0",
+   "status": "2H",
    "tl": [
+    {
+     "a": "",
+     "d": "Yellow Card",
+     "h": false,
+     "k": "C",
+     "p": "Cyle Larin",
+     "t": 32
+    },
     {
      "a": "",
      "d": "Yellow Card",
@@ -1774,11 +1782,11 @@
     },
     {
      "a": "",
-     "d": "Yellow Card",
-     "h": false,
-     "k": "C",
-     "p": "Cyle Larin",
-     "t": 32
+     "d": "Normal Goal",
+     "h": true,
+     "k": "G",
+     "p": "Rubén Vargas",
+     "t": 46
     }
    ]
   },
@@ -2407,8 +2415,8 @@
    ]
   },
   "2461115": {
-   "score": "2-0",
-   "status": "1H",
+   "score": "2-1",
+   "status": "2H",
    "tl": [
     {
      "a": "Ivan Bašić",
@@ -2425,6 +2433,14 @@
      "k": "G",
      "p": "Sultan Al-Brake",
      "t": 34
+    },
+    {
+     "a": "Edmilson Junior",
+     "d": "Normal Goal",
+     "h": false,
+     "k": "G",
+     "p": "Hassan Al-Haydos",
+     "t": 42
     }
    ]
   }
