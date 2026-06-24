@@ -320,6 +320,48 @@
   @keyframes kalfab{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
   @media print{#kal .kal-fab{display:none!important}}
 
+
+  /* ===== sectie 04 — WK in cijfers & topscorers ===== */
+  #stats{margin-top:8px}
+  #stats .stats-toggle{width:100%;border:1px dashed var(--line);background:#FAFBFC;color:var(--ink);font-weight:800;font-size:13px;padding:12px;border-radius:12px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;transition:.15s}
+  #stats .stats-toggle:hover{border-color:var(--muted);background:#F2F5F9}
+  #stats .stats-body{display:none;margin-top:12px}
+  #stats.open .stats-body{display:block}
+  #stats .subhead{font-family:'Anton',sans-serif;text-transform:uppercase;font-size:16px;letter-spacing:.03em;color:var(--muted);margin:20px 4px 10px}
+  #stats .statgrid{display:grid;gap:12px;grid-template-columns:repeat(auto-fill,minmax(190px,1fr))}
+  #stats .stat{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:14px 16px;box-shadow:var(--shadow);display:flex;flex-direction:column;gap:5px;justify-content:center}
+  #stats .stat .lab{font-size:10px;font-weight:800;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);display:flex;align-items:center;gap:6px}
+  #stats .stat .num{font-family:'Anton',sans-serif;font-size:40px;line-height:.95;color:var(--ink)}
+  #stats .stat .det{font-size:12px;color:var(--muted);font-weight:600}
+  #stats .stat .det b{color:var(--ink)}
+  #stats .stat .winline{display:flex;align-items:center;gap:6px;font-family:'Anton',sans-serif;font-size:24px;line-height:1}
+  #stats .stat .winline .fl{font-size:22px}
+  #stats .stat .winline .sc{color:var(--signal)}
+  #stats .stat.hero{grid-column:span 2;background:var(--ink);color:#fff;position:relative;overflow:hidden}
+  #stats .stat.hero::after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(90deg,rgba(255,255,255,.05) 0 2px,transparent 2px 64px);pointer-events:none}
+  #stats .stat.hero .lab{color:var(--gold)}
+  #stats .stat.hero .num{font-size:60px;color:#fff}
+  #stats .stat.hero .det{color:#C7CDD6}#stats .stat.hero .det b{color:#fff}
+  @media(max-width:520px){#stats .stat.hero{grid-column:span 1}#stats .stat.hero .num{font-size:48px}}
+  #stats .boards{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(290px,1fr))}
+  #stats .board{background:var(--paper);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);overflow:hidden}
+  #stats .board .bh{display:flex;align-items:center;gap:10px;padding:12px 16px;border-bottom:1px solid var(--line);background:linear-gradient(180deg,#fff,#FAFBFC)}
+  #stats .board .bh .bicon{font-size:19px}
+  #stats .board .bh h3{font-family:'Anton',sans-serif;font-weight:400;text-transform:uppercase;font-size:17px;margin:0;letter-spacing:.02em}
+  #stats .board .bh .bsub{margin-left:auto;font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.05em;color:var(--muted)}
+  #stats .board ol{list-style:none;margin:0;padding:6px 8px 10px}
+  #stats .lbrow{display:flex;align-items:center;gap:10px;padding:7px 8px;border-radius:9px;font-size:14px}
+  #stats .lbrow+.lbrow{border-top:1px solid #F1F3F7}
+  #stats .lbrow .rank{font-family:'Anton',sans-serif;font-size:12px;width:22px;height:22px;border-radius:6px;display:grid;place-items:center;color:#fff;background:#AEB6C0;flex:none}
+  #stats .lbrow.r1 .rank{background:var(--gold)}#stats .lbrow.r2 .rank{background:#9AA3AD}#stats .lbrow.r3 .rank{background:#C0844F}
+  #stats .lbrow .fl{font-size:18px;flex:none}
+  #stats .lbrow .who{flex:1;min-width:0}
+  #stats .lbrow .who .nm{font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:block;line-height:1.2}
+  #stats .lbrow .who .tm{font-size:11px;color:var(--muted);font-weight:600}
+  #stats .lbrow .val{font-family:'Anton',sans-serif;font-size:22px;flex:none;line-height:1}
+  #stats .lbrow .cards{display:flex;gap:2px;flex:none;font-size:14px;align-items:center}
+  #stats .lbrow.be{background:var(--be-soft)}#stats .lbrow.be .who .nm::after{content:" ★";color:var(--be);font-size:11px}
+  #stats .lbrow.nl{background:var(--nl-soft)}#stats .lbrow.nl .who .nm::after{content:" ★";color:var(--nl);font-size:11px}
 </style>
 </head>
 <body>
@@ -616,6 +658,12 @@
       <p><b>19 juli</b> — finale (MetLife Stadium, NY/NJ)</p>
     </div>
   </div>
+
+  <section id="stats">
+    <div class="sec-head"><span class="num">04</span><h2>WK in cijfers &amp; topscorers</h2><span class="tag">groepsfase · klik om te tonen</span></div>
+    <button class="stats-toggle" id="statsToggle"><span class="cv">▾</span><span class="tg-label">Toon de cijfers</span></button>
+    <div class="stats-body">{{STATS}}</div>
+  </section>
 
   <footer>
     Automatisch bijgewerkt via football-data.org · standen kunnen vertraagd zijn · alle aftraptijden in Belgische tijd (CEST). Posities zijn nog voorlopig.
@@ -932,6 +980,10 @@ document.getElementById('kal').addEventListener('click',function(e){
   var g=r.parentNode;g.classList.toggle('open');
   var d=g.querySelector('.mdetail');if(d)d.hidden=!g.classList.contains('open');
 });
+</script>
+<script>
+(function(){var s=document.getElementById('stats'),b=document.getElementById('statsToggle');if(!b)return;
+b.addEventListener('click',function(){var o=s.classList.toggle('open');b.querySelector('.cv').textContent=o?'▴':'▾';b.querySelector('.tg-label').textContent=o?'Verberg de cijfers':'Toon de cijfers';});})();
 </script>
 </body>
 </html>

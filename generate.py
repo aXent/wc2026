@@ -224,14 +224,19 @@ def fetch_timeline(eid):
         typ = r.get("strTimeline")
         if typ not in ("Goal", "Card"):
             continue
+        det = r.get("strTimelineDetail") or ""
+        if typ == "Goal" and det == "Missed Penalty":
+            continue            # TheSportsDB tagt dit als 'Goal', maar het is géén doelpunt
         out.append({"t": int(r.get("intTime") or 0),
                     "k": "G" if typ == "Goal" else "C",
-                    "d": r.get("strTimelineDetail") or "",
+                    "d": det,
                     "p": r.get("strPlayer") or "",
                     "a": r.get("strAssist") or "",
                     "h": r.get("strHome") == "Yes"})
     out.sort(key=lambda x: x["t"])
     return out
+
+SCHEMA = 2          # verhoog dit om de tijdlijn-cache geforceerd opnieuw op te bouwen
 
 def load_cache():
     try:
@@ -239,7 +244,8 @@ def load_cache():
             c = json.load(f)
     except (FileNotFoundError, json.JSONDecodeError):
         c = {}
-    c.setdefault("schema", 1)
+    if c.get("schema") != SCHEMA:                       # ander schema → cache verwerpen
+        c = {"schema": SCHEMA, "events": {}}
     c.setdefault("events", {})
     return c
 
@@ -282,6 +288,117 @@ def render_tl_data(events, cache):
         key = f"{TEAMS[hc][1]}_{TEAMS[ac][1]}_{dt.day}/{dt.month}"
         out[key] = entry["tl"]
     return json.dumps(out, ensure_ascii=False)
+
+# ----------------------------------------------------------------------------
+# Statistieken (topscorers/assists/kaarten + 'WK in cijfers')
+# ----------------------------------------------------------------------------
+def compute_stats(events, cache):
+    """Aggregeer leaderboards + kerncijfers uit scores (events) en tijdlijnen (cache)."""
+    evmap = cache["events"]
+    players = {}
+    def P(name, flag):
+        return players.setdefault(name, {"name": name, "flag": flag,
+                                         "goals": 0, "pen": 0, "ast": 0, "y": 0, "r": 0})
+    pen = reds = yellows = total = mp = clean = 0
+    big = most = fastest = None
+    hat = []
+    for ev in events:
+        hc, ac = code_of(ev.get("strHomeTeam")), code_of(ev.get("strAwayTeam"))
+        if not hc or not ac:
+            continue
+        if played(ev):                                  # cijfers uit de uitslag
+            hs, as_ = int(ev["intHomeScore"]), int(ev["intAwayScore"])
+            total += hs + as_; mp += 1
+            clean += (as_ == 0) + (hs == 0)
+            diff, summ = abs(hs - as_), hs + as_
+            if big is None or (diff, summ) > (big["diff"], big["sum"]):
+                big = {"diff": diff, "sum": summ, "hc": hc, "ac": ac, "score": f"{hs}–{as_}"}
+            if most is None or summ > most["sum"]:
+                most = {"sum": summ, "hc": hc, "ac": ac, "score": f"{hs}–{as_}"}
+        entry = evmap.get(ev.get("idEvent"))             # leaderboards uit de tijdlijn
+        if not entry:
+            continue
+        mg = {}
+        for r in entry.get("tl") or []:
+            if r["k"] == "G" and r["d"] == "Missed Penalty":
+                continue
+            flag = TEAMS[hc if r["h"] else ac][1]
+            if r["k"] == "G":
+                if r["d"] != "Own Goal":
+                    pd = P(r["p"], flag); pd["goals"] += 1
+                    if r["d"] == "Penalty":
+                        pd["pen"] += 1; pen += 1
+                    mg[r["p"]] = mg.get(r["p"], 0) + 1
+                    if mg[r["p"]] == 3:
+                        hat.append((r["p"], flag))
+                    if fastest is None or r["t"] < fastest["t"]:
+                        fastest = {"t": r["t"], "name": r["p"], "home": TEAMS[hc][0], "away": TEAMS[ac][0]}
+                    if r["a"]:
+                        P(r["a"], flag)["ast"] += 1
+            else:                                        # kaart
+                pd = P(r["p"], flag)
+                if r["d"] == "Red Card":
+                    pd["r"] += 1; reds += 1
+                else:
+                    pd["y"] += 1; yellows += 1
+    al = list(players.values())
+    scorers = sorted((p for p in al if p["goals"]), key=lambda p: (-p["goals"], -p["ast"], p["name"]))[:8]
+    assists = sorted((p for p in al if p["ast"]),   key=lambda p: (-p["ast"], -p["goals"], p["name"]))[:8]
+    cards   = sorted((p for p in al if p["r"] or p["y"]), key=lambda p: (-p["r"], -p["y"], p["name"]))[:8]
+    return {"total": total, "matches": mp, "clean": clean, "pen": pen, "reds": reds,
+            "yellows": yellows, "hat": hat, "fastest": fastest, "big": big, "most": most,
+            "scorers": scorers, "assists": assists, "cards": cards}
+
+def render_stats(events, cache):
+    s = compute_stats(events, cache)
+    if not s["matches"]:
+        return ""                                        # nog niets gespeeld
+    f2n = {TEAMS[c][1]: TEAMS[c][0] for c in TEAMS}
+    be, nl = TEAMS["BEL"][1], TEAMS["NED"][1]
+    def acc(flag):
+        return " be" if flag == be else (" nl" if flag == nl else "")
+    avg = f'{s["total"] / s["matches"]:.2f}'.replace(".", ",")
+    def tile(lab, num, det, cls=""):
+        return (f'<div class="stat {cls}"><span class="lab">{lab}</span>'
+                f'<span class="num">{num}</span><span class="det">{det}</span></div>')
+    big, most, fast = s["big"], s["most"], s["fastest"]
+    win = (f'<div class="stat"><span class="lab">🔥 Grootste zege</span>'
+           f'<span class="winline"><span class="fl">{TEAMS[big["hc"]][1]}</span>'
+           f'<span class="sc">{big["score"]}</span><span class="fl">{TEAMS[big["ac"]][1]}</span></span>'
+           f'<span class="det">{TEAMS[big["hc"]][0]} – {TEAMS[big["ac"]][0]}</span></div>')
+    hatnames = " · ".join(f'{flag} {name.split()[-1]}' for name, flag in s["hat"]) or "nog geen"
+    grid = (
+        f'<div class="stat hero"><span class="lab">⚽ Totaal doelpunten</span>'
+        f'<span class="num">{s["total"]}</span>'
+        f'<span class="det">in {s["matches"]} wedstrijden · <b>gemiddeld {avg} per match</b></span></div>'
+        + win
+        + tile("📈 Meeste goals / match", most["sum"], f'{TEAMS[most["hc"]][0]} {most["score"]} {TEAMS[most["ac"]][0]}')
+        + tile("🧤 Clean sheets", s["clean"], 'keer "de nul" gehouden')
+        + tile("🎯 Penalty’s benut", s["pen"], "rake strafschoppen")
+        + tile("🟥 Rode kaarten", s["reds"], f'+ {s["yellows"]} gele kaarten')
+        + tile("🎩 Hat-tricks", len(s["hat"]), hatnames)
+        + tile("⏱️ Snelste goal", (str(fast["t"]) + "'") if fast else "—",
+               f'{fast["name"]} · {fast["home"]}–{fast["away"]}' if fast else "—")
+    )
+    def row(p, i, val, show_pen=False):
+        rcls = f" r{i}" if i <= 3 else ""
+        pn = f' · {p["pen"]} pen.' if show_pen and p["pen"] else ""
+        return (f'<li class="lbrow{rcls}{acc(p["flag"])}"><span class="rank">{i}</span>'
+                f'<span class="fl">{p["flag"]}</span><span class="who">'
+                f'<span class="nm">{p["name"]}</span><span class="tm">{f2n.get(p["flag"], "")}{pn}</span>'
+                f'</span>{val}</li>')
+    def board(icon, title, sub, lst, valfn, show_pen=False):
+        rows = "".join(row(p, i, valfn(p), show_pen) for i, p in enumerate(lst, 1))
+        return (f'<div class="board"><div class="bh"><span class="bicon">{icon}</span>'
+                f'<h3>{title}</h3><span class="bsub">{sub}</span></div><ol>{rows}</ol></div>')
+    boards = (
+        board("👟", "Gouden Schoen", "Goals", s["scorers"], lambda p: f'<span class="val">{p["goals"]}</span>', show_pen=True)
+        + board("🅰️", "Assists", "Beslissend", s["assists"], lambda p: f'<span class="val">{p["ast"]}</span>')
+        + board("🟨", "Kaarten", "Discipline", s["cards"], lambda p: f'<span class="cards">{"🟥" * p["r"]}{"🟨" * p["y"]}</span>')
+    )
+    return (f'<div class="statgrid">{grid}</div>'
+            f'<div class="subhead">Topscorers &amp; kaarten</div>'
+            f'<div class="boards">{boards}</div>')
 
 # ----------------------------------------------------------------------------
 # Renderen (identiek format aan de placeholders in template.html)
@@ -349,6 +466,7 @@ def main():
     html = html.replace("{{POP_DATA}}", render_pop_data(groups))
     html = html.replace("{{FX_DATA}}",  render_fx_data(groups))
     html = html.replace("{{TL_DATA}}",  render_tl_data(events, cache))
+    html = html.replace("{{STATS}}",    render_stats(events, cache))
     open(OUTPUT, "w", encoding="utf-8").write(html)
     tot = sum(len(g["matches"]) for g in groups.values())
     print(f"{OUTPUT} geschreven — {len(groups)} groepen, {tot} groepsduels.")
