@@ -43,10 +43,18 @@ jobs:
         run: |
           if git diff --quiet -- index.html data.json; then
             echo "Geen wijziging in de standen — niets te committen."
-          else
-            git config user.name  "wk-bot"
-            git config user.email "github-actions[bot]@users.noreply.github.com"
-            git add index.html data.json
-            git commit -m "Auto-update standen ($(date -u +'%Y-%m-%d %H:%M UTC'))"
-            git push
+            exit 0
           fi
+          git config user.name  "wk-bot"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add index.html data.json
+          git commit -m "Auto-update standen ($(date -u +'%Y-%m-%d %H:%M UTC'))"
+          # Gelijktijdige runs/handmatige pushes kunnen main vooruit schuiven:
+          # rebase en probeer opnieuw i.p.v. falen op een afgewezen push.
+          for attempt in 1 2 3; do
+            if git push; then exit 0; fi
+            echo "Push afgewezen — rebase op origin/main en opnieuw (poging $attempt)…"
+            git pull --rebase origin main || exit 1
+          done
+          echo "Push bleef falen na 3 pogingen." >&2
+          exit 1
