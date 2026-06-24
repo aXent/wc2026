@@ -75,9 +75,11 @@
   .groups{display:grid;gap:12px;grid-template-columns:repeat(auto-fill,minmax(232px,1fr))}
   .grp{background:var(--paper);border:1px solid var(--line);border-radius:14px;overflow:hidden;box-shadow:var(--shadow)}
   .grp.has-be{border-color:var(--be);box-shadow:0 0 0 1px var(--be), var(--shadow)}
+  .grp.has-nl{border-color:var(--nl);box-shadow:0 0 0 1px var(--nl), var(--shadow)}
   .grp .gh{display:flex;align-items:center;gap:10px;padding:10px 14px;border-bottom:1px solid var(--line);background:linear-gradient(180deg,#fff,#FAFBFC)}
   .grp .glet{font-family:'Anton',sans-serif;font-size:22px;line-height:1;background:var(--ink);color:#fff;width:34px;height:34px;border-radius:9px;display:grid;place-items:center;flex:none}
   .grp.has-be .glet{background:var(--be)}
+  .grp.has-nl .glet{background:var(--nl)}
   .grp .gname{font-weight:800;font-size:13px;letter-spacing:.04em;text-transform:uppercase;color:var(--muted)}
   .grp .played{margin-left:auto;font-size:10px;font-weight:800;letter-spacing:.04em;color:var(--muted);background:#EEF1F5;padding:3px 7px;border-radius:999px;text-transform:uppercase}
   .grp ol{list-style:none;margin:0;padding:6px 8px 10px}
@@ -95,6 +97,9 @@
   .grp li.be{background:var(--be-soft)}
   .grp li.be .nm{font-weight:800}
   .grp li.be .nm::after{content:" ★";color:var(--be);font-size:11px}
+  .grp li.nl{background:var(--nl-soft)}
+  .grp li.nl .nm{font-weight:800}
+  .grp li.nl .nm::after{content:" ★";color:var(--nl);font-size:11px}
 
   /* uitklapbare resterende wedstrijden */
   .grp .gh{cursor:pointer;user-select:none}
@@ -335,7 +340,7 @@
   <div class="sec-head">
     <span class="num">01</span>
     <h2>De groepen — stand nu</h2>
-    <span class="tag">★ = België &nbsp;|&nbsp; <span style="color:var(--turf)">groen</span> top 2 · <span style="color:var(--amber)">oranje</span> 3<sup>e</sup> · grijs 4<sup>e</sup></span>
+    <span class="tag">★ = <span style="color:var(--be)">België</span> / <span style="color:var(--nl)">Nederland</span> &nbsp;|&nbsp; <span style="color:var(--turf)">groen</span> top 2 · <span style="color:var(--amber)">oranje</span> 3<sup>e</sup> · grijs 4<sup>e</sup></span>
   </div>
   <p class="scroll-hint" style="margin:0 4px 12px">👆 Tik op een groep voor alle wedstrijden — uitslagen én programma.</p>
 

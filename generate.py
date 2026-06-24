@@ -291,14 +291,15 @@ def render_group_cards(groups):
     for g in sorted(groups):
         gr = groups[g]
         has_be = any(t["code"] == "BEL" for t in gr["teams"])
+        has_nl = any(t["code"] == "NED" for t in gr["teams"])
         rows = "".join(
-            f'<li class="q{i}{" be" if t["code"]=="BEL" else ""}">'
+            f'<li class="q{i}{" be" if t["code"]=="BEL" else (" nl" if t["code"]=="NED" else "")}">'
             f'<span class="pos">{i}</span><span class="fl">{t["flag"]}</span>'
             f'<span class="nm">{t["nl"]}</span><span class="pts">{t["pts"]}</span>'
             f'<span class="gd">{gd_str(t["gd"])}</span></li>'
             for i, t in enumerate(gr["teams"], 1))
         out.append(
-            f'<div class="grp{" has-be" if has_be else ""}"><div class="gh">'
+            f'<div class="grp{" has-be" if has_be else (" has-nl" if has_nl else "")}"><div class="gh">'
             f'<span class="glet">{g}</span><span class="gname">Groep {g}</span>'
             f'<span class="played">{gr["played"]}/3</span></div><ol>{rows}</ol></div>')
     return "\n".join(out)
