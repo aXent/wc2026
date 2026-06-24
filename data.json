@@ -1761,8 +1761,8 @@
    ]
   },
   "2391767": {
-   "score": "1-0",
-   "status": "2H",
+   "score": "2-1",
+   "status": "FT",
    "tl": [
     {
      "a": "",
@@ -1781,12 +1781,36 @@
      "t": 32
     },
     {
-     "a": "",
+     "a": "Johan Manzambi",
      "d": "Normal Goal",
      "h": true,
      "k": "G",
      "p": "Rubén Vargas",
      "t": 46
+    },
+    {
+     "a": "Breel Embolo",
+     "d": "Normal Goal",
+     "h": true,
+     "k": "G",
+     "p": "Johan Manzambi",
+     "t": 57
+    },
+    {
+     "a": "Nathan Saliba",
+     "d": "Normal Goal",
+     "h": false,
+     "k": "G",
+     "p": "Promise David",
+     "t": 76
+    },
+    {
+     "a": "",
+     "d": "Yellow Card",
+     "h": false,
+     "k": "C",
+     "p": "Liam Millar",
+     "t": 87
     }
    ]
   },
@@ -2415,8 +2439,8 @@
    ]
   },
   "2461115": {
-   "score": "2-1",
-   "status": "2H",
+   "score": "3-1",
+   "status": "FT",
    "tl": [
     {
      "a": "Ivan Bašić",
@@ -2431,7 +2455,7 @@
      "d": "Own Goal",
      "h": true,
      "k": "G",
-     "p": "Sultan Al-Brake",
+     "p": "Mahmud Abunada",
      "t": 34
     },
     {
@@ -2441,6 +2465,30 @@
      "k": "G",
      "p": "Hassan Al-Haydos",
      "t": 42
+    },
+    {
+     "a": "",
+     "d": "Yellow Card",
+     "h": false,
+     "k": "C",
+     "p": "Ahmed Fathy",
+     "t": 78
+    },
+    {
+     "a": "Dennis Hadžikadunić",
+     "d": "Normal Goal",
+     "h": true,
+     "k": "G",
+     "p": "Ermin Mahmić",
+     "t": 80
+    },
+    {
+     "a": "",
+     "d": "Yellow Card",
+     "h": true,
+     "k": "C",
+     "p": "Ermin Mahmić",
+     "t": 82
     }
    ]
   }
