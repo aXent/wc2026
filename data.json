@@ -1505,14 +1505,6 @@
    "status": "FT",
    "tl": [
     {
-     "a": "Lionel Messi",
-     "d": "Missed Penalty",
-     "h": true,
-     "k": "G",
-     "p": "Lionel Messi",
-     "t": 9
-    },
-    {
      "a": "Facundo Medina",
      "d": "Normal Goal",
      "h": true,
@@ -1771,7 +1763,24 @@
   "2391767": {
    "score": "0-0",
    "status": "1H",
-   "tl": []
+   "tl": [
+    {
+     "a": "",
+     "d": "Yellow Card",
+     "h": true,
+     "k": "C",
+     "p": "Granit Xhaka",
+     "t": 32
+    },
+    {
+     "a": "",
+     "d": "Yellow Card",
+     "h": false,
+     "k": "C",
+     "p": "Cyle Larin",
+     "t": 32
+    }
+   ]
   },
   "2461103": {
    "score": "2-1",
@@ -2398,10 +2407,27 @@
    ]
   },
   "2461115": {
-   "score": "0-0",
+   "score": "2-0",
    "status": "1H",
-   "tl": []
+   "tl": [
+    {
+     "a": "Ivan Bašić",
+     "d": "Normal Goal",
+     "h": true,
+     "k": "G",
+     "p": "Kerim Alajbegović",
+     "t": 29
+    },
+    {
+     "a": "",
+     "d": "Own Goal",
+     "h": true,
+     "k": "G",
+     "p": "Sultan Al-Brake",
+     "t": 34
+    }
+   ]
   }
  },
- "schema": 1
+ "schema": 2
 }
