@@ -1977,8 +1977,8 @@
    ]
   },
   "2391768": {
-   "score": "0-1",
-   "status": "HT",
+   "score": "0-2",
+   "status": "FT",
    "tl": [
     {
      "a": "Yan Diomande",
@@ -1987,12 +1987,44 @@
      "k": "G",
      "p": "Nicolas Pépé",
      "t": 7
+    },
+    {
+     "a": "",
+     "d": "Yellow Card",
+     "h": false,
+     "k": "C",
+     "p": "Nicolas Pépé",
+     "t": 35
+    },
+    {
+     "a": "Ibrahim Sangaré",
+     "d": "Normal Goal",
+     "h": false,
+     "k": "G",
+     "p": "Nicolas Pépé",
+     "t": 64
+    },
+    {
+     "a": "",
+     "d": "Yellow Card",
+     "h": true,
+     "k": "C",
+     "p": "Juninho Bacuna",
+     "t": 75
+    },
+    {
+     "a": "",
+     "d": "Yellow Card",
+     "h": true,
+     "k": "C",
+     "p": "Gervane Kastaneer",
+     "t": 83
     }
    ]
   },
   "2391769": {
-   "score": "1-1",
-   "status": "HT",
+   "score": "2-1",
+   "status": "2H",
    "tl": [
     {
      "a": "Florian Wirtz",
@@ -2009,6 +2041,46 @@
      "k": "G",
      "p": "Nilson Angulo",
      "t": 9
+    },
+    {
+     "a": "",
+     "d": "Yellow Card",
+     "h": true,
+     "k": "C",
+     "p": "Piero Hincapié",
+     "t": 43
+    },
+    {
+     "a": "",
+     "d": "Yellow Card",
+     "h": false,
+     "k": "C",
+     "p": "Aleksandar Pavlović",
+     "t": 44
+    },
+    {
+     "a": "",
+     "d": "Yellow Card",
+     "h": true,
+     "k": "C",
+     "p": "Alan Franco",
+     "t": 50
+    },
+    {
+     "a": "Kevin Rodríguez",
+     "d": "Normal Goal",
+     "h": true,
+     "k": "G",
+     "p": "Gonzalo Plata",
+     "t": 77
+    },
+    {
+     "a": "",
+     "d": "Yellow Card",
+     "h": true,
+     "k": "C",
+     "p": "Gonzalo Plata",
+     "t": 89
     }
    ]
   },
