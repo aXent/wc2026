@@ -36,6 +36,7 @@ TZ       = ZoneInfo("Europe/Brussels")              # Belgische tijd (CEST)
 TEMPLATE = "template.html"
 OUTPUT   = "index.html"
 CACHE    = "data.json"                               # tijdlijn-cache (doelpunten/kaarten)
+THIRDS   = "thirds_table.json"                       # officiële toewijzing beste nrs. 3 (Annex C, 495 combinaties)
 WEEKDAYS = ["ma", "di", "wo", "do", "vr", "za", "zo"]
 MONTHS   = ["januari","februari","maart","april","mei","juni",
             "juli","augustus","september","oktober","november","december"]
@@ -168,8 +169,8 @@ def build_groups(events):
                 tbl[c]["pts"] += 3 if gf > ga else (1 if gf == ga else 0)
         order = sorted(codes, key=lambda c: (tbl[c]["pts"],
                        tbl[c]["gf"] - tbl[c]["ga"], tbl[c]["gf"]), reverse=True)
-        teams = [{"flag": TEAMS[c][1], "nl": TEAMS[c][0], "code": c,
-                  "pts": tbl[c]["pts"], "gd": tbl[c]["gf"] - tbl[c]["ga"]} for c in order]
+        teams = [{"flag": TEAMS[c][1], "nl": TEAMS[c][0], "code": c, "pts": tbl[c]["pts"],
+                  "gd": tbl[c]["gf"] - tbl[c]["ga"], "gf": tbl[c]["gf"]} for c in order]
         # 3) wedstrijdregels voor de accordion
         matches = [{
             "d": m["d"], "t": m["t"],
@@ -401,6 +402,34 @@ def render_stats(events, cache):
             f'<div class="boards">{boards}</div>')
 
 # ----------------------------------------------------------------------------
+# Knock-out: vakjes invullen vanuit de groepsstand
+# ----------------------------------------------------------------------------
+def load_thirds_table():
+    try:
+        with open(THIRDS, encoding="utf-8") as f:
+            return json.load(f)
+    except (FileNotFoundError, json.JSONDecodeError):
+        return {}
+
+def render_bracket_data(groups):
+    """1X/2X invullen zodra een groep af is; de 8 beste nrs. 3 zodra de hele
+    groepsfase af is, via de officiële 495-combinatietabel (Annex C)."""
+    qual = {}
+    for g, gr in groups.items():
+        if gr["played"] >= 3 and len(gr["teams"]) >= 2:        # groep volledig gespeeld
+            t = gr["teams"]
+            qual["1" + g] = [t[0]["flag"], t[0]["nl"]]
+            qual["2" + g] = [t[1]["flag"], t[1]["nl"]]
+    third = {}
+    if len(groups) == 12 and all(gr["played"] >= 3 for gr in groups.values()):
+        t3 = {g: groups[g]["teams"][2] for g in groups}        # nr. 3 van elke groep
+        ranked = sorted(groups, key=lambda g: (t3[g]["pts"], t3[g]["gd"], t3[g]["gf"]), reverse=True)
+        key = "".join(sorted(ranked[:8]))                      # 8 beste → combinatiesleutel
+        for w, tg in load_thirds_table().get(key, {}).items(): # winnaargroep w speelt de 3e van groep tg
+            third[w] = [t3[tg]["flag"], t3[tg]["nl"], tg]      # tg = brongroep (voor de popover)
+    return json.dumps(qual, ensure_ascii=False), json.dumps(third, ensure_ascii=False)
+
+# ----------------------------------------------------------------------------
 # Renderen (identiek format aan de placeholders in template.html)
 # ----------------------------------------------------------------------------
 def render_group_cards(groups):
@@ -467,6 +496,9 @@ def main():
     html = html.replace("{{FX_DATA}}",  render_fx_data(groups))
     html = html.replace("{{TL_DATA}}",  render_tl_data(events, cache))
     html = html.replace("{{STATS}}",    render_stats(events, cache))
+    qual_json, third_json = render_bracket_data(groups)
+    html = html.replace("{{QUAL_DATA}}",  qual_json)
+    html = html.replace("{{THIRD_DATA}}", third_json)
     open(OUTPUT, "w", encoding="utf-8").write(html)
     tot = sum(len(g["matches"]) for g in groups.values())
     print(f"{OUTPUT} geschreven — {len(groups)} groepen, {tot} groepsduels.")
