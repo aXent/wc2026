@@ -155,6 +155,10 @@
   .slot .code{font-family:'Anton',sans-serif;font-size:13px;color:var(--ink);background:#F1F3F7;border-radius:5px;padding:1px 6px;min-width:30px;text-align:center;flex:none}
   .slot.win .code{background:var(--turf);color:#fff}
   .slot.team .code{background:var(--ink);color:#fff}
+  /* voorlopige plaatsing (groep nog niet af): leesbaar grijs + stippellijn-onderlijning */
+  .slot.prov .code{background:#AEB6C0;color:#fff}
+  .slot.prov .lab{color:var(--muted);font-style:italic;text-decoration:underline dotted var(--muted);text-underline-offset:2px}
+  .slot.prov .fl{opacity:.6}
   .slot .fl{font-size:15px;flex:none}
   .slot .lab{color:var(--muted);font-weight:600;font-size:11.5px}
   .slot.team .lab{color:var(--ink);font-weight:700;font-size:12.5px}
@@ -1010,10 +1014,11 @@ b.addEventListener('click',function(){var o=s.classList.toggle('open');b.querySe
 /* Knock-outvakjes invullen vanuit de groepsstand: 1X/2X zodra een groep af is,
    en de beste nummers 3 op hun officiële plek zodra de groepsfase af is. */
 (function(){
-  var QUAL = {"1A": ["🇲🇽", "Mexico"], "2A": ["🇿🇦", "Zuid-Afrika"], "1B": ["🇨🇭", "Zwitserland"], "2B": ["🇨🇦", "Canada"], "1C": ["🇧🇷", "Brazilië"], "2C": ["🇲🇦", "Marokko"]};
+  var QUAL = {"1A": ["🇲🇽", "Mexico", true], "2A": ["🇿🇦", "Zuid-Afrika", true], "1B": ["🇨🇭", "Zwitserland", true], "2B": ["🇨🇦", "Canada", true], "1C": ["🇧🇷", "Brazilië", true], "2C": ["🇲🇦", "Marokko", true], "1D": ["🇺🇸", "Ver. Staten", false], "2D": ["🇦🇺", "Australië", false], "1E": ["🇩🇪", "Duitsland", false], "2E": ["🇨🇮", "Ivoorkust", false], "1F": ["🇳🇱", "Nederland", false], "2F": ["🇯🇵", "Japan", false], "1G": ["🇪🇬", "Egypte", false], "2G": ["🇮🇷", "Iran", false], "1H": ["🇪🇸", "Spanje", false], "2H": ["🇺🇾", "Uruguay", false], "1I": ["🇫🇷", "Frankrijk", false], "2I": ["🇳🇴", "Noorwegen", false], "1J": ["🇦🇷", "Argentinië", false], "2J": ["🇦🇹", "Oostenrijk", false], "1K": ["🇨🇴", "Colombia", false], "2K": ["🇵🇹", "Portugal", false], "1L": ["🏴󠁧󠁢󠁥󠁮󠁧󠁿", "Engeland", false], "2L": ["🇬🇭", "Ghana", false]};
   var THIRD = {};
-  function fill(slot, flag, name){
-    slot.classList.add('team');
+  function fill(slot, flag, name, prov){
+    slot.classList.remove('team', 'prov');
+    slot.classList.add(prov ? 'prov' : 'team');         // prov = voorlopig (grijs), anders bevestigd
     var lab = slot.querySelector('.lab'), fl = slot.querySelector('.fl');
     if(!fl){ fl = document.createElement('span'); fl.className = 'fl'; slot.insertBefore(fl, lab); }
     fl.textContent = flag;
@@ -1023,7 +1028,7 @@ b.addEventListener('click',function(){var o=s.classList.toggle('open');b.querySe
     var third = null, wg = null;
     m.querySelectorAll('.slot').forEach(function(s){
       var el = s.querySelector('.code'), c = el ? el.textContent.trim() : '';
-      if(QUAL[c]){ fill(s, QUAL[c][0], QUAL[c][1]); }
+      if(QUAL[c]){ fill(s, QUAL[c][0], QUAL[c][1], !QUAL[c][2]); }   // QUAL[c][2] = bevestigd?
       if(c === '3'){ third = s; }
       var mw = c.match(/^1([A-L])$/); if(mw){ wg = mw[1]; }
     });
