@@ -723,6 +723,15 @@
     var lab = labEl ? labEl.textContent : '';
     var m;
 
+    // ingevulde beste-3e (data-grp = brongroep): toon die groepsstand, 3e gemarkeerd
+    var fgrp = slot.getAttribute('data-grp');
+    if(fgrp && G[fgrp]){
+      var fg = G[fgrp];
+      var frows = fg.t.map(function(t,i){ return row(t, i===2); }).join('');
+      return '<div class="wc-title"><span class="wc-code">3ᵉ</span> Groep '+fgrp+' · beste nr. 3</div>'+
+        frows+'<div class="wc-note">Geplaatst als beste nummer 3 voor de 1/16 finales.</div>';
+    }
+
     // 1X of 2X (incl. 1A/1D met bevestigd team)
     if((m = code.match(/^([12])([A-L])$/))){
       var pos = +m[1], grp = m[2], g = G[grp];
@@ -995,6 +1004,31 @@ document.getElementById('kal').addEventListener('click',function(e){
 <script>
 (function(){var s=document.getElementById('stats'),b=document.getElementById('statsToggle');if(!b)return;
 b.addEventListener('click',function(){var o=s.classList.toggle('open');b.querySelector('.cv').textContent=o?'▴':'▾';b.querySelector('.tg-label').textContent=o?'Verberg de cijfers':'Toon de cijfers';});})();
+</script>
+<script>
+/* Knock-outvakjes invullen vanuit de groepsstand: 1X/2X zodra een groep af is,
+   en de beste nummers 3 op hun officiële plek zodra de groepsfase af is. */
+(function(){
+  var QUAL = {"1A": ["🇲🇽", "Mexico"], "2A": ["🇿🇦", "Zuid-Afrika"], "1B": ["🇨🇭", "Zwitserland"], "2B": ["🇨🇦", "Canada"], "1C": ["🇧🇷", "Brazilië"], "2C": ["🇲🇦", "Marokko"]};
+  var THIRD = {};
+  function fill(slot, flag, name){
+    slot.classList.add('team');
+    var lab = slot.querySelector('.lab'), fl = slot.querySelector('.fl');
+    if(!fl){ fl = document.createElement('span'); fl.className = 'fl'; slot.insertBefore(fl, lab); }
+    fl.textContent = flag;
+    if(lab){ lab.textContent = name; }
+  }
+  document.querySelectorAll('.bracket .m').forEach(function(m){
+    var third = null, wg = null;
+    m.querySelectorAll('.slot').forEach(function(s){
+      var el = s.querySelector('.code'), c = el ? el.textContent.trim() : '';
+      if(QUAL[c]){ fill(s, QUAL[c][0], QUAL[c][1]); }
+      if(c === '3'){ third = s; }
+      var mw = c.match(/^1([A-L])$/); if(mw){ wg = mw[1]; }
+    });
+    if(third && wg && THIRD[wg]){ fill(third, THIRD[wg][0], THIRD[wg][1]); third.setAttribute('data-grp', THIRD[wg][2]); }
+  });
+})();
 </script>
 </body>
 </html>
