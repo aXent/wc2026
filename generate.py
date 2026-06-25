@@ -250,8 +250,19 @@ def load_cache():
     c.setdefault("events", {})
     return c
 
+def tl_complete(entry, score):
+    """True als de opgeslagen tijdlijn minstens zoveel doelpunten bevat als de uitslag.
+    TheSportsDB zet score+FT vaak vóór de tijdlijn klaar is; dan staat er een lege/
+    onvolledige tijdlijn in de cache die anders nooit meer ververst zou worden."""
+    try:
+        total = sum(int(x) for x in score.split("-"))
+    except ValueError:
+        return True
+    goals = sum(1 for r in (entry.get("tl") or []) if r.get("k") == "G")
+    return goals >= total
+
 def update_cache(events, cache):
-    """Vul de cache aan voor gespeelde duels die nieuw/niet-definitief/gewijzigd zijn."""
+    """Vul de cache aan voor gespeelde duels die nieuw/niet-definitief/gewijzigd/onvolledig zijn."""
     evmap = cache["events"]
     fetched = 0
     for ev in events:
@@ -261,8 +272,9 @@ def update_cache(events, cache):
         score  = f'{ev.get("intHomeScore")}-{ev.get("intAwayScore")}'
         status = ev.get("strStatus") or ""
         old = evmap.get(eid)
-        if old and old.get("status") == "FT" and old.get("score") == score and "tl" in old:
-            continue                                   # definitief én ongewijzigd → skip
+        if (old and old.get("status") == "FT" and old.get("score") == score
+                and "tl" in old and tl_complete(old, score)):
+            continue                                   # definitief, ongewijzigd én volledig → skip
         tl = fetch_timeline(eid)
         if tl is None:                                 # API-fout → niet cachen, volgende run
             continue
