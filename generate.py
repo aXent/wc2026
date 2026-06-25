@@ -457,10 +457,13 @@ def render_group_cards(groups):
             f'<span class="nm">{t["nl"]}</span><span class="pts">{t["pts"]}</span>'
             f'<span class="gd">{gd_str(t["gd"])}</span></li>'
             for i, t in enumerate(gr["teams"], 1))
+        final = gr["played"] >= 3
+        cls = "grp" + (" final" if final else "") + (" has-be" if has_be else (" has-nl" if has_nl else ""))
+        badge = "Eindstand" if final else f'{gr["played"]}/3'
         out.append(
-            f'<div class="grp{" has-be" if has_be else (" has-nl" if has_nl else "")}"><div class="gh">'
+            f'<div class="{cls}"><div class="gh">'
             f'<span class="glet">{g}</span><span class="gname">Groep {g}</span>'
-            f'<span class="played">{gr["played"]}/3</span></div><ol>{rows}</ol></div>')
+            f'<span class="played">{badge}</span></div><ol>{rows}</ol></div>')
     return "\n".join(out)
 
 def render_pop_data(groups):
