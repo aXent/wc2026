@@ -1976,6 +1976,42 @@
     }
    ]
   },
+  "2391768": {
+   "score": "0-1",
+   "status": "1H",
+   "tl": [
+    {
+     "a": "Yan Diomande",
+     "d": "Normal Goal",
+     "h": false,
+     "k": "G",
+     "p": "Nicolas Pépé",
+     "t": 7
+    }
+   ]
+  },
+  "2391769": {
+   "score": "1-1",
+   "status": "1H",
+   "tl": [
+    {
+     "a": "Florian Wirtz",
+     "d": "Normal Goal",
+     "h": false,
+     "k": "G",
+     "p": "Leroy Sané",
+     "t": 2
+    },
+    {
+     "a": "Pedro Vite",
+     "d": "Normal Goal",
+     "h": true,
+     "k": "G",
+     "p": "Nilson Angulo",
+     "t": 9
+    }
+   ]
+  },
   "2461103": {
    "score": "2-1",
    "status": "FT",
