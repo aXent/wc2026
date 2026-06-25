@@ -428,10 +428,11 @@ def render_bracket_data(groups):
     groepsfase af is, via de officiële 495-combinatietabel (Annex C)."""
     qual = {}
     for g, gr in groups.items():
-        if gr["played"] >= 3 and len(gr["teams"]) >= 2:        # groep volledig gespeeld
+        if gr["played"] >= 2 and len(gr["teams"]) >= 2:        # vanaf 2 speeldagen tonen
             t = gr["teams"]
-            qual["1" + g] = [t[0]["flag"], t[0]["nl"]]
-            qual["2" + g] = [t[1]["flag"], t[1]["nl"]]
+            fin = gr["played"] >= 3                             # 3/3 = bevestigd; anders voorlopig (grijs)
+            qual["1" + g] = [t[0]["flag"], t[0]["nl"], fin]
+            qual["2" + g] = [t[1]["flag"], t[1]["nl"], fin]
     third = {}
     if len(groups) == 12 and all(gr["played"] >= 3 for gr in groups.values()):
         t3 = {g: groups[g]["teams"][2] for g in groups}        # nr. 3 van elke groep
