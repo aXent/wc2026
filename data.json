@@ -1763,17 +1763,164 @@
   "2391764": {
    "score": "4-2",
    "status": "FT",
-   "tl": []
+   "tl": [
+    {
+     "a": "",
+     "d": "Own Goal",
+     "h": false,
+     "k": "G",
+     "p": "Bono",
+     "t": 10
+    },
+    {
+     "a": "",
+     "d": "Normal Goal",
+     "h": true,
+     "k": "G",
+     "p": "Achraf Hakimi",
+     "t": 39
+    },
+    {
+     "a": "Jean-Kevin Duverne",
+     "d": "Normal Goal",
+     "h": false,
+     "k": "G",
+     "p": "Wilson Isidor",
+     "t": 43
+    },
+    {
+     "a": "Achraf Hakimi",
+     "d": "Normal Goal",
+     "h": true,
+     "k": "G",
+     "p": "Ismael Saibari",
+     "t": 45
+    },
+    {
+     "a": "Chadi Riad",
+     "d": "Normal Goal",
+     "h": true,
+     "k": "G",
+     "p": "Soufiane Rahimi",
+     "t": 78
+    },
+    {
+     "a": "",
+     "d": "Yellow Card",
+     "h": false,
+     "k": "C",
+     "p": "Johny Placide",
+     "t": 79
+    },
+    {
+     "a": "",
+     "d": "Yellow Card",
+     "h": false,
+     "k": "C",
+     "p": "Duckens Nazon",
+     "t": 79
+    },
+    {
+     "a": "Soufiane Rahimi",
+     "d": "Normal Goal",
+     "h": true,
+     "k": "G",
+     "p": "Gessime Yassine",
+     "t": 89
+    },
+    {
+     "a": "",
+     "d": "Yellow Card",
+     "h": false,
+     "k": "C",
+     "p": "Josué Casimir",
+     "t": 90
+    }
+   ]
   },
   "2391765": {
    "score": "0-3",
    "status": "FT",
-   "tl": []
+   "tl": [
+    {
+     "a": "Rayan",
+     "d": "Normal Goal",
+     "h": false,
+     "k": "G",
+     "p": "Vinícius Júnior",
+     "t": 7
+    },
+    {
+     "a": "Bruno Guimarães",
+     "d": "Normal Goal",
+     "h": false,
+     "k": "G",
+     "p": "Vinícius Júnior",
+     "t": 45
+    },
+    {
+     "a": "Bruno Guimarães",
+     "d": "Normal Goal",
+     "h": false,
+     "k": "G",
+     "p": "Matheus Cunha",
+     "t": 60
+    },
+    {
+     "a": "",
+     "d": "Yellow Card",
+     "h": false,
+     "k": "C",
+     "p": "Danilo",
+     "t": 63
+    },
+    {
+     "a": "",
+     "d": "Yellow Card",
+     "h": false,
+     "k": "C",
+     "p": "Fabinho",
+     "t": 83
+    },
+    {
+     "a": "",
+     "d": "Yellow Card",
+     "h": true,
+     "k": "C",
+     "p": "Ryan Christie",
+     "t": 89
+    }
+   ]
   },
   "2391766": {
    "score": "1-0",
    "status": "FT",
-   "tl": []
+   "tl": [
+    {
+     "a": "Tshepang Moremi",
+     "d": "Normal Goal",
+     "h": true,
+     "k": "G",
+     "p": "Thapelo Maseko",
+     "t": 63
+    },
+    {
+     "a": "",
+     "d": "Yellow Card",
+     "h": true,
+     "k": "C",
+     "p": "Aubrey Modiba",
+     "t": 73
+    },
+    {
+     "a": "",
+     "d": "Yellow Card",
+     "h": false,
+     "k": "C",
+     "p": "Gue-sung Cho",
+     "t": 79
+    }
+   ]
   },
   "2391767": {
    "score": "2-1",
@@ -2510,7 +2657,40 @@
   "2461116": {
    "score": "0-3",
    "status": "FT",
-   "tl": []
+   "tl": [
+    {
+     "a": "Luis Romo",
+     "d": "Normal Goal",
+     "h": false,
+     "k": "G",
+     "p": "Mateo Chávez",
+     "t": 55
+    },
+    {
+     "a": "Jorge Sánchez",
+     "d": "Normal Goal",
+     "h": false,
+     "k": "G",
+     "p": "Julián Quiñones",
+     "t": 61
+    },
+    {
+     "a": "",
+     "d": "Yellow Card",
+     "h": false,
+     "k": "C",
+     "p": "Edson Álvarez",
+     "t": 64
+    },
+    {
+     "a": "Roberto Alvarado",
+     "d": "Normal Goal",
+     "h": false,
+     "k": "G",
+     "p": "Álvaro Fidalgo",
+     "t": 90
+    }
+   ]
   }
  },
  "schema": 2
