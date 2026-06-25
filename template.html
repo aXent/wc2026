@@ -723,11 +723,12 @@
 
     // 1X of 2X (incl. 1A/1D met bevestigd team)
     if((m = code.match(/^([12])([A-L])$/))){
-      var pos = +m[1], grp = m[2], g = G[grp];
-      var title = '<span class="wc-code'+(pos===1?' w':'')+'">'+code+'</span> Groep '+grp+' · stand nu';
+      var pos = +m[1], grp = m[2], g = G[grp], fin = g.p >= 3;
+      var title = '<span class="wc-code'+(pos===1?' w':'')+'">'+code+'</span> Groep '+grp+(fin?' · eindstand':' · stand nu');
       var rows = g.t.map(function(t,i){ return row(t, pos===1 ? i===0 : i===1); }).join('');
       var who = g.t[pos-1][1];
-      var note = (pos===1?'Nu eerste: ':'Nu tweede: ')+who+'. '+prov(g.p);
+      var note = fin ? (pos===1?'Groepswinnaar: ':'Tweede in de groep: ')+who+'.'
+                     : (pos===1?'Nu eerste: ':'Nu tweede: ')+who+'. '+prov(g.p);
       return '<div class="wc-title">'+title+'</div>'+rows+'<div class="wc-note">'+note+'</div>';
     }
     // Beste 3e met combinatie van groepen
