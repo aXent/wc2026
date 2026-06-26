@@ -2892,7 +2892,56 @@
   "2461118": {
    "score": "3-2",
    "status": "FT",
-   "tl": []
+   "tl": [
+    {
+     "a": "Sebastian Berhalter",
+     "d": "Normal Goal",
+     "h": false,
+     "k": "G",
+     "p": "Auston Trusty",
+     "t": 3
+    },
+    {
+     "a": "Barış Alper Yılmaz",
+     "d": "Normal Goal",
+     "h": true,
+     "k": "G",
+     "p": "Arda Güler",
+     "t": 10
+    },
+    {
+     "a": "",
+     "d": "Yellow Card",
+     "h": false,
+     "k": "C",
+     "p": "Sebastian Berhalter",
+     "t": 19
+    },
+    {
+     "a": "Orkun Kökçü",
+     "d": "Normal Goal",
+     "h": true,
+     "k": "G",
+     "p": "Barış Alper Yılmaz",
+     "t": 31
+    },
+    {
+     "a": "",
+     "d": "Normal Goal",
+     "h": false,
+     "k": "G",
+     "p": "Sebastian Berhalter",
+     "t": 49
+    },
+    {
+     "a": "",
+     "d": "Normal Goal",
+     "h": true,
+     "k": "G",
+     "p": "Kaan Ayhan",
+     "t": 90
+    }
+   ]
   }
  },
  "schema": 2
