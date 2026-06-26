@@ -2084,10 +2084,48 @@
     }
    ]
   },
+  "2391770": {
+   "score": "0-0",
+   "status": "1H",
+   "tl": []
+  },
   "2391771": {
    "score": "1-3",
    "status": "FT",
-   "tl": []
+   "tl": [
+    {
+     "a": "",
+     "d": "Own Goal",
+     "h": false,
+     "k": "G",
+     "p": "Ellyes Skhiri",
+     "t": 3
+    },
+    {
+     "a": "Virgil van Dijk",
+     "d": "Normal Goal",
+     "h": false,
+     "k": "G",
+     "p": "Brian Brobbey",
+     "t": 7
+    },
+    {
+     "a": "Hannibal Mejbri",
+     "d": "Normal Goal",
+     "h": true,
+     "k": "G",
+     "p": "Hazem Mastouri",
+     "t": 54
+    },
+    {
+     "a": "Tijjani Reijnders",
+     "d": "Normal Goal",
+     "h": false,
+     "k": "G",
+     "p": "Jan Paul van Hecke",
+     "t": 62
+    }
+   ]
   },
   "2461103": {
    "score": "2-1",
@@ -2808,6 +2846,52 @@
   "2461117": {
    "score": "1-1",
    "status": "FT",
+   "tl": [
+    {
+     "a": "",
+     "d": "Yellow Card",
+     "h": false,
+     "k": "C",
+     "p": "Isak Hien",
+     "t": 32
+    },
+    {
+     "a": "Ritsu Dōan",
+     "d": "Normal Goal",
+     "h": true,
+     "k": "G",
+     "p": "Daizen Maeda",
+     "t": 56
+    },
+    {
+     "a": "Viktor Gyökeres",
+     "d": "Normal Goal",
+     "h": false,
+     "k": "G",
+     "p": "Anthony Elanga",
+     "t": 62
+    },
+    {
+     "a": "",
+     "d": "Yellow Card",
+     "h": true,
+     "k": "C",
+     "p": "Shōgo Taniguchi",
+     "t": 77
+    },
+    {
+     "a": "",
+     "d": "Yellow Card",
+     "h": false,
+     "k": "C",
+     "p": "Viktor Gyökeres",
+     "t": 85
+    }
+   ]
+  },
+  "2461118": {
+   "score": "1-1",
+   "status": "1H",
    "tl": []
   }
  },
