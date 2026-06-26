@@ -2129,7 +2129,7 @@
   },
   "2391775": {
    "score": "1-4",
-   "status": "2H",
+   "status": "FT",
    "tl": [
     {
      "a": "Kylian Mbappé",
@@ -2170,6 +2170,22 @@
      "k": "G",
      "p": "Ousmane Dembélé",
      "t": 32
+    },
+    {
+     "a": "",
+     "d": "Yellow Card",
+     "h": false,
+     "k": "C",
+     "p": "Aurélien Tchouaméni",
+     "t": 74
+    },
+    {
+     "a": "Bradley Barcola",
+     "d": "Normal Goal",
+     "h": false,
+     "k": "G",
+     "p": "Désiré Doué",
+     "t": 90
     }
    ]
   },
@@ -2991,7 +3007,7 @@
   },
   "2461119": {
    "score": "5-0",
-   "status": "2H",
+   "status": "FT",
    "tl": [
     {
      "a": "Abdoulaye Seck",
@@ -3048,6 +3064,30 @@
      "k": "C",
      "p": "Amir Al-Ammari",
      "t": 75
+    },
+    {
+     "a": "",
+     "d": "Yellow Card",
+     "h": true,
+     "k": "C",
+     "p": "Pape Gueye",
+     "t": 81
+    },
+    {
+     "a": "Pape Gueye",
+     "d": "Normal Goal",
+     "h": true,
+     "k": "G",
+     "p": "Iliman Ndiaye",
+     "t": 82
+    },
+    {
+     "a": "",
+     "d": "Yellow Card",
+     "h": false,
+     "k": "C",
+     "p": "Merchas Doski",
+     "t": 90
     }
    ]
   }
