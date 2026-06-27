@@ -2366,7 +2366,7 @@
   },
   "2391779": {
    "score": "1-0",
-   "status": "HT",
+   "status": "2H",
    "tl": [
     {
      "a": "Mateo Kovačić",
@@ -2375,13 +2375,54 @@
      "k": "G",
      "p": "Petar Sučić",
      "t": 31
+    },
+    {
+     "a": "",
+     "d": "Yellow Card",
+     "h": true,
+     "k": "C",
+     "p": "Ivan Perišić",
+     "t": 68
     }
    ]
   },
   "2391781": {
-   "score": "0-0",
-   "status": "HT",
-   "tl": []
+   "score": "0-2",
+   "status": "2H",
+   "tl": [
+    {
+     "a": "",
+     "d": "Yellow Card",
+     "h": true,
+     "k": "C",
+     "p": "José Fajardo",
+     "t": 53
+    },
+    {
+     "a": "",
+     "d": "Yellow Card",
+     "h": false,
+     "k": "C",
+     "p": "Jarell Quansah",
+     "t": 60
+    },
+    {
+     "a": "Bukayo Saka",
+     "d": "Normal Goal",
+     "h": false,
+     "k": "G",
+     "p": "Jude Bellingham",
+     "t": 62
+    },
+    {
+     "a": "Jude Bellingham",
+     "d": "Normal Goal",
+     "h": false,
+     "k": "G",
+     "p": "Harry Kane",
+     "t": 67
+    }
+   ]
   },
   "2461103": {
    "score": "2-1",
