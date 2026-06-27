@@ -2221,6 +2221,30 @@
      "k": "G",
      "p": "Kevin De Bruyne",
      "t": 66
+    },
+    {
+     "a": "",
+     "d": "Normal Goal",
+     "h": true,
+     "k": "G",
+     "p": "Elijah Just",
+     "t": 84
+    },
+    {
+     "a": "Nicolas Raskin",
+     "d": "Normal Goal",
+     "h": false,
+     "k": "G",
+     "p": "Romelu Lukaku",
+     "t": 86
+    },
+    {
+     "a": "Romelu Lukaku",
+     "d": "Normal Goal",
+     "h": false,
+     "k": "G",
+     "p": "Alexis Saelemaekers",
+     "t": 90
     }
    ]
   },
