@@ -2129,7 +2129,17 @@
   },
   "2391772": {
    "score": "0-0",
-   "status": "2H",
+   "status": "FT",
+   "tl": []
+  },
+  "2391773": {
+   "score": "1-0",
+   "status": "1H",
+   "tl": []
+  },
+  "2391774": {
+   "score": "0-0",
+   "status": "1H",
    "tl": []
   },
   "2391775": {
@@ -2196,8 +2206,57 @@
   },
   "2391776": {
    "score": "0-1",
-   "status": "2H",
-   "tl": []
+   "status": "FT",
+   "tl": [
+    {
+     "a": "Marcos Llorente",
+     "d": "Normal Goal",
+     "h": false,
+     "k": "G",
+     "p": "Álex Baena",
+     "t": 42
+    },
+    {
+     "a": "",
+     "d": "Yellow Card",
+     "h": false,
+     "k": "C",
+     "p": "Álex Baena",
+     "t": 46
+    },
+    {
+     "a": "",
+     "d": "Yellow Card",
+     "h": true,
+     "k": "C",
+     "p": "Juan Manuel Sanabria",
+     "t": 54
+    },
+    {
+     "a": "",
+     "d": "Yellow Card",
+     "h": true,
+     "k": "C",
+     "p": "Guillermo Varela",
+     "t": 58
+    },
+    {
+     "a": "",
+     "d": "Yellow Card",
+     "h": true,
+     "k": "C",
+     "p": "Nicolás De La Cruz",
+     "t": 90
+    },
+    {
+     "a": "",
+     "d": "Red Card",
+     "h": true,
+     "k": "C",
+     "p": "Agustín Canobbio",
+     "t": 90
+    }
+   ]
   },
   "2461103": {
    "score": "2-1",
