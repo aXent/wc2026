@@ -2365,7 +2365,7 @@
    ]
   },
   "2391779": {
-   "score": "1-0",
+   "score": "2-1",
    "status": "2H",
    "tl": [
     {
@@ -2383,6 +2383,22 @@
      "k": "C",
      "p": "Ivan Perišić",
      "t": 68
+    },
+    {
+     "a": "Ernest Nuamah",
+     "d": "Normal Goal",
+     "h": false,
+     "k": "G",
+     "p": "Derrick Luckassen",
+     "t": 73
+    },
+    {
+     "a": "Luka Modrić",
+     "d": "Normal Goal",
+     "h": true,
+     "k": "G",
+     "p": "Nikola Vlašić",
+     "t": 83
     }
    ]
   },
@@ -2421,6 +2437,14 @@
      "k": "G",
      "p": "Harry Kane",
      "t": 67
+    },
+    {
+     "a": "",
+     "d": "Yellow Card",
+     "h": true,
+     "k": "C",
+     "p": "Andrés Andrade",
+     "t": 84
     }
    ]
   },
