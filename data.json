@@ -2365,13 +2365,22 @@
    ]
   },
   "2391779": {
-   "score": "0-0",
-   "status": "1H",
-   "tl": []
+   "score": "1-0",
+   "status": "HT",
+   "tl": [
+    {
+     "a": "Mateo Kovačić",
+     "d": "Normal Goal",
+     "h": true,
+     "k": "G",
+     "p": "Petar Sučić",
+     "t": 31
+    }
+   ]
   },
   "2391781": {
    "score": "0-0",
-   "status": "1H",
+   "status": "HT",
    "tl": []
   },
   "2461103": {
