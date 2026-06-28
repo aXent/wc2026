@@ -145,6 +145,8 @@
   .round.r-final{flex:0 0 196px;min-width:196px;justify-content:center}
   .rlabel{font-size:10.5px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);text-align:center;margin-bottom:8px;padding-bottom:6px;border-bottom:2px solid var(--line)}
   .round.r-final .rlabel{color:var(--signal);border-color:var(--signal)}
+  .bracket-scroll{max-height:78vh}
+  .bracket .rlabel{position:sticky;top:0;z-index:6;background:var(--paper);box-shadow:0 8px 0 var(--paper)}
   .matches{display:flex;flex-direction:column;justify-content:space-around;flex:1}
   .m{position:relative;display:flex;flex-direction:column;justify-content:center;flex:1 1 auto;padding:7px 0}
   .round:not(.r-first) .m::before{content:"";position:absolute;left:-6px;top:0;height:100%;border-left:2px solid var(--line)}
@@ -232,7 +234,7 @@
     body{background:#fff}
     .wrap{max-width:none;padding:0}
     .scroll-hint,.live .pulse{display:none}
-    .bracket-scroll{overflow:visible;border:none;box-shadow:none;padding:0}
+    .bracket-scroll{overflow:visible;border:none;box-shadow:none;padding:0;max-height:none}
     .bracket{min-width:0;page-break-inside:avoid}
     header.masthead,.format,.grp,.box,.lg{box-shadow:none}
     .sec-head{page-break-after:avoid}
@@ -748,7 +750,19 @@
     }
     // Winnaar van wedstrijd
     if((m = code.match(/^W(\d+)$/))){
-      var n=+m[1], s=M[n]||[];
+      var n=+m[1];
+      var ko=(typeof KO!=='undefined')?KO.filter(function(x){return x.n===n;})[0]:null;
+      if(ko){
+        var possRow=function(c, other){
+          var team=koTeam(c, other);
+          if(team) return '<div class="wc-row"><span class="wc-fl">'+team.flag+'</span><span class="wc-gtag">'+c+'</span><span class="wc-nm">'+team.name+'</span></div>';
+          return '<div class="wc-row"><span class="wc-gtag">'+c+'</span><span class="wc-nm" style="color:var(--muted)">'+codeLabel(c)+'</span></div>';
+        };
+        return '<div class="wc-title"><span class="wc-code w">W'+n+'</span> Mogelijke teams · #'+n+'</div>'+
+          possRow(ko.h, ko.a)+possRow(ko.a, ko.h)+
+          '<div class="wc-note">De winnaar van dit duel komt hier terecht.</div>';
+      }
+      var s=M[n]||[];
       return '<div class="wc-title"><span class="wc-code w">W'+n+'</span> Winnaar van wedstrijd #'+n+'</div>'+
         '<div class="wc-vs"><b>'+(s[0]||'?')+'</b><br>tegen<br><b>'+(s[1]||'?')+'</b></div>'+
         '<div class="wc-note">Tik op het bronvakje in een eerdere ronde voor de teams daarachter.</div>';
