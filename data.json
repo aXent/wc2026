@@ -3558,9 +3558,34 @@
    ]
   },
   "2499618": {
-   "score": "0-0",
-   "status": "2H",
-   "tl": []
+   "score": "0-1",
+   "status": "FT",
+   "tl": [
+    {
+     "a": "",
+     "d": "Yellow Card",
+     "h": false,
+     "k": "C",
+     "p": "Nathan Saliba",
+     "t": 54
+    },
+    {
+     "a": "",
+     "d": "Yellow Card",
+     "h": false,
+     "k": "C",
+     "p": "Niko Sigur",
+     "t": 67
+    },
+    {
+     "a": "",
+     "d": "Normal Goal",
+     "h": false,
+     "k": "G",
+     "p": "Stephen Eustáquio",
+     "t": 90
+    }
+   ]
   }
  },
  "schema": 2
