@@ -3658,9 +3658,18 @@
    ]
   },
   "2502846": {
-   "score": "0-0",
-   "status": "1H",
-   "tl": []
+   "score": "0-1",
+   "status": "HT",
+   "tl": [
+    {
+     "a": "Matías Galarza",
+     "d": "Normal Goal",
+     "h": false,
+     "k": "G",
+     "p": "Julio Enciso",
+     "t": 42
+    }
+   ]
   }
  },
  "schema": 2
