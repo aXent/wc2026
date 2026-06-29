@@ -3586,6 +3586,44 @@
      "t": 90
     }
    ]
+  },
+  "2499835": {
+   "score": "0-1",
+   "status": "HT",
+   "tl": [
+    {
+     "a": "",
+     "d": "Yellow Card",
+     "h": false,
+     "k": "C",
+     "p": "Kaishū Sano",
+     "t": 12
+    },
+    {
+     "a": "",
+     "d": "Yellow Card",
+     "h": true,
+     "k": "C",
+     "p": "Casemiro",
+     "t": 14
+    },
+    {
+     "a": "",
+     "d": "Normal Goal",
+     "h": false,
+     "k": "G",
+     "p": "Kaishū Sano",
+     "t": 29
+    },
+    {
+     "a": "",
+     "d": "Yellow Card",
+     "h": false,
+     "k": "C",
+     "p": "Daichi Kamada",
+     "t": 45
+    }
+   ]
   }
  },
  "schema": 2
