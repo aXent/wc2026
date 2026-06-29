@@ -3659,7 +3659,7 @@
   },
   "2502846": {
    "score": "1-1",
-   "status": "P",
+   "status": "AP",
    "tl": [
     {
      "a": "Matías Galarza",
@@ -3684,6 +3684,46 @@
      "k": "C",
      "p": "Andrés Cubas",
      "t": 65
+    },
+    {
+     "a": "",
+     "d": "Yellow Card",
+     "h": false,
+     "k": "C",
+     "p": "Jonathan Tah",
+     "t": 105
+    },
+    {
+     "a": "",
+     "d": "Yellow Card",
+     "h": true,
+     "k": "C",
+     "p": "Julian Nagelsmann",
+     "t": 105
+    },
+    {
+     "a": "",
+     "d": "Yellow Card",
+     "h": true,
+     "k": "C",
+     "p": "Kai Havertz",
+     "t": 106
+    },
+    {
+     "a": "",
+     "d": "Yellow Card",
+     "h": true,
+     "k": "C",
+     "p": "Jamal Musiala",
+     "t": 115
+    },
+    {
+     "a": "",
+     "d": "Yellow Card",
+     "h": false,
+     "k": "C",
+     "p": "Matías Galarza",
+     "t": 117
     }
    ]
   }
