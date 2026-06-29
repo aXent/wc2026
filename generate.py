@@ -436,24 +436,27 @@ KO_FIXTURES = {
 }
 KO_ROUNDS = [list(range(73, 89)), [89,90,91,92,93,94,95,96], [97,98,99,100], [101,102], [103,104]]
 
-def fetch_knockout(group_ids):
-    """Knock-outduels (teams + uitslag) ophalen — die zitten NIET in eventsseason
-    maar in eventsround (intRound 32/16/8/4/2), met een eigen idEvent-reeks. De 72
-    groepsduels sluiten we op idEvent uit (ronde-nummers botsen anders: 'ronde 2' =
+def fetch_knockout(events):
+    """Knock-outduels verzamelen uit de seizoensfeed én eventsround, en alleen de
+    echte knock-outs houden: beide teams bekend én uit VERSCHILLENDE groepen
+    (groepsduels zitten altijd binnen één groep). Zo maakt het niet uit of de feed
+    de knock-outs al bevat, en vermijden we ronde-nummercollisies (bv. 'ronde 2' =
     zowel groepsspeeldag 2 als de finale)."""
-    seen = {}
+    seen = {e.get("idEvent"): e for e in events}
     for r in (32, 16, 8, 4, 2):
         url = f"{BASE}/eventsround.php?id={LEAGUE}&r={r}&s=2026"
         try:
             with urllib.request.urlopen(url, timeout=30) as resp:
-                evs = json.load(resp).get("events") or []
+                for e in (json.load(resp).get("events") or []):
+                    seen[e.get("idEvent")] = e
         except (urllib.error.URLError, json.JSONDecodeError):
             continue
-        for e in evs:
-            eid = e.get("idEvent")
-            if eid and eid not in group_ids and str(e.get("idLeague")) == LEAGUE:
-                seen[eid] = e
-    return list(seen.values())
+    ko = []
+    for e in seen.values():
+        hc, ac = code_of(e.get("strHomeTeam")), code_of(e.get("strAwayTeam"))
+        if hc and ac and group_of(hc) != group_of(ac):       # cross-group = knock-outduel
+            ko.append(e)
+    return ko
 
 def render_bracket_data(groups, ko_events):
     """1X/2X (zodra groep af), beste-3e's (Annex C, zodra groepsfase af) en knock-out
@@ -614,7 +617,7 @@ def main():
     html = html.replace("{{FX_DATA}}",  render_fx_data(groups))
     html = html.replace("{{TL_DATA}}",  render_tl_data(events, cache))
     html = html.replace("{{STATS}}",    render_stats(events, cache))
-    ko_events = fetch_knockout({e.get("idEvent") for e in events})
+    ko_events = fetch_knockout(events)
     qual_json, third_json, wins_json, koscore_json = render_bracket_data(groups, ko_events)
     html = html.replace("{{QUAL_DATA}}",    qual_json)
     html = html.replace("{{THIRD_DATA}}",   third_json)
