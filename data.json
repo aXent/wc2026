@@ -3588,8 +3588,8 @@
    ]
   },
   "2499835": {
-   "score": "0-1",
-   "status": "HT",
+   "score": "1-1",
+   "status": "2H",
    "tl": [
     {
      "a": "",
@@ -3622,6 +3622,22 @@
      "k": "C",
      "p": "Daichi Kamada",
      "t": 45
+    },
+    {
+     "a": "",
+     "d": "Yellow Card",
+     "h": true,
+     "k": "C",
+     "p": "Danilo",
+     "t": 48
+    },
+    {
+     "a": "Gabriel Magalhães",
+     "d": "Normal Goal",
+     "h": true,
+     "k": "G",
+     "p": "Casemiro",
+     "t": 56
     }
    ]
   }
