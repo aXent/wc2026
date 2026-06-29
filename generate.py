@@ -423,9 +423,41 @@ def load_thirds_table():
     except (FileNotFoundError, json.JSONDecodeError):
         return {}
 
-def render_bracket_data(groups):
-    """1X/2X invullen zodra een groep af is; de 8 beste nrs. 3 zodra de hele
-    groepsfase af is, via de officiële 495-combinatietabel (Annex C)."""
+# Knock-outschema: welke twee vakjes voeden elk duel (#73..#104). Bron = template KO.
+KO_FIXTURES = {
+ 73:("2A","2B"), 74:("1E","3"),  75:("1F","2C"), 76:("1C","2F"),
+ 77:("1I","3"),  78:("2E","2I"), 79:("1A","3"),  80:("1L","3"),
+ 81:("1D","3"),  82:("1G","3"),  83:("2K","2L"), 84:("1H","2J"),
+ 85:("1B","3"),  86:("1J","2H"), 87:("1K","3"),  88:("2D","2G"),
+ 89:("W74","W77"), 90:("W73","W75"), 91:("W76","W78"), 92:("W79","W80"),
+ 93:("W83","W84"), 94:("W81","W82"), 95:("W86","W88"), 96:("W85","W87"),
+ 97:("W89","W90"), 98:("W93","W94"), 99:("W91","W92"), 100:("W95","W96"),
+ 101:("W97","W98"), 102:("W99","W100"), 103:("V101","V102"), 104:("W101","W102"),
+}
+KO_ROUNDS = [list(range(73, 89)), [89,90,91,92,93,94,95,96], [97,98,99,100], [101,102], [103,104]]
+
+def fetch_knockout(group_ids):
+    """Knock-outduels (teams + uitslag) ophalen — die zitten NIET in eventsseason
+    maar in eventsround (intRound 32/16/8/4/2), met een eigen idEvent-reeks. De 72
+    groepsduels sluiten we op idEvent uit (ronde-nummers botsen anders: 'ronde 2' =
+    zowel groepsspeeldag 2 als de finale)."""
+    seen = {}
+    for r in (32, 16, 8, 4, 2):
+        url = f"{BASE}/eventsround.php?id={LEAGUE}&r={r}&s=2026"
+        try:
+            with urllib.request.urlopen(url, timeout=30) as resp:
+                evs = json.load(resp).get("events") or []
+        except (urllib.error.URLError, json.JSONDecodeError):
+            continue
+        for e in evs:
+            eid = e.get("idEvent")
+            if eid and eid not in group_ids and str(e.get("idLeague")) == LEAGUE:
+                seen[eid] = e
+    return list(seen.values())
+
+def render_bracket_data(groups, ko_events):
+    """1X/2X (zodra groep af), beste-3e's (Annex C, zodra groepsfase af) en knock-out
+    winnaars W## / verliezers V## doorzetten zodra een duel gespeeld is."""
     qual = {}
     for g, gr in groups.items():
         if gr["played"] >= 2 and len(gr["teams"]) >= 2:        # vanaf 2 speeldagen tonen
@@ -433,14 +465,84 @@ def render_bracket_data(groups):
             fin = gr["played"] >= 3                             # 3/3 = bevestigd; anders voorlopig (grijs)
             qual["1" + g] = [t[0]["flag"], t[0]["nl"], fin]
             qual["2" + g] = [t[1]["flag"], t[1]["nl"], fin]
-    third = {}
+    third, third_map = {}, {}
     if len(groups) == 12 and all(gr["played"] >= 3 for gr in groups.values()):
         t3 = {g: groups[g]["teams"][2] for g in groups}        # nr. 3 van elke groep
         ranked = sorted(groups, key=lambda g: (t3[g]["pts"], t3[g]["gd"], t3[g]["gf"]), reverse=True)
-        key = "".join(sorted(ranked[:8]))                      # 8 beste → combinatiesleutel
-        for w, tg in load_thirds_table().get(key, {}).items(): # winnaargroep w speelt de 3e van groep tg
-            third[w] = [t3[tg]["flag"], t3[tg]["nl"], tg]      # tg = brongroep (voor de popover)
-    return json.dumps(qual, ensure_ascii=False), json.dumps(third, ensure_ascii=False)
+        third_map = load_thirds_table().get("".join(sorted(ranked[:8])), {})  # winnaargroep -> brongroep 3e
+        for w, tg in third_map.items():
+            third[w] = [t3[tg]["flag"], t3[tg]["nl"], tg]
+
+    # knock-outduels indexeren op het (ongeordende) paar teamcodes
+    ko, by_set = [], {}
+    for e in ko_events:
+        hc, ac = code_of(e.get("strHomeTeam")), code_of(e.get("strAwayTeam"))
+        if not hc or not ac:
+            continue
+        rec = {"id": e.get("idEvent"), "codes": {hc, ac}, "by": {},
+               "ft": e.get("strStatus") == "FT" and played(e)}
+        if played(e):
+            rec["by"] = {hc: int(e["intHomeScore"]), ac: int(e["intAwayScore"])}
+        ko.append(rec)
+        by_set[frozenset((hc, ac))] = rec
+
+    winners, losers, scores = {}, {}, {}
+    def fteam(code, sib):                                       # vakjescode -> teamcode (of None)
+        if len(code) == 2 and code[0] in "12" and code[1] in GROUPS:
+            g, pos = code[1], int(code[0])
+            if g in groups and groups[g]["played"] >= 3 and len(groups[g]["teams"]) >= pos:
+                return groups[g]["teams"][pos - 1]["code"]
+            return None
+        if code == "3":
+            if sib and sib[0] == "1" and sib[1:] in third_map:
+                return groups[third_map[sib[1:]]]["teams"][2]["code"]
+            return None
+        if code[0] == "W" and code[1:].isdigit():
+            return winners.get(int(code[1:]))
+        if code[0] == "V" and code[1:].isdigit():
+            return losers.get(int(code[1:]))
+        return None
+    def infer(th, ta, exclude):                                # gelijkspel -> wie speelt later nog = winnaar
+        for r in ko:
+            if r["id"] == exclude:
+                continue
+            if th in r["codes"] and ta not in r["codes"]:
+                return th
+            if ta in r["codes"] and th not in r["codes"]:
+                return ta
+        return None
+    for _ in range(len(KO_ROUNDS) + 1):                        # propageren door alle rondes
+        changed = False
+        for rnd in KO_ROUNDS:
+            for n in rnd:
+                if n in winners:
+                    continue
+                h, a = KO_FIXTURES[n]
+                th, ta = fteam(h, a), fteam(a, h)
+                if not th or not ta:
+                    continue
+                rec = by_set.get(frozenset((th, ta)))
+                if not rec or not rec["ft"]:
+                    continue
+                sh, sa = rec["by"][th], rec["by"][ta]
+                scores[n] = (th, ta, sh, sa)
+                w = (th if sh > sa else ta) if sh != sa else infer(th, ta, rec["id"])
+                if not w:
+                    continue
+                winners[n] = w
+                losers[n] = ta if w == th else th
+                changed = True
+        if not changed:
+            break
+
+    wins = {}
+    for n, c in winners.items():
+        wins["W" + str(n)] = [TEAMS[c][1], TEAMS[c][0]]
+    for n, c in losers.items():
+        wins["V" + str(n)] = [TEAMS[c][1], TEAMS[c][0]]
+    koscore = {str(n): f"{sh}–{sa}" for n, (th, ta, sh, sa) in scores.items()}
+    return (json.dumps(qual, ensure_ascii=False), json.dumps(third, ensure_ascii=False),
+            json.dumps(wins, ensure_ascii=False), json.dumps(koscore, ensure_ascii=False))
 
 # ----------------------------------------------------------------------------
 # Renderen (identiek format aan de placeholders in template.html)
@@ -512,9 +614,12 @@ def main():
     html = html.replace("{{FX_DATA}}",  render_fx_data(groups))
     html = html.replace("{{TL_DATA}}",  render_tl_data(events, cache))
     html = html.replace("{{STATS}}",    render_stats(events, cache))
-    qual_json, third_json = render_bracket_data(groups)
-    html = html.replace("{{QUAL_DATA}}",  qual_json)
-    html = html.replace("{{THIRD_DATA}}", third_json)
+    ko_events = fetch_knockout({e.get("idEvent") for e in events})
+    qual_json, third_json, wins_json, koscore_json = render_bracket_data(groups, ko_events)
+    html = html.replace("{{QUAL_DATA}}",    qual_json)
+    html = html.replace("{{THIRD_DATA}}",   third_json)
+    html = html.replace("{{WINNERS_DATA}}", wins_json)
+    html = html.replace("{{KO_SCORES}}",    koscore_json)
     open(OUTPUT, "w", encoding="utf-8").write(html)
     tot = sum(len(g["matches"]) for g in groups.values())
     print(f"{OUTPUT} geschreven — {len(groups)} groepen, {tot} groepsduels.")

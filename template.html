@@ -751,6 +751,11 @@
     // Winnaar van wedstrijd
     if((m = code.match(/^W(\d+)$/))){
       var n=+m[1];
+      if(typeof KOWIN!=='undefined' && KOWIN['W'+n]){ var kw=KOWIN['W'+n];   // al gespeeld -> echte winnaar
+        return '<div class="wc-title"><span class="wc-code w">W'+n+'</span> Winnaar #'+n+'</div>'+
+          '<div class="wc-row hi"><span class="wc-fl">'+kw[0]+'</span><span class="wc-nm">'+kw[1]+'</span></div>'+
+          (KOSCORE[n]?'<div class="wc-note">Wedstrijd #'+n+' gewonnen ('+KOSCORE[n]+').</div>':'');
+      }
       var ko=(typeof KO!=='undefined')?KO.filter(function(x){return x.n===n;})[0]:null;
       if(ko){
         var possRow=function(c, other){
@@ -904,10 +909,11 @@ function isToday(dt){return keyOf(dt)===keyOf(NOW);}
 function roundTag(r){return {'1/16':'1/16 F','1/8':'1/8 F','KF':'Kwartfinale','HF':'Halve F','Troost':'Troostfin.','Finale':'Finale'}[r]||r;}
 function codeLabel(c){var m;if((m=c.match(/^1([A-L])$/)))return 'Winnaar '+m[1];if((m=c.match(/^2([A-L])$/)))return 'Nr. 2 '+m[1];if(c==='3')return 'Beste 3e';if((m=c.match(/^W(\d+)$/)))return 'Winnaar #'+m[1];if((m=c.match(/^V(\d+)$/)))return 'Verliezer #'+m[1];return c;}
 // Knock-outvakje -> echt team zodra bekend (zelfde data als het schema). other = code van de tegenstander (voor de beste-3e).
-var KOQUAL={{QUAL_DATA}}, KOTHIRD={{THIRD_DATA}};
+var KOQUAL={{QUAL_DATA}}, KOTHIRD={{THIRD_DATA}}, KOWIN={{WINNERS_DATA}}, KOSCORE={{KO_SCORES}};
 function koTeam(code,other){
   if(/^[12][A-L]$/.test(code) && KOQUAL[code]){ var q=KOQUAL[code]; return {flag:q[0],name:q[1],prov:!q[2]}; }
   if(code==='3'){ var w=(other||'').match(/^1([A-L])$/); if(w && KOTHIRD[w[1]]){ var t=KOTHIRD[w[1]]; return {flag:t[0],name:t[1],prov:false}; } }
+  if(/^[WV]\d+$/.test(code) && KOWIN[code]){ var x=KOWIN[code]; return {flag:x[0],name:x[1],prov:false}; }  // gespeelde knock-outwinnaar/verliezer
   return null;
 }
 var TL_DATA={{TL_DATA}};
@@ -925,7 +931,7 @@ function buildMatches(){
     out.push({dt:parseDate(m.d,m.t),kind:'group',tag:'Groep '+g,home:m.h,away:m.a,score:m.s||null,time:m.t||null,be:!!m.be,nl:!!m.nl});
   });});
   KO.forEach(function(m){
-    out.push({dt:parseDate(m.d,m.t),kind:'ko',tag:roundTag(m.r),round:m.r,city:m.c,home:codeLabel(m.h),away:codeLabel(m.a),hcode:m.h,acode:m.a,hteam:koTeam(m.h,m.a),ateam:koTeam(m.a,m.h),score:null,time:m.t,be:!!m.be,nl:!!m.nl});
+    out.push({dt:parseDate(m.d,m.t),kind:'ko',tag:roundTag(m.r),round:m.r,city:m.c,home:codeLabel(m.h),away:codeLabel(m.a),hcode:m.h,acode:m.a,hteam:koTeam(m.h,m.a),ateam:koTeam(m.a,m.h),score:(KOSCORE[m.n]||null),time:m.t,be:!!m.be,nl:!!m.nl});
   });
   out.sort(function(a,b){return a.dt-b.dt;});
   return out;
@@ -1031,6 +1037,7 @@ b.addEventListener('click',function(){var o=s.classList.toggle('open');b.querySe
 (function(){
   var QUAL = {{QUAL_DATA}};
   var THIRD = {{THIRD_DATA}};
+  var WINNERS = {{WINNERS_DATA}};
   function fill(slot, flag, name, prov){
     slot.classList.remove('team', 'prov');
     slot.classList.add(prov ? 'prov' : 'team');         // prov = voorlopig (grijs), anders bevestigd
@@ -1044,6 +1051,7 @@ b.addEventListener('click',function(){var o=s.classList.toggle('open');b.querySe
     m.querySelectorAll('.slot').forEach(function(s){
       var el = s.querySelector('.code'), c = el ? el.textContent.trim() : '';
       if(QUAL[c]){ fill(s, QUAL[c][0], QUAL[c][1], !QUAL[c][2]); }   // QUAL[c][2] = bevestigd?
+      if(WINNERS[c]){ fill(s, WINNERS[c][0], WINNERS[c][1], false); }   // gespeelde knock-outwinnaar/verliezer
       if(c === '3'){ third = s; }
       var mw = c.match(/^1([A-L])$/); if(mw){ wg = mw[1]; }
     });
