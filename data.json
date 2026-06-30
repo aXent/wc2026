@@ -3659,8 +3659,33 @@
   },
   "2499836": {
    "score": "1-1",
-   "status": "P",
-   "tl": []
+   "status": "FT",
+   "tl": [
+    {
+     "a": "",
+     "d": "Yellow Card",
+     "h": false,
+     "k": "C",
+     "p": "Issa Diop",
+     "t": 47
+    },
+    {
+     "a": "Crysencio Summerville",
+     "d": "Normal Goal",
+     "h": true,
+     "k": "G",
+     "p": "Cody Gakpo",
+     "t": 72
+    },
+    {
+     "a": "Chemsdine Talbi",
+     "d": "Normal Goal",
+     "h": false,
+     "k": "G",
+     "p": "Issa Diop",
+     "t": 90
+    }
+   ]
   },
   "2502846": {
    "score": "1-1",
@@ -3689,22 +3714,6 @@
      "k": "C",
      "p": "Andrés Cubas",
      "t": 65
-    },
-    {
-     "a": "",
-     "d": "Yellow Card",
-     "h": false,
-     "k": "C",
-     "p": "Jonathan Tah",
-     "t": 105
-    },
-    {
-     "a": "",
-     "d": "Yellow Card",
-     "h": true,
-     "k": "C",
-     "p": "Julian Nagelsmann",
-     "t": 105
     },
     {
      "a": "",
