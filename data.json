@@ -3688,9 +3688,18 @@
    ]
   },
   "2502605": {
-   "score": "0-0",
-   "status": "1H",
-   "tl": []
+   "score": "0-1",
+   "status": "2H",
+   "tl": [
+    {
+     "a": "",
+     "d": "Normal Goal",
+     "h": false,
+     "k": "G",
+     "p": "Antonio Nusa",
+     "t": 39
+    }
+   ]
   },
   "2502846": {
    "score": "1-1",
