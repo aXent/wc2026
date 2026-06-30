@@ -3804,8 +3804,8 @@
    ]
   },
   "2502847": {
-   "score": "1-0",
-   "status": "HT",
+   "score": "3-0",
+   "status": "2H",
    "tl": [
     {
      "a": "Ousmane Dembélé",
@@ -3814,6 +3814,22 @@
      "k": "G",
      "p": "Kylian Mbappé",
      "t": 45
+    },
+    {
+     "a": "Michael Olise",
+     "d": "Normal Goal",
+     "h": true,
+     "k": "G",
+     "p": "Bradley Barcola",
+     "t": 53
+    },
+    {
+     "a": "Michael Olise",
+     "d": "Normal Goal",
+     "h": true,
+     "k": "G",
+     "p": "Kylian Mbappé",
+     "t": 74
     }
    ]
   }
