@@ -3688,16 +3688,40 @@
    ]
   },
   "2502605": {
-   "score": "0-1",
-   "status": "2H",
+   "score": "1-2",
+   "status": "FT",
    "tl": [
     {
-     "a": "",
+     "a": "Martin Ødegaard",
      "d": "Normal Goal",
      "h": false,
      "k": "G",
      "p": "Antonio Nusa",
      "t": 39
+    },
+    {
+     "a": "",
+     "d": "Yellow Card",
+     "h": false,
+     "k": "C",
+     "p": "Antonio Nusa",
+     "t": 45
+    },
+    {
+     "a": "Nicolas Pépé",
+     "d": "Normal Goal",
+     "h": true,
+     "k": "G",
+     "p": "Amad Diallo",
+     "t": 74
+    },
+    {
+     "a": "Patrick Berg",
+     "d": "Normal Goal",
+     "h": false,
+     "k": "G",
+     "p": "Erling Haaland",
+     "t": 86
     }
    ]
   },
