@@ -3689,7 +3689,7 @@
   },
   "2502846": {
    "score": "1-1",
-   "status": "PEN",
+   "status": "AP",
    "tl": [
     {
      "a": "Matías Galarza",
@@ -3718,6 +3718,14 @@
     {
      "a": "",
      "d": "Yellow Card",
+     "h": false,
+     "k": "C",
+     "p": "Jonathan Tah",
+     "t": 105
+    },
+    {
+     "a": "",
+     "d": "Yellow Card",
      "h": true,
      "k": "C",
      "p": "Kai Havertz",
@@ -3730,6 +3738,22 @@
      "k": "C",
      "p": "Jamal Musiala",
      "t": 115
+    },
+    {
+     "a": "",
+     "d": "Yellow Card",
+     "h": true,
+     "k": "C",
+     "p": "Jamal Musiala",
+     "t": 116
+    },
+    {
+     "a": "",
+     "d": "Yellow Card",
+     "h": false,
+     "k": "C",
+     "p": "Jamal Musiala",
+     "t": 117
     },
     {
      "a": "",
