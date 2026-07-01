@@ -3888,8 +3888,8 @@
    ]
   },
   "2503391": {
-   "score": "0-1",
-   "status": "2H",
+   "score": "2-1",
+   "status": "FT",
    "tl": [
     {
      "a": "Chancel Mbemba",
@@ -3913,7 +3913,23 @@
      "h": false,
      "k": "C",
      "p": "Noah Sadiki",
-     "t": 27
+     "t": 28
+    },
+    {
+     "a": "Anthony Gordon",
+     "d": "Normal Goal",
+     "h": true,
+     "k": "G",
+     "p": "Harry Kane",
+     "t": 75
+    },
+    {
+     "a": "Anthony Gordon",
+     "d": "Normal Goal",
+     "h": true,
+     "k": "G",
+     "p": "Harry Kane",
+     "t": 86
     }
    ]
   }
