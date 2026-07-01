@@ -3934,8 +3934,8 @@
    ]
   },
   "2503392": {
-   "score": "2-2",
-   "status": "BT",
+   "score": "3-2",
+   "status": "AET",
    "tl": [
     {
      "a": "",
@@ -3970,7 +3970,7 @@
      "t": 67
     },
     {
-     "a": "",
+     "a": "Thomas Meunier",
      "d": "Normal Goal",
      "h": true,
      "k": "G",
@@ -3978,12 +3978,28 @@
      "t": 86
     },
     {
-     "a": "",
+     "a": "Leandro Trossard",
      "d": "Normal Goal",
      "h": true,
      "k": "G",
      "p": "Youri Tielemans",
      "t": 89
+    },
+    {
+     "a": "",
+     "d": "Yellow Card",
+     "h": true,
+     "k": "C",
+     "p": "Youri Tielemans",
+     "t": 90
+    },
+    {
+     "a": "",
+     "d": "Penalty",
+     "h": true,
+     "k": "G",
+     "p": "Youri Tielemans",
+     "t": 120
     }
    ]
   }
