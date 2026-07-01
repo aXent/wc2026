@@ -3934,8 +3934,8 @@
    ]
   },
   "2503392": {
-   "score": "0-1",
-   "status": "HT",
+   "score": "2-2",
+   "status": "BT",
    "tl": [
     {
      "a": "",
@@ -3944,6 +3944,46 @@
      "k": "G",
      "p": "Habib Diarra",
      "t": 25
+    },
+    {
+     "a": "Moussa Niakhaté",
+     "d": "Normal Goal",
+     "h": false,
+     "k": "G",
+     "p": "Ismaïla Sarr",
+     "t": 51
+    },
+    {
+     "a": "",
+     "d": "Yellow Card",
+     "h": true,
+     "k": "C",
+     "p": "Brandon Mechele",
+     "t": 64
+    },
+    {
+     "a": "",
+     "d": "Yellow Card",
+     "h": false,
+     "k": "C",
+     "p": "Lamine Camara",
+     "t": 67
+    },
+    {
+     "a": "",
+     "d": "Normal Goal",
+     "h": true,
+     "k": "G",
+     "p": "Romelu Lukaku",
+     "t": 86
+    },
+    {
+     "a": "",
+     "d": "Normal Goal",
+     "h": true,
+     "k": "G",
+     "p": "Youri Tielemans",
+     "t": 89
     }
    ]
   }
