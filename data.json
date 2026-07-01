@@ -3835,8 +3835,57 @@
   },
   "2503390": {
    "score": "2-0",
-   "status": "2H",
-   "tl": []
+   "status": "FT",
+   "tl": [
+    {
+     "a": "Roberto Alvarado",
+     "d": "Normal Goal",
+     "h": true,
+     "k": "G",
+     "p": "Julián Quiñones",
+     "t": 22
+    },
+    {
+     "a": "Julián Quiñones",
+     "d": "Normal Goal",
+     "h": true,
+     "k": "G",
+     "p": "Raúl Jiménez",
+     "t": 31
+    },
+    {
+     "a": "",
+     "d": "Yellow Card",
+     "h": false,
+     "k": "C",
+     "p": "Alan Franco",
+     "t": 45
+    },
+    {
+     "a": "",
+     "d": "Yellow Card",
+     "h": false,
+     "k": "C",
+     "p": "Kendry Páez",
+     "t": 90
+    },
+    {
+     "a": "",
+     "d": "Red Card",
+     "h": false,
+     "k": "C",
+     "p": "Piero Hincapié",
+     "t": 90
+    },
+    {
+     "a": "",
+     "d": "Yellow Card",
+     "h": false,
+     "k": "C",
+     "p": "Moisés Caicedo",
+     "t": 90
+    }
+   ]
   }
  },
  "schema": 2
