@@ -299,6 +299,7 @@
   #kal .tm .fl{font-size:17px;flex:none}
   #kal .tm .nm{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-weight:600;font-size:14px}
   #kal .tm .cd{font-family:'Anton',sans-serif;font-size:12px;background:#EEF1F5;color:var(--ink);border-radius:5px;padding:1px 6px;flex:none;min-width:32px;text-align:center}
+  #kal .tm.winr .nm{font-weight:800;color:var(--ink)}   /* knock-outwinnaar */
   #kal .tm.prov .nm{color:var(--muted);font-style:italic;text-decoration:underline dotted var(--muted);text-underline-offset:2px}
   #kal .tm.prov .fl{opacity:.6}
   #kal .rt{display:flex;flex-direction:column;align-items:flex-end;gap:3px;flex:none}
@@ -931,7 +932,7 @@ function buildMatches(){
     out.push({dt:parseDate(m.d,m.t),kind:'group',tag:'Groep '+g,home:m.h,away:m.a,score:m.s||null,time:m.t||null,be:!!m.be,nl:!!m.nl});
   });});
   KO.forEach(function(m){
-    out.push({dt:parseDate(m.d,m.t),kind:'ko',tag:roundTag(m.r),round:m.r,city:m.c,home:codeLabel(m.h),away:codeLabel(m.a),hcode:m.h,acode:m.a,hteam:koTeam(m.h,m.a),ateam:koTeam(m.a,m.h),score:(KOSCORE[m.n]||null),time:m.t,be:!!m.be,nl:!!m.nl});
+    out.push({dt:parseDate(m.d,m.t),kind:'ko',tag:roundTag(m.r),round:m.r,city:m.c,n:m.n,home:codeLabel(m.h),away:codeLabel(m.a),hcode:m.h,acode:m.a,hteam:koTeam(m.h,m.a),ateam:koTeam(m.a,m.h),score:(KOSCORE[m.n]||null),time:m.t,be:!!m.be,nl:!!m.nl});
   });
   out.sort(function(a,b){return a.dt-b.dt;});
   return out;
@@ -939,7 +940,7 @@ function buildMatches(){
 function teamLine(m,side){
   if(m.kind==='group'){var t=side==='h'?m.home:m.away;return '<span class="tm"><span class="fl">'+t[0]+'</span><span class="nm">'+t[1]+'</span></span>';}
   var team=side==='h'?m.hteam:m.ateam;
-  if(team){return '<span class="tm'+(team.prov?' prov':'')+'"><span class="fl">'+team.flag+'</span><span class="nm">'+team.name+'</span></span>';}
+  if(team){var iw=(typeof KOWIN!=='undefined')&&KOWIN['W'+m.n]&&KOWIN['W'+m.n][1]===team.name;return '<span class="tm'+(team.prov?' prov':'')+(iw?' winr':'')+'"><span class="fl">'+team.flag+'</span><span class="nm">'+team.name+'</span></span>';}
   var code=side==='h'?m.hcode:m.acode,lab=side==='h'?m.home:m.away;
   return '<span class="tm"><span class="cd">'+code+'</span><span class="nm">'+lab+'</span></span>';
 }
@@ -948,9 +949,11 @@ function rowHTML(m){
   var left=m.score?'<span class="sc">'+m.score+'</span>':'<span class="ti">'+(m.time||'')+'</span>';
   var tag=m.kind==='group'?'<span class="metatag">'+m.tag+'</span>':'<span class="metatag '+(m.round==='Finale'?'fin':'ko')+'">'+m.tag+'</span>';
   var city=m.kind==='ko'?'<span class="cty">'+m.city+'</span>':'';
+  var pn=m.score?m.score.split('–'):[];
+  var pen=(m.kind==='ko'&&pn.length===2&&pn[0]===pn[1]&&typeof KOWIN!=='undefined'&&KOWIN['W'+m.n])?'<span class="cty">n.s.</span>':'';
   var key=tlKey(m),tl=(m.score&&key&&TL_DATA[key]&&TL_DATA[key].length)?TL_DATA[key]:null;
   var chev=tl?'<span class="mchev">▸</span>':'';
-  var row='<div class="mrow '+cls+(tl?' exp':'')+'"><span class="when">'+left+'</span><span class="teams">'+teamLine(m,'h')+teamLine(m,'a')+'</span><span class="rt">'+tag+city+'</span>'+chev+'</div>';
+  var row='<div class="mrow '+cls+(tl?' exp':'')+'"><span class="when">'+left+'</span><span class="teams">'+teamLine(m,'h')+teamLine(m,'a')+'</span><span class="rt">'+tag+city+pen+'</span>'+chev+'</div>';
   return '<div class="mgame">'+row+(tl?'<div class="mdetail" hidden>'+tlHTML(tl,m)+'</div>':'')+'</div>';
 }
 function relTime(dt){

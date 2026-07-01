@@ -482,10 +482,13 @@ def render_bracket_data(groups, ko_events):
         hc, ac = code_of(e.get("strHomeTeam")), code_of(e.get("strAwayTeam"))
         if not hc or not ac:
             continue
-        rec = {"id": e.get("idEvent"), "codes": {hc, ac}, "by": {},
-               "ft": e.get("strStatus") == "FT" and played(e)}
+        rec = {"id": e.get("idEvent"), "codes": {hc, ac}, "by": {}, "byx": {},
+               "ft": e.get("strStatus") in ("FT", "AET", "AP", "Match Finished") and played(e)}
         if played(e):
             rec["by"] = {hc: int(e["intHomeScore"]), ac: int(e["intAwayScore"])}
+            eh, ea = e.get("intHomeScoreExtra"), e.get("intAwayScoreExtra")   # strafschoppen/verlenging
+            if eh not in (None, "") and ea not in (None, ""):
+                rec["byx"] = {hc: int(eh), ac: int(ea)}
         ko.append(rec)
         by_set[frozenset((hc, ac))] = rec
 
@@ -529,7 +532,12 @@ def render_bracket_data(groups, ko_events):
                     continue
                 sh, sa = rec["by"][th], rec["by"][ta]
                 scores[n] = (th, ta, sh, sa)
-                w = (th if sh > sa else ta) if sh != sa else infer(th, ta, rec["id"])
+                if sh != sa:                                   # in de reguliere tijd/verlenging beslist
+                    w = th if sh > sa else ta
+                elif rec["byx"].get(th) != rec["byx"].get(ta):  # gelijk → strafschoppen
+                    w = th if rec["byx"].get(th, 0) > rec["byx"].get(ta, 0) else ta
+                else:                                          # nog niet te bepalen → volgende ronde
+                    w = infer(th, ta, rec["id"])
                 if not w:
                     continue
                 winners[n] = w
