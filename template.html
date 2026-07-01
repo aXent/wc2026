@@ -918,10 +918,18 @@ function koTeam(code,other){
   return null;
 }
 var TL_DATA={{TL_DATA}};
-function tlKey(m){return m.kind==='group'?(m.home[0]+'_'+m.away[0]+'_'+m.dt.getDate()+'/'+(m.dt.getMonth()+1)):null;}
-function tlHTML(tl,m){return tl.map(function(e){
+function tlKey(m){
+  var d=m.dt.getDate()+'/'+(m.dt.getMonth()+1);
+  if(m.kind==='group')return m.home[0]+'_'+m.away[0]+'_'+d;
+  if(m.kind==='ko'&&m.hteam&&m.ateam&&typeof TL_DATA!=='undefined'){   // knock-out: op de echte teams, beide volgordes
+    var a=m.hteam.flag+'_'+m.ateam.flag+'_'+d, b=m.ateam.flag+'_'+m.hteam.flag+'_'+d;
+    return TL_DATA[a]?a:(TL_DATA[b]?b:a);
+  }
+  return null;
+}
+function tlHTML(tl,hf,af){return tl.map(function(e){
   var ic=e.k==='G'?(e.d==='Own Goal'?'🥅':'⚽'):(e.d==='Red Card'?'🟥':'🟨');
-  var fl=e.h?m.home[0]:m.away[0];
+  var fl=e.h?hf:af;   // hf/af = thuis/uit-vlag uit de gevonden sleutel (juiste volgorde)
   var note=e.k==='G'?(e.d==='Penalty'?' <span class="tl-note">(pen.)</span>':(e.d==='Own Goal'?' <span class="tl-note">(e.d.)</span>':'')):'';
   var as=(e.k==='G'&&e.a)?'<span class="tl-as">— '+e.a+'</span>':'';
   return '<div class="tl-row"><span class="tl-min">'+e.t+"'</span><span class='tl-ic'>"+ic+"</span><span class='tl-fl'>"+fl+'</span><span class="tl-p">'+e.p+note+'</span>'+as+'</div>';
@@ -954,7 +962,7 @@ function rowHTML(m){
   var key=tlKey(m),tl=(m.score&&key&&TL_DATA[key]&&TL_DATA[key].length)?TL_DATA[key]:null;
   var chev=tl?'<span class="mchev">▸</span>':'';
   var row='<div class="mrow '+cls+(tl?' exp':'')+'"><span class="when">'+left+'</span><span class="teams">'+teamLine(m,'h')+teamLine(m,'a')+'</span><span class="rt">'+tag+city+pen+'</span>'+chev+'</div>';
-  return '<div class="mgame">'+row+(tl?'<div class="mdetail" hidden>'+tlHTML(tl,m)+'</div>':'')+'</div>';
+  return '<div class="mgame">'+row+(tl?'<div class="mdetail" hidden>'+tlHTML(tl,key.split('_')[0],key.split('_')[1])+'</div>':'')+'</div>';
 }
 function relTime(dt){
   var d1=new Date(dt.getFullYear(),dt.getMonth(),dt.getDate());
