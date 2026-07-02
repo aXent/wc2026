@@ -3690,7 +3690,48 @@
   "2499837": {
    "score": "2-0",
    "status": "FT",
-   "tl": []
+   "tl": [
+    {
+     "a": "",
+     "d": "Normal Goal",
+     "h": true,
+     "k": "G",
+     "p": "Folarin Balogun",
+     "t": 45
+    },
+    {
+     "a": "",
+     "d": "Red Card",
+     "h": true,
+     "k": "C",
+     "p": "Folarin Balogun",
+     "t": 64
+    },
+    {
+     "a": "",
+     "d": "Yellow Card",
+     "h": false,
+     "k": "C",
+     "p": "Nikola Katić",
+     "t": 80
+    },
+    {
+     "a": "",
+     "d": "Yellow Card",
+     "h": false,
+     "k": "C",
+     "p": "Stjepan Radeljić",
+     "t": 80
+    },
+    {
+     "a": "",
+     "d": "Normal Goal",
+     "h": true,
+     "k": "G",
+     "p": "Malik Tillman",
+     "t": 82
+    }
+   ]
   },
   "2502605": {
    "score": "1-2",
@@ -3989,14 +4030,6 @@
      "k": "G",
      "p": "Youri Tielemans",
      "t": 89
-    },
-    {
-     "a": "",
-     "d": "Yellow Card",
-     "h": true,
-     "k": "C",
-     "p": "Youri Tielemans",
-     "t": 90
     },
     {
      "a": "",
