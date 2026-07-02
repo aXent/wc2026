@@ -4018,8 +4018,8 @@
    ]
   },
   "2503636": {
-   "score": "1-0",
-   "status": "HT",
+   "score": "3-0",
+   "status": "FT",
    "tl": [
     {
      "a": "Marc Cucurella",
@@ -4028,6 +4028,30 @@
      "k": "G",
      "p": "Mikel Oyarzabal",
      "t": 36
+    },
+    {
+     "a": "Álex Baena",
+     "d": "Normal Goal",
+     "h": true,
+     "k": "G",
+     "p": "Pedro Porro",
+     "t": 66
+    },
+    {
+     "a": "",
+     "d": "Yellow Card",
+     "h": false,
+     "k": "C",
+     "p": "Stefan Posch",
+     "t": 83
+    },
+    {
+     "a": "Marc Cucurella",
+     "d": "Normal Goal",
+     "h": true,
+     "k": "G",
+     "p": "Mikel Oyarzabal",
+     "t": 89
     }
    ]
   }
