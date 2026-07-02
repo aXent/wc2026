@@ -3802,14 +3802,6 @@
     {
      "a": "",
      "d": "Yellow Card",
-     "h": false,
-     "k": "C",
-     "p": "Jonathan Tah",
-     "t": 105
-    },
-    {
-     "a": "",
-     "d": "Yellow Card",
      "h": true,
      "k": "C",
      "p": "Kai Havertz",
@@ -3822,22 +3814,6 @@
      "k": "C",
      "p": "Jamal Musiala",
      "t": 115
-    },
-    {
-     "a": "",
-     "d": "Yellow Card",
-     "h": true,
-     "k": "C",
-     "p": "Jamal Musiala",
-     "t": 116
-    },
-    {
-     "a": "",
-     "d": "Yellow Card",
-     "h": false,
-     "k": "C",
-     "p": "Jamal Musiala",
-     "t": 117
     },
     {
      "a": "",
@@ -4038,6 +4014,20 @@
      "k": "G",
      "p": "Youri Tielemans",
      "t": 120
+    }
+   ]
+  },
+  "2503636": {
+   "score": "1-0",
+   "status": "HT",
+   "tl": [
+    {
+     "a": "Marc Cucurella",
+     "d": "Normal Goal",
+     "h": true,
+     "k": "G",
+     "p": "Mikel Oyarzabal",
+     "t": 36
     }
    ]
   }
