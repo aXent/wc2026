@@ -4082,6 +4082,30 @@
      "k": "G",
      "p": "Breel Embolo",
      "t": 10
+    },
+    {
+     "a": "",
+     "d": "Yellow Card",
+     "h": false,
+     "k": "C",
+     "p": "Farès Chaïbi",
+     "t": 36
+    },
+    {
+     "a": "",
+     "d": "Normal Goal",
+     "h": true,
+     "k": "G",
+     "p": "Dan Ndoye",
+     "t": 46
+    },
+    {
+     "a": "",
+     "d": "Yellow Card",
+     "h": false,
+     "k": "C",
+     "p": "Hicham Boudaoui",
+     "t": 72
     }
    ]
   },
