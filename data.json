@@ -3857,7 +3857,7 @@
   },
   "2502848": {
    "score": "1-1",
-   "status": "2H",
+   "status": "FT",
    "tl": [
     {
      "a": "Karim Hafez",
@@ -3868,12 +3868,28 @@
      "t": 13
     },
     {
-     "a": "Aiden O'Neill",
-     "d": "Normal Goal",
+     "a": "",
+     "d": "Own Goal",
      "h": true,
      "k": "G",
-     "p": "Harry Souttar",
+     "p": "Mohamed Hany",
      "t": 55
+    },
+    {
+     "a": "",
+     "d": "Yellow Card",
+     "h": false,
+     "k": "C",
+     "p": "Haissem Hassan",
+     "t": 105
+    },
+    {
+     "a": "",
+     "d": "Yellow Card",
+     "h": false,
+     "k": "C",
+     "p": "Yasser Ibrahim",
+     "t": 120
     }
    ]
   },
