@@ -1070,5 +1070,29 @@ b.addEventListener('click',function(){var o=s.classList.toggle('open');b.querySe
   });
 })();
 </script>
+<script>
+/* Ververst de pagina elke 15 minuten en herstelt de scrollpositie, zodat de
+   standen live blijven zonder je plek te verliezen. */
+(function(){
+  var ss; try{ ss = window.sessionStorage; }catch(e){ ss = null; }
+  if("scrollRestoration" in history) history.scrollRestoration = "manual";
+  var KEY = "wk-scroll", MS = 900000;   // 15 min
+  if(ss){
+    var saved = ss.getItem(KEY);
+    if(saved !== null){
+      var y = parseInt(saved, 10) || 0, go = function(){ window.scrollTo(0, y); };
+      go(); addEventListener("load", go); setTimeout(go, 300);
+      if(document.fonts && document.fonts.ready) document.fonts.ready.then(go);
+    }
+    var save = function(){ try{ ss.setItem(KEY, String(Math.round(window.scrollY))); }catch(e){} };
+    var t = null;
+    addEventListener("scroll", function(){ if(t) return; t = setTimeout(function(){ t = null; save(); }, 200); }, {passive:true});
+    addEventListener("pagehide", save);
+    setTimeout(function(){ save(); location.reload(); }, MS);
+  } else {
+    setTimeout(function(){ location.reload(); }, MS);
+  }
+})();
+</script>
 </body>
 </html>
