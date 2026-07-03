@@ -4020,7 +4020,70 @@
   "2503393": {
    "score": "2-1",
    "status": "FT",
-   "tl": []
+   "tl": [
+    {
+     "a": "",
+     "d": "Yellow Card",
+     "h": true,
+     "k": "C",
+     "p": "Rúben Dias",
+     "t": 17
+    },
+    {
+     "a": "",
+     "d": "Normal Goal",
+     "h": false,
+     "k": "G",
+     "p": "Ivan Perišić",
+     "t": 53
+    },
+    {
+     "a": "",
+     "d": "Yellow Card",
+     "h": false,
+     "k": "C",
+     "p": "Luka Modrić",
+     "t": 59
+    },
+    {
+     "a": "",
+     "d": "Penalty",
+     "h": true,
+     "k": "G",
+     "p": "Cristiano Ronaldo",
+     "t": 68
+    },
+    {
+     "a": "Rafael Leão",
+     "d": "Normal Goal",
+     "h": true,
+     "k": "G",
+     "p": "Gonçalo Ramos",
+     "t": 90
+    },
+    {
+     "a": "",
+     "d": "Yellow Card",
+     "h": false,
+     "k": "C",
+     "p": "Ivan Perišić",
+     "t": 90
+    }
+   ]
+  },
+  "2503635": {
+   "score": "2-0",
+   "status": "FT",
+   "tl": [
+    {
+     "a": "Johan Manzambi",
+     "d": "Normal Goal",
+     "h": true,
+     "k": "G",
+     "p": "Breel Embolo",
+     "t": 10
+    }
+   ]
   },
   "2503636": {
    "score": "3-0",
