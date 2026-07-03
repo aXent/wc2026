@@ -579,15 +579,6 @@ def render_group_cards(groups):
             f'<span class="played">{badge}</span></div><ol>{rows}</ol></div>')
     return "\n".join(out)
 
-def render_pop_data(groups):
-    parts = []
-    for g in sorted(groups):
-        gr = groups[g]
-        t = ",".join(f'["{x["flag"]}","{x["nl"]}",{x["pts"]},"{gd_str(x["gd"])}"]'
-                     for x in gr["teams"])
-        parts.append(f'{g}:{{p:{gr["played"]},t:[{t}]}}')
-    return "{" + ",".join(parts) + "}"
-
 def render_fx_data(groups):
     parts = []
     for g in sorted(groups):
@@ -613,7 +604,7 @@ def date_label():
 def main():
     if not os.path.exists(TEMPLATE):
         sys.exit(f"{TEMPLATE} ontbreekt (de pagina met placeholders "
-                 f"{{{{GROUPS}}}}, {{{{POP_DATA}}}}, {{{{FX_DATA}}}}, {{{{DATE}}}}).")
+                 f"{{{{GROUPS}}}}, {{{{FX_DATA}}}}, {{{{QUAL_DATA}}}}, {{{{DATE}}}}).")
     season, events = fetch_events()
     groups = build_groups(events)
     validate_group_schedule(groups, len(events), season)
@@ -621,7 +612,6 @@ def main():
     html = open(TEMPLATE, encoding="utf-8").read()
     html = html.replace("{{DATE}}",     date_label())
     html = html.replace("{{GROUPS}}",   render_group_cards(groups))
-    html = html.replace("{{POP_DATA}}", render_pop_data(groups))
     html = html.replace("{{FX_DATA}}",  render_fx_data(groups))
     html = html.replace("{{TL_DATA}}",  render_tl_data(events, cache))
     html = html.replace("{{STATS}}",    render_stats(events, cache))

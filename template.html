@@ -137,57 +137,53 @@
   .keychips span{display:inline-flex;align-items:center;gap:6px}
   .keychips .sw{width:12px;height:12px;border-radius:4px;display:inline-block}
 
-  /* Bracket */
-  .scroll-hint{font-size:12px;color:var(--muted);margin:0 4px 8px;font-weight:600}
-  .bracket-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;padding:6px 2px 14px;background:var(--paper);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow)}
-  .bracket{display:flex;min-width:1080px;padding:10px 8px}
-  .round{display:flex;flex-direction:column;justify-content:space-around;flex:1 1 0;padding:0 6px;min-width:172px}
-  .round.r-final{flex:0 0 196px;min-width:196px;justify-content:center}
-  .rlabel{font-size:10.5px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);text-align:center;margin-bottom:8px;padding-bottom:6px;border-bottom:2px solid var(--line)}
-  .round.r-final .rlabel{color:var(--signal);border-color:var(--signal)}
-  .bracket-scroll{max-height:78vh}
-  .bracket .rlabel{position:sticky;top:0;z-index:6;background:var(--paper);box-shadow:0 8px 0 var(--paper)}
-  .matches{display:flex;flex-direction:column;justify-content:space-around;flex:1}
-  .m{position:relative;display:flex;flex-direction:column;justify-content:center;flex:1 1 auto;padding:7px 0}
-  .round:not(.r-first) .m::before{content:"";position:absolute;left:-6px;top:0;height:100%;border-left:2px solid var(--line)}
-  .round:not(.r-first) .m::after{content:"";position:absolute;left:-6px;top:50%;width:6px;border-top:2px solid var(--line)}
-  .round:not(.r-final) .m .box::after{content:"";position:absolute;right:-6px;top:50%;width:6px;border-top:2px solid var(--line)}
-  .box{position:relative;background:#fff;border:1px solid var(--line);border-radius:9px;overflow:hidden;box-shadow:0 1px 2px rgba(20,24,30,.05)}
-  .slot{display:flex;align-items:center;gap:7px;padding:6px 8px;font-size:12.5px;font-weight:600}
-  .slot+.slot{border-top:1px solid #EDF0F4}
-  .slot .code{font-family:'Anton',sans-serif;font-size:13px;color:var(--ink);background:#F1F3F7;border-radius:5px;padding:1px 6px;min-width:30px;text-align:center;flex:none}
-  .slot.win .code{background:var(--turf);color:#fff}
-  .slot.team .code{background:var(--ink);color:#fff}
-  /* voorlopige plaatsing (groep nog niet af): leesbaar grijs + stippellijn-onderlijning */
-  .slot.prov .code{background:#AEB6C0;color:#fff}
-  .slot.prov .lab{color:var(--muted);font-style:italic;text-decoration:underline dotted var(--muted);text-underline-offset:2px}
-  .slot.prov .fl{opacity:.6}
-  .slot .fl{font-size:15px;flex:none}
-  .slot .lab{color:var(--muted);font-weight:600;font-size:11.5px}
-  .slot.team .lab{color:var(--ink);font-weight:700;font-size:12.5px}
-  .cap{font-size:10px;color:var(--muted);font-weight:700;letter-spacing:.02em;padding:3px 8px 0;display:flex;justify-content:space-between;gap:6px}
-  .cap .city{color:var(--ink)}
+  /* Bracket (schema als boom — verbindingslijnen lopen exact tussen de twee voedende duels) */
+  .scroll-hint{font-size:12px;color:var(--muted);margin:0 4px 10px;font-weight:600}
+  .scroll-hint b{color:var(--signal)}
+  .btree-wrap{--conn:#8A97A8;overflow-x:auto;-webkit-overflow-scrolling:touch;max-height:82vh;background:var(--paper);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);padding:10px 6px}
+  .btree{display:flex;min-width:1200px;padding:4px}
+  .bcol{display:flex;flex-direction:column;flex:1;min-width:210px;padding:0 9px}
+  .bcol .bl{position:sticky;top:0;z-index:8;background:var(--paper);font-family:'Anton',sans-serif;text-transform:uppercase;font-size:12.5px;letter-spacing:.06em;color:var(--muted);text-align:center;padding:6px 0 9px;border-bottom:2px solid var(--line);margin-bottom:6px}
+  .bcol.fin .bl{color:var(--signal);border-color:var(--signal)}
+  .bms{display:flex;flex-direction:column;justify-content:space-around;flex:1}
+  .bm{position:relative;display:flex;flex-direction:column;justify-content:center;flex:1 1 auto;padding:6px 0;cursor:pointer}
+  /* verticale koppeling loopt precies van de ene naar de andere voeder (25%-75%) */
+  .bcol:not(.first) .bm::before{content:"";position:absolute;left:-9px;top:25%;height:50%;border-left:2px solid var(--conn)}
+  .bcol:not(.first) .bm::after{content:"";position:absolute;left:-9px;top:50%;margin-top:-1px;width:9px;border-top:2px solid var(--conn)}
+  .bcol:not(.last) .bm>.bmc::after{content:"";position:absolute;right:-9px;top:50%;margin-top:-1px;width:9px;border-top:2px solid var(--conn)}
+  .bmc{position:relative;background:#fff;border:1px solid var(--line);border-radius:10px;box-shadow:0 1px 2px rgba(20,24,30,.05);transition:box-shadow .12s,border-color .12s,opacity .12s}
+  .bmc>.brow:first-child{border-radius:10px 10px 0 0;overflow:hidden}
+  .bmc>.brow:last-child{border-radius:0 0 10px 10px;overflow:hidden}
+  .bmc.be{border-color:var(--be);box-shadow:0 0 0 1px var(--be)}
+  .bmc.nl{border-color:var(--nl);box-shadow:0 0 0 1px var(--nl)}
+  .bmc.champ{border:2px solid var(--gold);box-shadow:0 8px 22px -12px rgba(242,165,12,.6)}
+  .brow{display:flex;align-items:center;gap:6px;padding:6px 9px;font-size:12.5px;background:#fff}
+  .brow+.brow{border-top:1px solid #EEF1F5}
+  .brow .cr{font-size:15px;flex:none}
+  .brow .nm{flex:1;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .brow .sc{font-family:'Anton',sans-serif;font-size:14px;flex:none;color:var(--muted)}
+  .brow.win{background:var(--turf-soft)}.brow.win .nm{font-weight:800}.brow.win .sc{color:var(--turf)}
+  .brow.prov .nm{color:var(--muted);font-style:italic}.brow.prov .cr{opacity:.6}
+  .brow.tbd .nm{color:var(--muted);font-size:11.5px}.brow.tbd .cr{color:var(--muted)}
+  .bcap{font-size:9px;font-weight:800;color:var(--muted);text-align:center;padding:3px 2px 0;text-transform:uppercase;letter-spacing:.02em;transition:color .12s}
+  /* trace: tik/hover een duel → de 2 wedstrijden die ertoe leiden lichten op */
+  .btree.tracing .bmc{opacity:.4}
+  .btree.tracing .bm.focus>.bmc,.btree.tracing .bm.feed>.bmc{opacity:1}
+  .bm.focus>.bmc{border-color:var(--signal);box-shadow:0 0 0 2px var(--signal),0 10px 20px -10px rgba(255,79,43,.55);z-index:3}
+  .bm.feed>.bmc{border-color:var(--signal);box-shadow:0 0 0 2px var(--signal);z-index:3}
+  .bm.focus>.bcap{color:var(--signal)}
+  .bcol .bm.focus::before{border-color:var(--signal);border-left-width:3px;z-index:4}
+  .bcol .bm.focus::after{border-color:var(--signal);border-top-width:3px;z-index:4}
+  .bcol .bm.feed>.bmc::after{border-color:var(--signal);border-top-width:3px;z-index:4}
+  .bronze-wrap{max-width:252px;margin:14px auto 0;text-align:center}
+  .bronze-wrap:empty{display:none}
+  .bronze-wrap .bt{font-size:10px;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px}
+  .bm.bronze{cursor:default;padding:0}
+  .bm.bronze::before,.bm.bronze::after{display:none}
 
-  /* België-indicator */
-  .box.be-route{border:2px solid var(--be)}
-  .slot.be-slot{background:var(--be-soft)}
-  .slot.be-slot .lab{color:var(--be);font-weight:800}
-  .be-flag{position:absolute;top:-2px;right:-7px;background:var(--be);color:#fff;font-size:9.5px;font-weight:800;letter-spacing:.03em;padding:2px 7px;border-radius:999px;box-shadow:0 2px 6px -1px rgba(232,17,45,.5);z-index:4;white-space:nowrap}
-
-  /* Nederland-indicator */
-  .box.nl-route{border:2px solid var(--nl)}
-  .slot.nl-slot{background:var(--nl-soft)}
-  .slot.nl-slot .lab{color:#C24E0E;font-weight:800}
-  .nl-flag{position:absolute;top:-2px;left:-7px;background:var(--nl);color:#fff;font-size:9.5px;font-weight:800;letter-spacing:.03em;padding:2px 7px;border-radius:999px;box-shadow:0 2px 6px -1px rgba(243,108,33,.5);z-index:4;white-space:nowrap}
-
-  /* highlighted group letters inside beste-3e combos */
+  /* highlighted group letters inside beste-3e combos (keychips/legende) */
   .hl-nl{color:var(--nl);font-weight:900}
   .hl-be{color:var(--be);font-weight:900}
-
-  .box.final-box{border:2px solid var(--signal);box-shadow:0 8px 22px -12px rgba(255,79,43,.55)}
-  .final-tag{font-family:'Anton',sans-serif;text-align:center;color:var(--signal);font-size:14px;letter-spacing:.05em;padding-top:2px}
-  .bronze{margin:10px 8px 0;border:1px dashed var(--line);border-radius:9px;background:#FAFBFC}
-  .bronze .cap .city{color:var(--muted)}
 
   /* Legend */
   .legend{margin-top:16px;display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
@@ -208,40 +204,20 @@
 
   footer{margin-top:30px;text-align:center;color:var(--muted);font-size:11.5px}
 
-  /* tap/hover popover */
-  .slot{cursor:pointer}
-  .slot:hover{box-shadow:inset 0 0 0 2px rgba(21,24,30,.12)}
-  #wc-pop{position:fixed;z-index:60;width:236px;max-width:calc(100vw - 16px);background:#fff;border:1px solid var(--line);border-radius:11px;box-shadow:0 14px 36px -8px rgba(20,24,30,.45);padding:9px 11px;font-size:12px;display:none}
-  #wc-pop.show{display:block}
-  #wc-pop .wc-title{font-weight:800;font-size:10.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin-bottom:7px;display:flex;align-items:center;gap:7px}
-  #wc-pop .wc-title .wc-code{font-family:'Anton',sans-serif;font-size:12px;color:#fff;background:var(--ink);border-radius:5px;padding:1px 6px;letter-spacing:.02em}
-  #wc-pop .wc-title .wc-code.w{background:var(--turf)}
-  .wc-row{display:flex;align-items:center;gap:7px;padding:2.5px 0}
-  .wc-row.hi{font-weight:800}
-  .wc-row.hi .wc-nm{color:var(--ink)}
-  .wc-fl{font-size:15px;flex:none}
-  .wc-gtag{font-family:'Anton',sans-serif;font-size:10px;color:var(--muted);background:#F1F3F7;border-radius:4px;padding:0 5px;flex:none}
-  .wc-nm{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:#3A424E}
-  .wc-pt{font-weight:800;flex:none}
-  .wc-gd{color:var(--muted);font-size:10.5px;width:26px;text-align:right;flex:none}
-  .wc-note{margin-top:7px;font-size:10.5px;line-height:1.4;color:var(--muted);border-top:1px solid #EDF0F4;padding-top:6px}
-  .wc-vs{font-size:12px;color:var(--ink);font-weight:600;line-height:1.5}
-  .wc-vs b{font-weight:800}
-
-  @media print{ .slot{cursor:default} #wc-pop{display:none!important} .grp .fx{display:block!important} .grp .chev{display:none} .grp .gh{cursor:default} }
+  @media print{ .grp .fx{display:block!important} .grp .chev{display:none} .grp .gh{cursor:default} }
 
   @media print{
     body{background:#fff}
     .wrap{max-width:none;padding:0}
     .scroll-hint,.live .pulse{display:none}
-    .bracket-scroll{overflow:visible;border:none;box-shadow:none;padding:0;max-height:none}
-    .bracket{min-width:0;page-break-inside:avoid}
-    header.masthead,.format,.grp,.box,.lg{box-shadow:none}
+    .btree-wrap{overflow:visible;border:none;box-shadow:none;padding:0;max-height:none}
+    .btree{min-width:0;page-break-inside:avoid}
+    header.masthead,.format,.grp,.bmc,.lg{box-shadow:none}
     .sec-head{page-break-after:avoid}
     .groups{page-break-inside:avoid}
     @page{size:landscape;margin:10mm}
   }
-  @media (max-width:520px){.slot .lab{font-size:11px}.round{min-width:158px}}
+  @media (max-width:520px){.brow .nm{font-size:11.5px}.bcol{min-width:186px}}
 
   /* ===== Speelkalender (variant B) — alle regels gescoped onder #kal ===== */
   #kal{margin-top:8px}
@@ -429,208 +405,12 @@
   <div class="keychips">
     <span><i class="sw" style="background:var(--be)"></i> 🇧🇪 = wedstrijd waar België kan belanden</span>
     <span><i class="sw" style="background:var(--nl)"></i> 🇳🇱 = wedstrijd waar Nederland kan belanden</span>
-    <span>In een <b>beste 3ᵉ</b>-vakje wijzen de gekleurde letters <span class="hl-be">G</span>/<span class="hl-nl">F</span> de mogelijke bestemming aan</span>
+    <span><i class="sw" style="background:var(--turf)"></i> groene regel = winnaar · grijs = nog niet zeker</span>
   </div>
-  <p class="scroll-hint">↔ Veeg horizontaal om het hele schema te zien (of print liggend). &nbsp;👆 Tik op een vakje voor de mogelijke teams.</p>
+  <p class="scroll-hint">↔ Veeg horizontaal om het hele schema te zien. &nbsp;👆 <b>Tik of hover</b> een duel → de 2 wedstrijden die ertoe leiden lichten op.</p>
 
-  <div class="bracket-scroll">
-    <div class="bracket">
-
-      <!-- ROUND OF 32 -->
-      <div class="round r-first">
-        <div class="rlabel">1/16 finale</div>
-        <div class="matches">
-
-          <div class="m"><div class="box">
-            <div class="slot"><span class="code">2A</span><span class="lab">Nr. 2 groep A</span></div>
-            <div class="slot"><span class="code">2B</span><span class="lab">Nr. 2 groep B</span></div>
-          </div><div class="cap"><span>#73 · zo 28/6 21:00</span><span class="city">Los Angeles</span></div></div>
-
-          <div class="m"><span class="nl-flag">🇳🇱 als winnaar F</span><div class="box nl-route">
-            <div class="slot win nl-slot"><span class="code">1F</span><span class="lab">Winnaar groep F</span></div>
-            <div class="slot"><span class="code">2C</span><span class="lab">Nr. 2 groep C</span></div>
-          </div><div class="cap"><span>#75 · di 30/6 03:00</span><span class="city">Monterrey</span></div></div>
-
-          <div class="m"><div class="box">
-            <div class="slot win"><span class="code">1E</span><span class="lab">Winnaar groep E</span></div>
-            <div class="slot"><span class="code">3</span><span class="lab">Beste 3<sup>e</sup> · A/B/C/D/<span class="hl-nl">F</span></span></div>
-          </div><div class="cap"><span>#74 · ma 29/6 22:30</span><span class="city">Boston</span></div></div>
-
-          <div class="m"><div class="box">
-            <div class="slot win"><span class="code">1I</span><span class="lab">Winnaar groep I</span></div>
-            <div class="slot"><span class="code">3</span><span class="lab">Beste 3<sup>e</sup> · C/D/<span class="hl-nl">F</span>/<span class="hl-be">G</span>/H</span></div>
-          </div><div class="cap"><span>#77 · di 30/6 23:00</span><span class="city">New York/NJ</span></div></div>
-
-          <div class="m"><div class="box">
-            <div class="slot"><span class="code">2K</span><span class="lab">Nr. 2 groep K</span></div>
-            <div class="slot"><span class="code">2L</span><span class="lab">Nr. 2 groep L</span></div>
-          </div><div class="cap"><span>#83 · vr 03/7 01:00</span><span class="city">Toronto</span></div></div>
-
-          <div class="m"><div class="box">
-            <div class="slot win"><span class="code">1H</span><span class="lab">Winnaar groep H</span></div>
-            <div class="slot"><span class="code">2J</span><span class="lab">Nr. 2 groep J</span></div>
-          </div><div class="cap"><span>#84 · do 02/7 21:00</span><span class="city">Los Angeles</span></div></div>
-
-          <div class="m"><div class="box">
-            <div class="slot team"><span class="code">1D</span><span class="fl">🇺🇸</span><span class="lab">Ver. Staten</span></div>
-            <div class="slot"><span class="code">3</span><span class="lab">Beste 3<sup>e</sup> · B/E/<span class="hl-nl">F</span>/I/J</span></div>
-          </div><div class="cap"><span>#81 · do 02/7 02:00</span><span class="city">San Francisco</span></div></div>
-
-          <div class="m"><span class="be-flag">🇧🇪 als winnaar G</span><div class="box be-route">
-            <div class="slot win be-slot"><span class="code">1G</span><span class="lab">Winnaar groep G</span></div>
-            <div class="slot"><span class="code">3</span><span class="lab">Beste 3<sup>e</sup> · A/E/H/I/J</span></div>
-          </div><div class="cap"><span>#82 · wo 01/7 22:00</span><span class="city">Seattle</span></div></div>
-
-          <div class="m"><span class="nl-flag">🇳🇱 als nr. 2 F</span><div class="box nl-route">
-            <div class="slot win"><span class="code">1C</span><span class="lab">Winnaar groep C</span></div>
-            <div class="slot nl-slot"><span class="code">2F</span><span class="lab">Nr. 2 groep F</span></div>
-          </div><div class="cap"><span>#76 · ma 29/6 19:00</span><span class="city">Houston</span></div></div>
-
-          <div class="m"><div class="box">
-            <div class="slot"><span class="code">2E</span><span class="lab">Nr. 2 groep E</span></div>
-            <div class="slot"><span class="code">2I</span><span class="lab">Nr. 2 groep I</span></div>
-          </div><div class="cap"><span>#78 · di 30/6 19:00</span><span class="city">Dallas</span></div></div>
-
-          <div class="m"><div class="box">
-            <div class="slot team"><span class="code">1A</span><span class="fl">🇲🇽</span><span class="lab">Mexico</span></div>
-            <div class="slot"><span class="code">3</span><span class="lab">Beste 3<sup>e</sup> · C/E/<span class="hl-nl">F</span>/H/I</span></div>
-          </div><div class="cap"><span>#79 · wo 01/7 03:00</span><span class="city">Mexico-Stad</span></div></div>
-
-          <div class="m"><div class="box">
-            <div class="slot win"><span class="code">1L</span><span class="lab">Winnaar groep L</span></div>
-            <div class="slot"><span class="code">3</span><span class="lab">Beste 3<sup>e</sup> · E/H/I/J/K</span></div>
-          </div><div class="cap"><span>#80 · wo 01/7 18:00</span><span class="city">Atlanta</span></div></div>
-
-          <div class="m"><div class="box">
-            <div class="slot win"><span class="code">1J</span><span class="lab">Winnaar groep J</span></div>
-            <div class="slot"><span class="code">2H</span><span class="lab">Nr. 2 groep H</span></div>
-          </div><div class="cap"><span>#86 · za 04/7 00:00</span><span class="city">Miami</span></div></div>
-
-          <div class="m"><span class="be-flag">🇧🇪 als nr. 2 G</span><div class="box be-route">
-            <div class="slot"><span class="code">2D</span><span class="lab">Nr. 2 groep D</span></div>
-            <div class="slot be-slot"><span class="code">2G</span><span class="lab">Nr. 2 groep G</span></div>
-          </div><div class="cap"><span>#88 · vr 03/7 20:00</span><span class="city">Dallas</span></div></div>
-
-          <div class="m"><div class="box">
-            <div class="slot win"><span class="code">1B</span><span class="lab">Winnaar groep B</span></div>
-            <div class="slot"><span class="code">3</span><span class="lab">Beste 3<sup>e</sup> · E/<span class="hl-nl">F</span>/<span class="hl-be">G</span>/I/J</span></div>
-          </div><div class="cap"><span>#85 · vr 03/7 05:00</span><span class="city">Vancouver</span></div></div>
-
-          <div class="m"><div class="box">
-            <div class="slot win"><span class="code">1K</span><span class="lab">Winnaar groep K</span></div>
-            <div class="slot"><span class="code">3</span><span class="lab">Beste 3<sup>e</sup> · D/E/I/J/L</span></div>
-          </div><div class="cap"><span>#87 · za 04/7 03:30</span><span class="city">Kansas City</span></div></div>
-
-        </div>
-      </div>
-
-      <!-- ROUND OF 16 -->
-      <div class="round">
-        <div class="rlabel">1/8 finale</div>
-        <div class="matches">
-          <div class="m"><div class="box">
-            <div class="slot win"><span class="code">W73</span><span class="lab">Winnaar #73</span></div>
-            <div class="slot win"><span class="code">W75</span><span class="lab">Winnaar #75</span></div>
-          </div><div class="cap"><span>#90 · za 04/7 19:00</span><span class="city">Houston</span></div></div>
-
-          <div class="m"><div class="box">
-            <div class="slot win"><span class="code">W74</span><span class="lab">Winnaar #74</span></div>
-            <div class="slot win"><span class="code">W77</span><span class="lab">Winnaar #77</span></div>
-          </div><div class="cap"><span>#89 · za 04/7 23:00</span><span class="city">Philadelphia</span></div></div>
-
-          <div class="m"><div class="box">
-            <div class="slot win"><span class="code">W83</span><span class="lab">Winnaar #83</span></div>
-            <div class="slot win"><span class="code">W84</span><span class="lab">Winnaar #84</span></div>
-          </div><div class="cap"><span>#93 · ma 06/7 21:00</span><span class="city">Dallas</span></div></div>
-
-          <div class="m"><div class="box">
-            <div class="slot win"><span class="code">W81</span><span class="lab">Winnaar #81</span></div>
-            <div class="slot win"><span class="code">W82</span><span class="lab">Winnaar #82</span></div>
-          </div><div class="cap"><span>#94 · di 07/7 02:00</span><span class="city">Seattle</span></div></div>
-
-          <div class="m"><div class="box">
-            <div class="slot win"><span class="code">W76</span><span class="lab">Winnaar #76</span></div>
-            <div class="slot win"><span class="code">W78</span><span class="lab">Winnaar #78</span></div>
-          </div><div class="cap"><span>#91 · zo 05/7 22:00</span><span class="city">New York/NJ</span></div></div>
-
-          <div class="m"><div class="box">
-            <div class="slot win"><span class="code">W79</span><span class="lab">Winnaar #79</span></div>
-            <div class="slot win"><span class="code">W80</span><span class="lab">Winnaar #80</span></div>
-          </div><div class="cap"><span>#92 · ma 06/7 02:00</span><span class="city">Mexico-Stad</span></div></div>
-
-          <div class="m"><div class="box">
-            <div class="slot win"><span class="code">W86</span><span class="lab">Winnaar #86</span></div>
-            <div class="slot win"><span class="code">W88</span><span class="lab">Winnaar #88</span></div>
-          </div><div class="cap"><span>#95 · di 07/7 18:00</span><span class="city">Atlanta</span></div></div>
-
-          <div class="m"><div class="box">
-            <div class="slot win"><span class="code">W85</span><span class="lab">Winnaar #85</span></div>
-            <div class="slot win"><span class="code">W87</span><span class="lab">Winnaar #87</span></div>
-          </div><div class="cap"><span>#96 · di 07/7 22:00</span><span class="city">Vancouver</span></div></div>
-        </div>
-      </div>
-
-      <!-- QUARTER -->
-      <div class="round">
-        <div class="rlabel">Kwartfinale</div>
-        <div class="matches">
-          <div class="m"><div class="box">
-            <div class="slot win"><span class="code">W89</span><span class="lab">Winnaar #89</span></div>
-            <div class="slot win"><span class="code">W90</span><span class="lab">Winnaar #90</span></div>
-          </div><div class="cap"><span>#97 · do 09/7 22:00</span><span class="city">Boston</span></div></div>
-
-          <div class="m"><div class="box">
-            <div class="slot win"><span class="code">W93</span><span class="lab">Winnaar #93</span></div>
-            <div class="slot win"><span class="code">W94</span><span class="lab">Winnaar #94</span></div>
-          </div><div class="cap"><span>#98 · vr 10/7 21:00</span><span class="city">Los Angeles</span></div></div>
-
-          <div class="m"><div class="box">
-            <div class="slot win"><span class="code">W91</span><span class="lab">Winnaar #91</span></div>
-            <div class="slot win"><span class="code">W92</span><span class="lab">Winnaar #92</span></div>
-          </div><div class="cap"><span>#99 · za 11/7 23:00</span><span class="city">Miami</span></div></div>
-
-          <div class="m"><div class="box">
-            <div class="slot win"><span class="code">W95</span><span class="lab">Winnaar #95</span></div>
-            <div class="slot win"><span class="code">W96</span><span class="lab">Winnaar #96</span></div>
-          </div><div class="cap"><span>#100 · zo 12/7 03:00</span><span class="city">Kansas City</span></div></div>
-        </div>
-      </div>
-
-      <!-- SEMI -->
-      <div class="round">
-        <div class="rlabel">Halve finale</div>
-        <div class="matches">
-          <div class="m"><div class="box">
-            <div class="slot win"><span class="code">W97</span><span class="lab">Winnaar #97</span></div>
-            <div class="slot win"><span class="code">W98</span><span class="lab">Winnaar #98</span></div>
-          </div><div class="cap"><span>#101 · di 14/7 21:00</span><span class="city">Dallas</span></div></div>
-
-          <div class="m"><div class="box">
-            <div class="slot win"><span class="code">W99</span><span class="lab">Winnaar #99</span></div>
-            <div class="slot win"><span class="code">W100</span><span class="lab">Winnaar #100</span></div>
-          </div><div class="cap"><span>#102 · wo 15/7 21:00</span><span class="city">Atlanta</span></div></div>
-        </div>
-      </div>
-
-      <!-- FINAL -->
-      <div class="round r-final">
-        <div class="rlabel">Finale</div>
-        <div class="matches">
-          <div class="m"><div class="final-tag">🏆</div><div class="box final-box">
-            <div class="slot win"><span class="code">W101</span><span class="lab">Winnaar HF 1</span></div>
-            <div class="slot win"><span class="code">W102</span><span class="lab">Winnaar HF 2</span></div>
-          </div><div class="cap"><span>#104 · zo 19/7 21:00</span><span class="city">New York/NJ</span></div></div>
-
-          <div class="bronze"><div class="cap" style="padding-top:6px"><span>Troostfinale · #103</span><span class="city">za 18/7</span></div>
-            <div class="slot"><span class="code">V101</span><span class="lab">Verliezer HF 1</span></div>
-            <div class="slot"><span class="code">V102</span><span class="lab">Verliezer HF 2</span></div>
-            <div class="cap" style="padding-bottom:6px"><span>za 18/7 23:00</span><span class="city">Miami</span></div>
-          </div>
-        </div>
-      </div>
-
-    </div>
-  </div>
+  <div class="btree-wrap"><div class="btree" id="btree"></div></div>
+  <div class="bronze-wrap" id="bronzeWrap"></div>
 
   <!-- LEGENDE -->
   <div class="legend">
@@ -680,154 +460,6 @@
   </footer>
 
 </div>
-<div id="wc-pop" role="dialog" aria-live="polite"></div>
-<script>
-(function(){
-  // Actuele groepsstanden (volgorde = stand t/m 22 juni). [vlag, naam, punten, doelsaldo]
-  var G = {{POP_DATA}};
-  // Welke twee plekken voeden elke knock-outwedstrijd (voor "winnaar #NN")
-  var M = {
-    73:["Nr. 2 groep A","Nr. 2 groep B"], 74:["Winnaar groep E","Beste 3ᵉ (A/B/C/D/F)"],
-    75:["Winnaar groep F","Nr. 2 groep C"], 76:["Winnaar groep C","Nr. 2 groep F"],
-    77:["Winnaar groep I","Beste 3ᵉ (C/D/F/G/H)"], 78:["Nr. 2 groep E","Nr. 2 groep I"],
-    79:["Mexico (winnaar A)","Beste 3ᵉ (C/E/F/H/I)"], 80:["Winnaar groep L","Beste 3ᵉ (E/H/I/J/K)"],
-    81:["Ver. Staten (winnaar D)","Beste 3ᵉ (B/E/F/I/J)"], 82:["Winnaar groep G","Beste 3ᵉ (A/E/H/I/J)"],
-    83:["Nr. 2 groep K","Nr. 2 groep L"], 84:["Winnaar groep H","Nr. 2 groep J"],
-    85:["Winnaar groep B","Beste 3ᵉ (E/F/G/I/J)"], 86:["Winnaar groep J","Nr. 2 groep H"],
-    87:["Winnaar groep K","Beste 3ᵉ (D/E/I/J/L)"], 88:["Nr. 2 groep D","Nr. 2 groep G"],
-    89:["Winnaar #74","Winnaar #77"], 90:["Winnaar #73","Winnaar #75"],
-    91:["Winnaar #76","Winnaar #78"], 92:["Winnaar #79","Winnaar #80"],
-    93:["Winnaar #83","Winnaar #84"], 94:["Winnaar #81","Winnaar #82"],
-    95:["Winnaar #86","Winnaar #88"], 96:["Winnaar #85","Winnaar #87"],
-    97:["Winnaar #89","Winnaar #90"], 98:["Winnaar #93","Winnaar #94"],
-    99:["Winnaar #91","Winnaar #92"], 100:["Winnaar #95","Winnaar #96"],
-    101:["Winnaar #97","Winnaar #98"], 102:["Winnaar #99","Winnaar #100"]
-  };
-
-  function row(t, hi, gtag){
-    return '<div class="wc-row'+(hi?' hi':'')+'">'+
-      '<span class="wc-fl">'+t[0]+'</span>'+
-      (gtag?'<span class="wc-gtag">'+gtag+'</span>':'')+
-      '<span class="wc-nm">'+t[1]+'</span>'+
-      '<span class="wc-pt">'+t[2]+'</span>'+
-      '<span class="wc-gd">'+t[3]+'</span></div>';
-  }
-  function prov(p){ return p<3 ? 'Nog '+(3-p)+' speeldag(en) te gaan — stand voorlopig.' : 'Eindstand groep.'; }
-
-  function content(slot){
-    var codeEl = slot.querySelector('.code');
-    if(!codeEl) return null;
-    var code = codeEl.textContent.trim();
-    var labEl = slot.querySelector('.lab');
-    var lab = labEl ? labEl.textContent : '';
-    var m;
-
-    // ingevulde beste-3e (data-grp = brongroep): toon die groepsstand, 3e gemarkeerd
-    var fgrp = slot.getAttribute('data-grp');
-    if(fgrp && G[fgrp]){
-      var fg = G[fgrp];
-      var frows = fg.t.map(function(t,i){ return row(t, i===2); }).join('');
-      return '<div class="wc-title"><span class="wc-code">3ᵉ</span> Groep '+fgrp+' · beste nr. 3</div>'+
-        frows+'<div class="wc-note">Geplaatst als beste nummer 3 voor de 1/16 finales.</div>';
-    }
-
-    // 1X of 2X (incl. 1A/1D met bevestigd team)
-    if((m = code.match(/^([12])([A-L])$/))){
-      var pos = +m[1], grp = m[2], g = G[grp], fin = g.p >= 3;
-      var title = '<span class="wc-code'+(pos===1?' w':'')+'">'+code+'</span> Groep '+grp+(fin?' · eindstand':' · stand nu');
-      var rows = g.t.map(function(t,i){ return row(t, pos===1 ? i===0 : i===1); }).join('');
-      var who = g.t[pos-1][1];
-      var note = fin ? (pos===1?'Groepswinnaar: ':'Tweede in de groep: ')+who+'.'
-                     : (pos===1?'Nu eerste: ':'Nu tweede: ')+who+'. '+prov(g.p);
-      return '<div class="wc-title">'+title+'</div>'+rows+'<div class="wc-note">'+note+'</div>';
-    }
-    // Beste 3e met combinatie van groepen
-    if(code==='3'){
-      var after = lab.split('·')[1] || lab;
-      var letters = (after.match(/[A-L]/g) || []);
-      var rows2 = letters.map(function(l){ var g=G[l]; return row(g.t[2], l==='F'||l==='G', l); }).join('');
-      return '<div class="wc-title"><span class="wc-code">3ᵉ</span> Beste nummers 3 · kandidaten</div>'+
-        rows2+'<div class="wc-note">Huidige nummers 3 van deze groepen. De 8 beste nummers 3 van het toernooi plaatsen zich.</div>';
-    }
-    // Winnaar van wedstrijd
-    if((m = code.match(/^W(\d+)$/))){
-      var n=+m[1];
-      if(typeof KOWIN!=='undefined' && KOWIN['W'+n]){ var kw=KOWIN['W'+n];   // al gespeeld -> echte winnaar
-        return '<div class="wc-title"><span class="wc-code w">W'+n+'</span> Winnaar #'+n+'</div>'+
-          '<div class="wc-row hi"><span class="wc-fl">'+kw[0]+'</span><span class="wc-nm">'+kw[1]+'</span></div>'+
-          (KOSCORE[n]?'<div class="wc-note">Wedstrijd #'+n+' gewonnen ('+KOSCORE[n]+').</div>':'');
-      }
-      var ko=(typeof KO!=='undefined')?KO.filter(function(x){return x.n===n;})[0]:null;
-      if(ko){
-        var possRow=function(c, other){
-          var team=koTeam(c, other);
-          if(team) return '<div class="wc-row"><span class="wc-fl">'+team.flag+'</span><span class="wc-gtag">'+c+'</span><span class="wc-nm">'+team.name+'</span></div>';
-          return '<div class="wc-row"><span class="wc-gtag">'+c+'</span><span class="wc-nm" style="color:var(--muted)">'+codeLabel(c)+'</span></div>';
-        };
-        return '<div class="wc-title"><span class="wc-code w">W'+n+'</span> Mogelijke teams · #'+n+'</div>'+
-          possRow(ko.h, ko.a)+possRow(ko.a, ko.h)+
-          '<div class="wc-note">De winnaar van dit duel komt hier terecht.</div>';
-      }
-      var s=M[n]||[];
-      return '<div class="wc-title"><span class="wc-code w">W'+n+'</span> Winnaar van wedstrijd #'+n+'</div>'+
-        '<div class="wc-vs"><b>'+(s[0]||'?')+'</b><br>tegen<br><b>'+(s[1]||'?')+'</b></div>'+
-        '<div class="wc-note">Tik op het bronvakje in een eerdere ronde voor de teams daarachter.</div>';
-    }
-    // Verliezer halve finale
-    if((m = code.match(/^V(\d+)$/))){
-      var n2=+m[1], s2=M[n2]||[];
-      return '<div class="wc-title"><span class="wc-code">V'+n2+'</span> Verliezer halve finale #'+n2+'</div>'+
-        '<div class="wc-vs"><b>'+(s2[0]||'?')+'</b><br>tegen<br><b>'+(s2[1]||'?')+'</b></div>';
-    }
-    return null;
-  }
-
-  var pop = document.getElementById('wc-pop');
-  var current = null;
-
-  function place(slot){
-    var r = slot.getBoundingClientRect();
-    pop.style.left='0px'; pop.style.top='0px'; // reset for measure
-    var pw = pop.offsetWidth, ph = pop.offsetHeight;
-    var vw = window.innerWidth, vh = window.innerHeight;
-    var left = r.left + r.width/2 - pw/2;
-    left = Math.max(8, Math.min(left, vw - pw - 8));
-    var top = r.bottom + 8;
-    if(top + ph > vh - 8){ top = r.top - ph - 8; }       // flip up
-    if(top < 8){ top = Math.max(8, vh - ph - 8); }
-    pop.style.left = left+'px';
-    pop.style.top = top+'px';
-  }
-  function open(slot){
-    var html = content(slot);
-    if(!html){ close(); return; }
-    pop.innerHTML = html;
-    pop.classList.add('show');
-    place(slot);
-    current = slot;
-  }
-  function close(){ pop.classList.remove('show'); current = null; }
-
-  document.addEventListener('click', function(e){
-    var slot = e.target.closest && e.target.closest('.slot');
-    if(slot){
-      e.stopPropagation();
-      if(current===slot){ close(); } else { open(slot); }
-      return;
-    }
-    if(!e.target.closest || !e.target.closest('#wc-pop')) close();
-  });
-  // desktop: hover toont, maar klik blijft werken
-  if(window.matchMedia && window.matchMedia('(hover:hover) and (pointer:fine)').matches){
-    document.querySelectorAll('.slot').forEach(function(slot){
-      slot.addEventListener('mouseenter', function(){ open(slot); });
-    });
-    document.querySelector('.bracket-scroll').addEventListener('mouseleave', close);
-  }
-  window.addEventListener('resize', close);
-  window.addEventListener('scroll', function(){ if(current) place(current); }, true);
-})();
-</script>
 <script>
 (function(){
   // Alle groepswedstrijden (Belgische tijd). s = uitslag (gespeeld), anders t = aftraptijd.
@@ -1043,31 +675,67 @@ document.getElementById('kal').addEventListener('click',function(e){
 b.addEventListener('click',function(){var o=s.classList.toggle('open');b.querySelector('.cv').textContent=o?'▴':'▾';b.querySelector('.tg-label').textContent=o?'Verberg de cijfers':'Toon de cijfers';});})();
 </script>
 <script>
-/* Knock-outvakjes invullen vanuit de groepsstand: 1X/2X zodra een groep af is,
-   en de beste nummers 3 op hun officiële plek zodra de groepsfase af is. */
+/* Knock-outschema (variant B) client-side opbouwen uit KO + koTeam + KOSCORE/KOWIN.
+   De verbindingslijnen lopen exact tussen de twee voedende duels; tik/hover een duel
+   en de 2 wedstrijden die ertoe leiden lichten op. */
 (function(){
-  var QUAL = {{QUAL_DATA}};
-  var THIRD = {{THIRD_DATA}};
-  var WINNERS = {{WINNERS_DATA}};
-  function fill(slot, flag, name, prov){
-    slot.classList.remove('team', 'prov');
-    slot.classList.add(prov ? 'prov' : 'team');         // prov = voorlopig (grijs), anders bevestigd
-    var lab = slot.querySelector('.lab'), fl = slot.querySelector('.fl');
-    if(!fl){ fl = document.createElement('span'); fl.className = 'fl'; slot.insertBefore(fl, lab); }
-    fl.textContent = flag;
-    if(lab){ lab.textContent = name; }
+  var tree = document.getElementById('btree');
+  if(!tree || typeof KO === 'undefined') return;
+  var byN = {}; KO.forEach(function(m){ byN[m.n] = m; });
+  var BRONZE = byN[103];
+  function feeders(n){ var m = byN[n]; if(!m) return [null,null];
+    function w(c){ var x = /^W(\d+)$/.exec(c); return x ? +x[1] : null; }
+    return [w(m.h), w(m.a)]; }
+  function leaves(n){ var f = feeders(n); if(f[0]==null) return [n]; return leaves(f[0]).concat(leaves(f[1])); }
+  var r32 = leaves(104);
+  function order(ns){ return ns.slice().sort(function(a,b){ return r32.indexOf(leaves(a)[0]) - r32.indexOf(leaves(b)[0]); }); }
+  function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+  function trow(code, other, score, winName){
+    var t = koTeam(code, other);
+    if(!t) return '<div class="brow tbd"><span class="cr">·</span><span class="nm">'+esc(codeLabel(code))+'</span></div>';
+    var win = winName && t.name === winName;
+    return '<div class="brow'+(win?' win':'')+(t.prov?' prov':'')+'">'+
+      '<span class="cr">'+t.flag+'</span><span class="nm">'+esc(t.name)+'</span>'+
+      (score!=null?'<span class="sc">'+score+'</span>':'')+'</div>';
   }
-  document.querySelectorAll('.bracket .m').forEach(function(m){
-    var third = null, wg = null;
-    m.querySelectorAll('.slot').forEach(function(s){
-      var el = s.querySelector('.code'), c = el ? el.textContent.trim() : '';
-      if(QUAL[c]){ fill(s, QUAL[c][0], QUAL[c][1], !QUAL[c][2]); }   // QUAL[c][2] = bevestigd?
-      if(WINNERS[c]){ fill(s, WINNERS[c][0], WINNERS[c][1], false); }   // gespeelde knock-outwinnaar/verliezer
-      if(c === '3'){ third = s; }
-      var mw = c.match(/^1([A-L])$/); if(mw){ wg = mw[1]; }
-    });
-    if(third && wg && THIRD[wg]){ fill(third, THIRD[wg][0], THIRD[wg][1]); third.setAttribute('data-grp', THIRD[wg][2]); }
+  function card(m, champ){
+    var sc = KOSCORE[m.n] || null, parts = sc ? sc.split('–') : [];
+    var wn = (KOWIN['W'+m.n] || [])[1] || null;
+    var pen = sc && parts.length===2 && parts[0]===parts[1] && wn;
+    var acc = m.be ? ' be' : (m.nl ? ' nl' : '');
+    return '<div class="bm'+(m===BRONZE?' bronze':'')+'" data-n="'+m.n+'">'+
+      '<div class="bmc'+acc+(champ?' champ':'')+'">'+
+        trow(m.h, m.a, parts.length?parts[0]:null, wn)+
+        trow(m.a, m.h, parts.length?parts[1]:null, wn)+
+      '</div><div class="bcap">#'+m.n+' · '+m.d+(pen?' · n.s.':'')+'</div></div>';
+  }
+  var COLS = [['1/16','1/16 finale'],['1/8','1/8 finale'],['KF','Kwartfinale'],['HF','Halve finale'],['Finale','Finale']];
+  tree.innerHTML = COLS.map(function(col, i){
+    var first = i===0, last = i===COLS.length-1;
+    var ms = order(KO.filter(function(m){ return m.r===col[0]; }).map(function(m){ return m.n; })).map(function(n){ return byN[n]; });
+    return '<div class="bcol'+(first?' first':'')+(last?' last fin':'')+'"><div class="bl">'+col[1]+
+      '</div><div class="bms">'+ms.map(function(m){ return card(m, last); }).join('')+'</div></div>';
+  }).join('');
+  var bw = document.getElementById('bronzeWrap');
+  if(bw && BRONZE) bw.innerHTML = '<div class="bt">🥉 Troostfinale · brons</div>' + card(BRONZE, false);
+
+  // welke 2 duels voeden n -> trace bij tik/hover
+  var FEED = {};
+  KO.forEach(function(m){ var f = feeders(m.n); if(f[0]!=null || f[1]!=null) FEED[m.n] = f; });
+  function clr(){ tree.classList.remove('tracing');
+    [].forEach.call(tree.querySelectorAll('.focus,.feed'), function(e){ e.classList.remove('focus','feed'); }); }
+  function trace(n){ clr(); var el = tree.querySelector('.bm[data-n="'+n+'"]'); if(!el) return;
+    var f = FEED[n]; if(!f || (f[0]==null && f[1]==null)) return;
+    tree.classList.add('tracing'); el.classList.add('focus');
+    f.forEach(function(x){ if(x==null) return; var fe = tree.querySelector('.bm[data-n="'+x+'"]'); if(fe) fe.classList.add('feed'); }); }
+  [].forEach.call(tree.querySelectorAll('.bm[data-n]'), function(el){
+    var n = el.getAttribute('data-n');
+    el.addEventListener('mouseenter', function(){ trace(n); });
+    el.addEventListener('click', function(ev){ ev.stopPropagation(); trace(n); });
   });
+  var wrap = tree.parentNode;
+  if(wrap) wrap.addEventListener('mouseleave', clr);
+  document.addEventListener('click', function(e){ if(!(e.target.closest && e.target.closest('.bm'))) clr(); });
 })();
 </script>
 <script>
