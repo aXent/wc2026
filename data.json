@@ -3855,6 +3855,28 @@
     }
    ]
   },
+  "2502848": {
+   "score": "1-1",
+   "status": "2H",
+   "tl": [
+    {
+     "a": "Karim Hafez",
+     "d": "Normal Goal",
+     "h": false,
+     "k": "G",
+     "p": "Emam Ashour",
+     "t": 13
+    },
+    {
+     "a": "Aiden O'Neill",
+     "d": "Normal Goal",
+     "h": true,
+     "k": "G",
+     "p": "Harry Souttar",
+     "t": 55
+    }
+   ]
+  },
   "2503390": {
    "score": "2-0",
    "status": "FT",
