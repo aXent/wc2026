@@ -3893,6 +3893,28 @@
     }
    ]
   },
+  "2502849": {
+   "score": "1-1",
+   "status": "ET",
+   "tl": [
+    {
+     "a": "",
+     "d": "Normal Goal",
+     "h": true,
+     "k": "G",
+     "p": "Lionel Messi",
+     "t": 29
+    },
+    {
+     "a": "",
+     "d": "Normal Goal",
+     "h": false,
+     "k": "G",
+     "p": "Deroy Duarte",
+     "t": 59
+    }
+   ]
+  },
   "2503390": {
    "score": "2-0",
    "status": "FT",
