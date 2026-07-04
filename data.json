@@ -3894,8 +3894,8 @@
    ]
   },
   "2502849": {
-   "score": "1-1",
-   "status": "ET",
+   "score": "3-2",
+   "status": "FT",
    "tl": [
     {
      "a": "",
@@ -3912,6 +3912,30 @@
      "k": "G",
      "p": "Deroy Duarte",
      "t": 59
+    },
+    {
+     "a": "",
+     "d": "Normal Goal",
+     "h": true,
+     "k": "G",
+     "p": "Lisandro Martínez",
+     "t": 93
+    },
+    {
+     "a": "",
+     "d": "Normal Goal",
+     "h": false,
+     "k": "G",
+     "p": "Sidny Lopes Cabral",
+     "t": 102
+    },
+    {
+     "a": "",
+     "d": "Normal Goal",
+     "h": true,
+     "k": "G",
+     "p": "Cristian Romero",
+     "t": 111
     }
    ]
   },
@@ -4130,6 +4154,11 @@
      "t": 90
     }
    ]
+  },
+  "2503394": {
+   "score": "1-0",
+   "status": "FT",
+   "tl": []
   },
   "2503635": {
    "score": "2-0",
