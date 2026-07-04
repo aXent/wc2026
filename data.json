@@ -4244,6 +4244,60 @@
      "t": 89
     }
    ]
+  },
+  "2505183": {
+   "score": "0-0",
+   "status": "HT",
+   "tl": [
+    {
+     "a": "",
+     "d": "Yellow Card",
+     "h": false,
+     "k": "C",
+     "p": "Redouane Halhal",
+     "t": 20
+    },
+    {
+     "a": "",
+     "d": "Yellow Card",
+     "h": false,
+     "k": "C",
+     "p": "Achraf Hakimi",
+     "t": 40
+    },
+    {
+     "a": "",
+     "d": "Yellow Card",
+     "h": true,
+     "k": "C",
+     "p": "Richie Laryea",
+     "t": 40
+    },
+    {
+     "a": "",
+     "d": "Yellow Card",
+     "h": true,
+     "k": "C",
+     "p": "Jonathan David",
+     "t": 43
+    },
+    {
+     "a": "",
+     "d": "Yellow Card",
+     "h": false,
+     "k": "C",
+     "p": "Azzedine Ounahi",
+     "t": 45
+    },
+    {
+     "a": "",
+     "d": "Yellow Card",
+     "h": false,
+     "k": "C",
+     "p": "Bilal El Khannouss",
+     "t": 45
+    }
+   ]
   }
  },
  "schema": 2
