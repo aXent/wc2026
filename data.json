@@ -4246,8 +4246,8 @@
    ]
   },
   "2505183": {
-   "score": "0-0",
-   "status": "HT",
+   "score": "0-3",
+   "status": "FT",
    "tl": [
     {
      "a": "",
@@ -4296,6 +4296,46 @@
      "k": "C",
      "p": "Bilal El Khannouss",
      "t": 45
+    },
+    {
+     "a": "",
+     "d": "Yellow Card",
+     "h": true,
+     "k": "C",
+     "p": "Luc de Fougerolles",
+     "t": 49
+    },
+    {
+     "a": "Achraf Hakimi",
+     "d": "Normal Goal",
+     "h": false,
+     "k": "G",
+     "p": "Azzedine Ounahi",
+     "t": 50
+    },
+    {
+     "a": "",
+     "d": "Yellow Card",
+     "h": true,
+     "k": "C",
+     "p": "Cyle Larin",
+     "t": 67
+    },
+    {
+     "a": "Brahim Díaz",
+     "d": "Normal Goal",
+     "h": false,
+     "k": "G",
+     "p": "Azzedine Ounahi",
+     "t": 82
+    },
+    {
+     "a": "Brahim Díaz",
+     "d": "Normal Goal",
+     "h": false,
+     "k": "G",
+     "p": "Soufiane Rahimi",
+     "t": 90
     }
    ]
   }
