@@ -4340,9 +4340,42 @@
    ]
   },
   "2505462": {
-   "score": "0-0",
-   "status": "HT",
-   "tl": []
+   "score": "1-2",
+   "status": "FT",
+   "tl": [
+    {
+     "a": "Andreas Schjelderup",
+     "d": "Normal Goal",
+     "h": false,
+     "k": "G",
+     "p": "Erling Haaland",
+     "t": 79
+    },
+    {
+     "a": "Andreas Schjelderup",
+     "d": "Normal Goal",
+     "h": false,
+     "k": "G",
+     "p": "Erling Haaland",
+     "t": 90
+    },
+    {
+     "a": "",
+     "d": "Yellow Card",
+     "h": true,
+     "k": "C",
+     "p": "Neymar",
+     "t": 90
+    },
+    {
+     "a": "",
+     "d": "Penalty",
+     "h": true,
+     "k": "G",
+     "p": "Neymar",
+     "t": 90
+    }
+   ]
   },
   "2505624": {
    "score": "0-1",
