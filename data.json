@@ -4414,6 +4414,108 @@
      "t": 90
     }
    ]
+  },
+  "2507706": {
+   "score": "2-3",
+   "status": "FT",
+   "tl": [
+    {
+     "a": "",
+     "d": "Yellow Card",
+     "h": false,
+     "k": "C",
+     "p": "Declan Rice",
+     "t": 1
+    },
+    {
+     "a": "Bukayo Saka",
+     "d": "Normal Goal",
+     "h": false,
+     "k": "G",
+     "p": "Jude Bellingham",
+     "t": 36
+    },
+    {
+     "a": "Harry Kane",
+     "d": "Normal Goal",
+     "h": false,
+     "k": "G",
+     "p": "Jude Bellingham",
+     "t": 38
+    },
+    {
+     "a": "",
+     "d": "Normal Goal",
+     "h": true,
+     "k": "G",
+     "p": "Julián Quiñones",
+     "t": 42
+    },
+    {
+     "a": "",
+     "d": "Red Card",
+     "h": false,
+     "k": "C",
+     "p": "Jarell Quansah",
+     "t": 54
+    },
+    {
+     "a": "",
+     "d": "Penalty",
+     "h": false,
+     "k": "G",
+     "p": "Harry Kane",
+     "t": 60
+    },
+    {
+     "a": "",
+     "d": "Yellow Card",
+     "h": false,
+     "k": "C",
+     "p": "Marc Guéhi",
+     "t": 68
+    },
+    {
+     "a": "",
+     "d": "Penalty",
+     "h": true,
+     "k": "G",
+     "p": "Raúl Jiménez",
+     "t": 69
+    },
+    {
+     "a": "",
+     "d": "Yellow Card",
+     "h": true,
+     "k": "C",
+     "p": "Jorge Sánchez",
+     "t": 71
+    },
+    {
+     "a": "",
+     "d": "Yellow Card",
+     "h": false,
+     "k": "C",
+     "p": "Nico O'Reilly",
+     "t": 72
+    },
+    {
+     "a": "",
+     "d": "Yellow Card",
+     "h": true,
+     "k": "C",
+     "p": "Johan Vásquez",
+     "t": 90
+    },
+    {
+     "a": "",
+     "d": "Yellow Card",
+     "h": false,
+     "k": "C",
+     "p": "Jordan Henderson",
+     "t": 90
+    }
+   ]
   }
  },
  "schema": 2
