@@ -4519,7 +4519,7 @@
   },
   "2511721": {
    "score": "0-1",
-   "status": "2H",
+   "status": "FT",
    "tl": [
     {
      "a": "",
@@ -4535,6 +4535,22 @@
      "h": false,
      "k": "G",
      "p": "Mikel Merino",
+     "t": 90
+    },
+    {
+     "a": "",
+     "d": "Yellow Card",
+     "h": true,
+     "k": "C",
+     "p": "Renato Veiga",
+     "t": 90
+    },
+    {
+     "a": "",
+     "d": "Yellow Card",
+     "h": false,
+     "k": "C",
+     "p": "Ferran Torres",
      "t": 90
     }
    ]
