@@ -4616,6 +4616,20 @@
      "t": 90
     }
    ]
+  },
+  "2513670": {
+   "score": "0-1",
+   "status": "1H",
+   "tl": [
+    {
+     "a": "",
+     "d": "Normal Goal",
+     "h": false,
+     "k": "G",
+     "p": "Yasser Ibrahim",
+     "t": 15
+    }
+   ]
   }
  },
  "schema": 2
