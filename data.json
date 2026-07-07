@@ -4517,6 +4517,68 @@
     }
    ]
   },
+  "2507707": {
+   "score": "1-4",
+   "status": "FT",
+   "tl": [
+    {
+     "a": "Nicolas Raskin",
+     "d": "Normal Goal",
+     "h": false,
+     "k": "G",
+     "p": "Charles De Ketelaere",
+     "t": 9
+    },
+    {
+     "a": "",
+     "d": "Normal Goal",
+     "h": true,
+     "k": "G",
+     "p": "Malik Tillman",
+     "t": 31
+    },
+    {
+     "a": "Leandro Trossard",
+     "d": "Normal Goal",
+     "h": false,
+     "k": "G",
+     "p": "Charles De Ketelaere",
+     "t": 33
+    },
+    {
+     "a": "",
+     "d": "Yellow Card",
+     "h": true,
+     "k": "C",
+     "p": "Weston McKennie",
+     "t": 35
+    },
+    {
+     "a": "Charles De Ketelaere",
+     "d": "Normal Goal",
+     "h": false,
+     "k": "G",
+     "p": "Hans Vanaken",
+     "t": 57
+    },
+    {
+     "a": "",
+     "d": "Yellow Card",
+     "h": true,
+     "k": "C",
+     "p": "Malik Tillman",
+     "t": 69
+    },
+    {
+     "a": "Hans Vanaken",
+     "d": "Normal Goal",
+     "h": false,
+     "k": "G",
+     "p": "Romelu Lukaku",
+     "t": 90
+    }
+   ]
+  },
   "2511721": {
    "score": "0-1",
    "status": "FT",
