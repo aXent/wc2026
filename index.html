@@ -718,7 +718,7 @@ b.addEventListener('click',function(){var o=s.classList.toggle('open');b.querySe
       '<div class="bmc'+acc+(champ?' champ':'')+'">'+
         trow(m.h, m.a, parts.length?parts[0]:null, wn)+
         trow(m.a, m.h, parts.length?parts[1]:null, wn)+
-      '</div><div class="bcap">#'+m.n+' · '+m.d+(pen?' · n.s.':'')+'</div></div>';
+      '</div><div class="bcap">#'+m.n+' · '+m.d+(sc?(pen?' · n.s.':''):' · <span style="color:var(--ink)">'+m.t+'</span>')+'</div></div>';
   }
   var COLS = [['1/16','1/16 finale'],['1/8','1/8 finale'],['KF','Kwartfinale'],['HF','Halve finale'],['Finale','Finale']];
   tree.innerHTML = COLS.map(function(col, i){
