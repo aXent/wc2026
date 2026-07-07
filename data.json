@@ -4697,8 +4697,49 @@
   },
   "2513671": {
    "score": "0-0",
-   "status": "BT",
-   "tl": []
+   "status": "AP",
+   "tl": [
+    {
+     "a": "",
+     "d": "Yellow Card",
+     "h": true,
+     "k": "C",
+     "p": "Granit Xhaka",
+     "t": 51
+    },
+    {
+     "a": "",
+     "d": "Yellow Card",
+     "h": true,
+     "k": "C",
+     "p": "Denis Zakaria",
+     "t": 59
+    },
+    {
+     "a": "",
+     "d": "Yellow Card",
+     "h": false,
+     "k": "C",
+     "p": "Luis Suárez",
+     "t": 60
+    },
+    {
+     "a": "",
+     "d": "Yellow Card",
+     "h": false,
+     "k": "C",
+     "p": "Davinson Sánchez",
+     "t": 95
+    },
+    {
+     "a": "",
+     "d": "Yellow Card",
+     "h": true,
+     "k": "C",
+     "p": "Miro Muheim",
+     "t": 105
+    }
+   ]
   }
  },
  "schema": 2
