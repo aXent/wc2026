@@ -4743,8 +4743,25 @@
   },
   "2515305": {
    "score": "2-0",
-   "status": "2H",
-   "tl": []
+   "status": "FT",
+   "tl": [
+    {
+     "a": "",
+     "d": "Normal Goal",
+     "h": true,
+     "k": "G",
+     "p": "Kylian Mbappé",
+     "t": 60
+    },
+    {
+     "a": "",
+     "d": "Normal Goal",
+     "h": true,
+     "k": "G",
+     "p": "Ousmane Dembélé",
+     "t": 66
+    }
+   ]
   }
  },
  "schema": 2
