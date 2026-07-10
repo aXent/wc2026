@@ -4764,9 +4764,42 @@
    ]
   },
   "2519345": {
-   "score": "0-0",
-   "status": "1H",
-   "tl": []
+   "score": "1-1",
+   "status": "2H",
+   "tl": [
+    {
+     "a": "",
+     "d": "Normal Goal",
+     "h": true,
+     "k": "G",
+     "p": "Fabián Ruiz",
+     "t": 30
+    },
+    {
+     "a": "Timothy Castagne",
+     "d": "Normal Goal",
+     "h": false,
+     "k": "G",
+     "p": "Charles De Ketelaere",
+     "t": 41
+    },
+    {
+     "a": "",
+     "d": "Yellow Card",
+     "h": true,
+     "k": "C",
+     "p": "Pau Cubarsí",
+     "t": 43
+    },
+    {
+     "a": "",
+     "d": "Yellow Card",
+     "h": false,
+     "k": "C",
+     "p": "Kevin De Bruyne",
+     "t": 85
+    }
+   ]
   }
  },
  "schema": 2
