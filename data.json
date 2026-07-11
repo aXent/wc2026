@@ -4764,11 +4764,11 @@
    ]
   },
   "2517651": {
-   "score": "1-1",
-   "status": "2H",
+   "score": "1-2",
+   "status": "ET",
    "tl": [
     {
-     "a": "",
+     "a": "Martin Ødegaard",
      "d": "Normal Goal",
      "h": true,
      "k": "G",
@@ -4776,12 +4776,12 @@
      "t": 36
     },
     {
-     "a": "",
+     "a": "Anthony Gordon",
      "d": "Normal Goal",
-     "h": true,
+     "h": false,
      "k": "G",
-     "p": "Andreas Schjelderup",
-     "t": 36
+     "p": "Jude Bellingham",
+     "t": 45
     },
     {
      "a": "",
@@ -4789,7 +4789,15 @@
      "h": false,
      "k": "G",
      "p": "Jude Bellingham",
-     "t": 46
+     "t": 93
+    },
+    {
+     "a": "",
+     "d": "Yellow Card",
+     "h": true,
+     "k": "C",
+     "p": "Kristoffer Ajer",
+     "t": 117
     }
    ]
   },
