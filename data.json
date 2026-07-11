@@ -4763,6 +4763,36 @@
     }
    ]
   },
+  "2517651": {
+   "score": "1-1",
+   "status": "HT",
+   "tl": [
+    {
+     "a": "",
+     "d": "Normal Goal",
+     "h": true,
+     "k": "G",
+     "p": "Andreas Schjelderup",
+     "t": 36
+    },
+    {
+     "a": "",
+     "d": "Normal Goal",
+     "h": true,
+     "k": "G",
+     "p": "Andreas Schjelderup",
+     "t": 36
+    },
+    {
+     "a": "",
+     "d": "Normal Goal",
+     "h": false,
+     "k": "G",
+     "p": "Jude Bellingham",
+     "t": 46
+    }
+   ]
+  },
   "2519345": {
    "score": "2-1",
    "status": "FT",
