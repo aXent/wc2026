@@ -4866,7 +4866,88 @@
   "2520608": {
    "score": "3-1",
    "status": "AET",
-   "tl": []
+   "tl": [
+    {
+     "a": "Lionel Messi",
+     "d": "Normal Goal",
+     "h": true,
+     "k": "G",
+     "p": "Alexis Mac Allister",
+     "t": 10
+    },
+    {
+     "a": "",
+     "d": "Yellow Card",
+     "h": false,
+     "k": "C",
+     "p": "Breel Embolo",
+     "t": 44
+    },
+    {
+     "a": "Ricardo Rodriguez",
+     "d": "Normal Goal",
+     "h": false,
+     "k": "G",
+     "p": "Dan Ndoye",
+     "t": 67
+    },
+    {
+     "a": "",
+     "d": "Yellow Card",
+     "h": false,
+     "k": "C",
+     "p": "Breel Embolo",
+     "t": 72
+    },
+    {
+     "a": "",
+     "d": "Red Card",
+     "h": false,
+     "k": "C",
+     "p": "Breel Embolo",
+     "t": 72
+    },
+    {
+     "a": "",
+     "d": "Yellow Card",
+     "h": true,
+     "k": "C",
+     "p": "Thiago Almada",
+     "t": 97
+    },
+    {
+     "a": "",
+     "d": "Yellow Card",
+     "h": true,
+     "k": "C",
+     "p": "Lautaro Martínez",
+     "t": 98
+    },
+    {
+     "a": "José Manuel López",
+     "d": "Normal Goal",
+     "h": true,
+     "k": "G",
+     "p": "Julián Álvarez",
+     "t": 112
+    },
+    {
+     "a": "",
+     "d": "Yellow Card",
+     "h": true,
+     "k": "C",
+     "p": "José Manuel López",
+     "t": 114
+    },
+    {
+     "a": "",
+     "d": "Normal Goal",
+     "h": true,
+     "k": "G",
+     "p": "Lautaro Martínez",
+     "t": 120
+    }
+   ]
   }
  },
  "schema": 2
