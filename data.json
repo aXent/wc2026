@@ -4765,7 +4765,7 @@
   },
   "2517651": {
    "score": "1-2",
-   "status": "ET",
+   "status": "AET",
    "tl": [
     {
      "a": "Martin Ødegaard",
@@ -4862,6 +4862,11 @@
      "t": 90
     }
    ]
+  },
+  "2520608": {
+   "score": "3-1",
+   "status": "AET",
+   "tl": []
   }
  },
  "schema": 2
