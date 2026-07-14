@@ -4948,6 +4948,28 @@
      "t": 120
     }
    ]
+  },
+  "2528031": {
+   "score": "0-0",
+   "status": "1H",
+   "tl": [
+    {
+     "a": "",
+     "d": "Yellow Card",
+     "h": true,
+     "k": "C",
+     "p": "Adrien Rabiot",
+     "t": 9
+    },
+    {
+     "a": "",
+     "d": "Penalty",
+     "h": false,
+     "k": "G",
+     "p": "Mikel Oyarzabal",
+     "t": 22
+    }
+   ]
   }
  },
  "schema": 2
