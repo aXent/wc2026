@@ -4950,8 +4950,8 @@
    ]
   },
   "2528031": {
-   "score": "0-0",
-   "status": "1H",
+   "score": "0-2",
+   "status": "2H",
    "tl": [
     {
      "a": "",
@@ -4968,6 +4968,22 @@
      "k": "G",
      "p": "Mikel Oyarzabal",
      "t": 22
+    },
+    {
+     "a": "",
+     "d": "Yellow Card",
+     "h": false,
+     "k": "C",
+     "p": "Marc Cucurella",
+     "t": 31
+    },
+    {
+     "a": "Dani Olmo",
+     "d": "Normal Goal",
+     "h": false,
+     "k": "G",
+     "p": "Pedro Porro",
+     "t": 58
     }
    ]
   }
