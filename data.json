@@ -4951,7 +4951,7 @@
   },
   "2528031": {
    "score": "0-2",
-   "status": "2H",
+   "status": "FT",
    "tl": [
     {
      "a": "",
@@ -4984,6 +4984,14 @@
      "k": "G",
      "p": "Pedro Porro",
      "t": 58
+    },
+    {
+     "a": "",
+     "d": "Yellow Card",
+     "h": true,
+     "k": "C",
+     "p": "Kylian Mbappé",
+     "t": 86
     }
    ]
   }
