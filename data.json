@@ -4996,9 +4996,42 @@
    ]
   },
   "2528727": {
-   "score": "0-0",
-   "status": "1H",
-   "tl": []
+   "score": "1-0",
+   "status": "2H",
+   "tl": [
+    {
+     "a": "",
+     "d": "Yellow Card",
+     "h": true,
+     "k": "C",
+     "p": "Elliot Anderson",
+     "t": 37
+    },
+    {
+     "a": "",
+     "d": "Yellow Card",
+     "h": false,
+     "k": "C",
+     "p": "Lisandro Martínez",
+     "t": 42
+    },
+    {
+     "a": "",
+     "d": "Yellow Card",
+     "h": false,
+     "k": "C",
+     "p": "Cristian Romero",
+     "t": 51
+    },
+    {
+     "a": "Morgan Rogers",
+     "d": "Normal Goal",
+     "h": true,
+     "k": "G",
+     "p": "Anthony Gordon",
+     "t": 55
+    }
+   ]
   }
  },
  "schema": 2
