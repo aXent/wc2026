@@ -4996,8 +4996,8 @@
    ]
   },
   "2528727": {
-   "score": "1-0",
-   "status": "2H",
+   "score": "1-2",
+   "status": "FT",
    "tl": [
     {
      "a": "",
@@ -5030,6 +5030,30 @@
      "k": "G",
      "p": "Anthony Gordon",
      "t": 55
+    },
+    {
+     "a": "Lionel Messi",
+     "d": "Normal Goal",
+     "h": false,
+     "k": "G",
+     "p": "Enzo Fernández",
+     "t": 85
+    },
+    {
+     "a": "Lionel Messi",
+     "d": "Normal Goal",
+     "h": false,
+     "k": "G",
+     "p": "Lautaro Martínez",
+     "t": 90
+    },
+    {
+     "a": "",
+     "d": "Yellow Card",
+     "h": false,
+     "k": "C",
+     "p": "Rodrigo de Paul",
+     "t": 90
     }
    ]
   }
