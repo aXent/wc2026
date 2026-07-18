@@ -5058,8 +5058,8 @@
    ]
   },
   "2533360": {
-   "score": "2-4",
-   "status": "2H",
+   "score": "4-6",
+   "status": "FT",
    "tl": [
     {
      "a": "",
@@ -5108,6 +5108,14 @@
      "k": "G",
      "p": "Bradley Barcola",
      "t": 54
+    },
+    {
+     "a": "Michael Olise",
+     "d": "Normal Goal",
+     "h": true,
+     "k": "G",
+     "p": "Kylian Mbappé",
+     "t": 66
     }
    ]
   }
