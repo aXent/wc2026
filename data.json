@@ -5056,6 +5056,20 @@
      "t": 90
     }
    ]
+  },
+  "2533360": {
+   "score": "0-2",
+   "status": "1H",
+   "tl": [
+    {
+     "a": "",
+     "d": "Normal Goal",
+     "h": false,
+     "k": "G",
+     "p": "Declan Rice",
+     "t": 3
+    }
+   ]
   }
  },
  "schema": 2
