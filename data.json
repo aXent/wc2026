@@ -5058,8 +5058,8 @@
    ]
   },
   "2533360": {
-   "score": "0-2",
-   "status": "1H",
+   "score": "2-4",
+   "status": "2H",
    "tl": [
     {
      "a": "",
@@ -5068,6 +5068,46 @@
      "k": "G",
      "p": "Declan Rice",
      "t": 3
+    },
+    {
+     "a": "Declan Rice",
+     "d": "Normal Goal",
+     "h": false,
+     "k": "G",
+     "p": "Ezri Konsa",
+     "t": 18
+    },
+    {
+     "a": "Marcus Rashford",
+     "d": "Normal Goal",
+     "h": false,
+     "k": "G",
+     "p": "Bukayo Saka",
+     "t": 37
+    },
+    {
+     "a": "Eberechi Eze",
+     "d": "Normal Goal",
+     "h": false,
+     "k": "G",
+     "p": "Bukayo Saka",
+     "t": 45
+    },
+    {
+     "a": "Michael Olise",
+     "d": "Normal Goal",
+     "h": true,
+     "k": "G",
+     "p": "Kylian Mbappé",
+     "t": 48
+    },
+    {
+     "a": "Kylian Mbappé",
+     "d": "Normal Goal",
+     "h": true,
+     "k": "G",
+     "p": "Bradley Barcola",
+     "t": 54
     }
    ]
   }
