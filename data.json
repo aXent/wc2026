@@ -5145,7 +5145,7 @@
   },
   "2533361": {
    "score": "1-0",
-   "status": "ET",
+   "status": "AET",
    "tl": [
     {
      "a": "",
@@ -5202,6 +5202,14 @@
      "k": "C",
      "p": "Alexis Mac Allister",
      "t": 111
+    },
+    {
+     "a": "",
+     "d": "Red Card",
+     "h": false,
+     "k": "C",
+     "p": "Leandro Paredes",
+     "t": 120
     }
    ]
   }
