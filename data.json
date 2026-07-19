@@ -5116,6 +5116,30 @@
      "k": "G",
      "p": "Kylian Mbappé",
      "t": 66
+    },
+    {
+     "a": "",
+     "d": "Penalty",
+     "h": false,
+     "k": "G",
+     "p": "Bukayo Saka",
+     "t": 87
+    },
+    {
+     "a": "Dayot Upamecano",
+     "d": "Normal Goal",
+     "h": true,
+     "k": "G",
+     "p": "Ousmane Dembélé",
+     "t": 90
+    },
+    {
+     "a": "",
+     "d": "Normal Goal",
+     "h": false,
+     "k": "G",
+     "p": "Jude Bellingham",
+     "t": 90
     }
    ]
   }
