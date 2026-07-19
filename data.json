@@ -5145,8 +5145,25 @@
   },
   "2533361": {
    "score": "0-0",
-   "status": "1H",
-   "tl": []
+   "status": "2H",
+   "tl": [
+    {
+     "a": "",
+     "d": "Yellow Card",
+     "h": false,
+     "k": "C",
+     "p": "Lisandro Martínez",
+     "t": 41
+    },
+    {
+     "a": "",
+     "d": "Yellow Card",
+     "h": false,
+     "k": "C",
+     "p": "Leandro Paredes",
+     "t": 52
+    }
+   ]
   }
  },
  "schema": 2
