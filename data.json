@@ -5144,8 +5144,8 @@
    ]
   },
   "2533361": {
-   "score": "0-0",
-   "status": "2H",
+   "score": "1-0",
+   "status": "ET",
    "tl": [
     {
      "a": "",
@@ -5162,6 +5162,46 @@
      "k": "C",
      "p": "Leandro Paredes",
      "t": 52
+    },
+    {
+     "a": "",
+     "d": "Yellow Card",
+     "h": false,
+     "k": "C",
+     "p": "Enzo Fernández",
+     "t": 82
+    },
+    {
+     "a": "",
+     "d": "Yellow Card",
+     "h": false,
+     "k": "C",
+     "p": "Cristian Romero",
+     "t": 90
+    },
+    {
+     "a": "",
+     "d": "Yellow Card",
+     "h": false,
+     "k": "C",
+     "p": "Julián Álvarez",
+     "t": 104
+    },
+    {
+     "a": "Nico Williams",
+     "d": "Normal Goal",
+     "h": true,
+     "k": "G",
+     "p": "Ferran Torres",
+     "t": 106
+    },
+    {
+     "a": "",
+     "d": "Yellow Card",
+     "h": false,
+     "k": "C",
+     "p": "Alexis Mac Allister",
+     "t": 111
     }
    ]
   }
