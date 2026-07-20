@@ -2,19 +2,19 @@ name: Update WK 2026 cheat sheet
 
 # Plaats dit bestand in de repo als: .github/workflows/update.yml
 
-on:
-  schedule:
+# on:
+#  schedule:
     # Elke 10 minuten (tijden in UTC). GitHub kan geplande runs vertragen.
     # Wil je het rustiger? Zet bv. '*/30 * * * *' (elk half uur).
-    - cron: '*/30 * * * *'
-  workflow_dispatch: {}          # handmatige "Run workflow"-knop
+#    - cron: '*/30 * * * *'
+#  workflow_dispatch: {}          # handmatige "Run workflow"-knop
 
-permissions:
-  contents: write                # nodig om de bijgewerkte index.html terug te pushen
+# permissions:
+#  contents: write                # nodig om de bijgewerkte index.html terug te pushen
 
-concurrency:
-  group: update-cheatsheet       # voorkomt overlappende runs
-  cancel-in-progress: false
+# concurrency:
+#  group: update-cheatsheet       # voorkomt overlappende runs
+#  cancel-in-progress: false
 
 jobs:
   build:
