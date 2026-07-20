@@ -5152,6 +5152,14 @@
      "d": "Yellow Card",
      "h": false,
      "k": "C",
+     "p": "Cristian Romero",
+     "t": -5
+    },
+    {
+     "a": "",
+     "d": "Yellow Card",
+     "h": false,
+     "k": "C",
      "p": "Lisandro Martínez",
      "t": 41
     },
@@ -5169,15 +5177,7 @@
      "h": false,
      "k": "C",
      "p": "Enzo Fernández",
-     "t": 82
-    },
-    {
-     "a": "",
-     "d": "Yellow Card",
-     "h": false,
-     "k": "C",
-     "p": "Cristian Romero",
-     "t": 90
+     "t": 83
     },
     {
      "a": "",
@@ -5194,14 +5194,6 @@
      "k": "C",
      "p": "Enzo Fernández",
      "t": 90
-    },
-    {
-     "a": "",
-     "d": "Yellow Card",
-     "h": false,
-     "k": "C",
-     "p": "Lionel Scaloni",
-     "t": 104
     },
     {
      "a": "Nico Williams",
