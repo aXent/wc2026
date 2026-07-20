@@ -5184,7 +5184,23 @@
      "d": "Yellow Card",
      "h": false,
      "k": "C",
-     "p": "Julián Álvarez",
+     "p": "Enzo Fernández",
+     "t": 90
+    },
+    {
+     "a": "",
+     "d": "Red Card",
+     "h": false,
+     "k": "C",
+     "p": "Enzo Fernández",
+     "t": 90
+    },
+    {
+     "a": "",
+     "d": "Yellow Card",
+     "h": false,
+     "k": "C",
+     "p": "Lionel Scaloni",
      "t": 104
     },
     {
@@ -5202,14 +5218,6 @@
      "k": "C",
      "p": "Alexis Mac Allister",
      "t": 111
-    },
-    {
-     "a": "",
-     "d": "Red Card",
-     "h": false,
-     "k": "C",
-     "p": "Leandro Paredes",
-     "t": 120
     }
    ]
   }
